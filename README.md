@@ -135,7 +135,7 @@ For performance and visual reasons the host mesh gets removed from the render-st
 ```typescript
 export type MeshTransmissionMaterialProps = {
   /* Transmission, default: 1 */
-  transmission?: number
+  _transmission?: number
   /* Thickness (refraction), default: 0 */
   thickness?: number
   /* Roughness (blur), default: 0 */
@@ -155,7 +155,7 @@ export type MeshTransmissionMaterialProps = {
 
 ```javascript
 const material = new MeshTransmissionMaterial({
-  transmission: 1,
+  _transmission: 1,
   thickness: 0,
   roughness: 0,
   chromaticAberration: 0.03,
