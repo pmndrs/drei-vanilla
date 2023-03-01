@@ -15,3 +15,7 @@ npm install @pmndrs/vanilla
 ```jsx
 import { PerspectiveCamera, PositionalAudio, ... } from '@pmndrs/vanilla'
 ```
+
+### Release
+
+TODO
