@@ -2,6 +2,9 @@
   "name": "@pmndrs/vanilla",
   "version": "0.0.0-semantic-release",
   "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "drei-inspired helpers for threejs",
   "keywords": [
     "drei",
