@@ -3,56 +3,28 @@ on:
   push:
     branches:
       - 'main'
-      - 'beta'
-      - 'alpha'
-  pull_request: {}
+
+# Cancel any previous run (see: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  main:
+  release-job:
     runs-on: ubuntu-latest
+    outputs:
+      released: ${{ steps.main.outputs.released }}
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Checkout repo
-        uses: actions/checkout@v2
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
-      - name: Install deps
-        # this runs a build script so there is no dedicated build
-        run: yarn install
-  release:
-    needs: main
-    runs-on: ubuntu-latest
-    if: ${{ github.repository == 'pmndrs/drei-vanilla' && contains('refs/heads/main,refs/heads/beta,refs/heads/alpha',github.ref) && github.event_name == 'push' }}
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Checkout repo
-        uses: actions/checkout@v2
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
-      - name: Install deps
-        # this runs a build script so there is no dedicated build
-        run: yarn install
-      - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          semantic_version: 17
-          extra_plugins: |
-            @semantic-release/git
-          branches: |
-            [
-              'main',
-              {name: 'beta', prerelease: true},
-              {name: 'alpha', prerelease: true}
-            ]
+          node-version: '18'
+          cache: 'yarn'
+      - id: main
+        run: |
+          yarn install
+          yarn release
+          if [ -d "dist/" ]; then echo "released=true" >> "$GITHUB_OUTPUT"; fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

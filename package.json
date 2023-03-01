@@ -6,7 +6,7 @@
   "keywords": [
     "drei",
     "three",
-    "threejs"    
+    "threejs"
   ],
   "repository": {
     "type": "git",
@@ -48,8 +48,9 @@
     "prettier-fix": "prettier --write .",
     "test": "npm run eslint:ci && npm run prettier",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false --strict --jsx react",
-    "typegen": "tsc --emitDeclarationOnly",    
-    "copy": "copyfiles package.json README.md LICENSE dist && json -I -f dist/package.json -e \"this.private=false; this.devDependencies=undefined; this.optionalDependencies=undefined; this.scripts=undefined; this.husky=undefined; this.prettier=undefined; this.jest=undefined; this['lint-staged']=undefined;\""
+    "typegen": "tsc --emitDeclarationOnly",
+    "copy": "copyfiles package.json README.md LICENSE dist && json -I -f dist/package.json -e \"this.private=false; this.devDependencies=undefined; this.optionalDependencies=undefined; this.scripts=undefined; this.husky=undefined; this.prettier=undefined; this.jest=undefined; this['lint-staged']=undefined;\"",
+    "release": "semantic-release"
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
@@ -65,20 +66,21 @@
     "three-mesh-bvh": "^0.5.23",
     "three-stdlib": "^2.21.8",
     "troika-three-text": "^0.47.1",
-    "utility-types": "^3.10.0"    
+    "utility-types": "^3.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/plugin-transform-modules-commonjs": "^7.14.0",
     "@babel/plugin-transform-runtime": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",    
+    "@babel/preset-env": "^7.14.2",
     "@babel/preset-typescript": "^7.10.4",
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",    
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@semantic-release/git": "^10.0.1",
     "@types/jest": "^26.0.10",
     "@types/lodash-es": "^4.17.3",
     "@types/three": "^0.149.0",
@@ -104,12 +106,13 @@
     "rollup-plugin-glslify": "^1.3.0",
     "rollup-plugin-multi-input": "^1.3.1",
     "rollup-plugin-terser": "^7.0.2",
+    "semantic-release": "^20.1.1",
     "three": "^0.149.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.7.4",
     "yarn": "^1.22.17"
   },
-  "peerDependencies": {    
+  "peerDependencies": {
     "three": ">=0.137"
   }
 }
