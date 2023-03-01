@@ -31,7 +31,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
   </tr>
 </table>
 
-# Cameras
+# Shaders
 
 #### pcss
 
