@@ -1,4 +1,1 @@
-export function foo() {
-    return null
-  }
-  
+export * from './pcss'
