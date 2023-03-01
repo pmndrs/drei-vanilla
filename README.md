@@ -34,6 +34,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
       <ul>                
         <li><a href="#materials">Materials</a></li>
         <ul>
+          <li><a href="#shadermaterial">shaderMaterial</a></li>
           <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
           <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
         </ul>
@@ -77,6 +78,39 @@ reset(renderer, scene, camera)
 ```
 
 # Materials
+
+#### shaderMaterial
+
+<p>
+  <a href="https://codesandbox.io/s/ni6v4"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/ni6v4/screenshot.png" alt="Demo"/></a>
+</p>
+
+Creates a THREE.ShaderMaterial for you with easier handling of uniforms, which are automatically declared as setter/getters on the object and allowed as constructor arguments.
+
+```jsx
+const ColorShiftMaterial = shaderMaterial(
+  { time: 0, color: new THREE.Color(0.2, 0.0, 0.1) },
+  // vertex shader
+  /*glsl*/ `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  // fragment shader
+  /*glsl*/ `
+    uniform float time;
+    uniform vec3 color;
+    varying vec2 vUv;
+    void main() {
+      gl_FragColor.rgba = vec4(0.5 + 0.3 * sin(vUv.yxx + time) + color, 1.0);
+    }
+  `
+)
+
+const mesh = new THREE.Mesh(geometry, new ColorShiftMaterial())
+```
 
 #### MeshDiscardMaterial
 
