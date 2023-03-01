@@ -99,6 +99,7 @@ Although it should be faster than MPM keep in mind that it can still be expensiv
 For performance and visual reasons the host mesh gets removed from the render-stack temporarily. If you have other objects that you don't want to see reflected in the material just add them to the parent mesh as children.
 
 ```typescript
+export type MeshTransmissionMaterialProps = {
   /* Transmission, default: 1 */
   transmission?: number
   /* Thickness (refraction), default: 0 */
@@ -116,4 +117,17 @@ For performance and visual reasons the host mesh gets removed from the render-st
   /* Temporal distortion (speed of movement), default: 0.0 */
   temporalDistortion: number
 }
+```
+
+```javascript
+const material = new MeshTransmissionMaterial({
+  transmission: 1,
+  thickness: 0,
+  roughness: 0,
+  chromaticAberration: 0.03,
+  anisotropy: 0.1,
+  distortion: 0,
+  distortionScale: 0.5,
+  temporalDistortion: 0.0,
+})
 ```
