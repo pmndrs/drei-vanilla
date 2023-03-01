@@ -29,6 +29,17 @@ import { pcss, ... } from '@pmndrs/vanilla'
       </ul>
     </td>    
   </tr>
+  <tr>
+    <td valign="top">
+      <ul>                
+        <li><a href="#materials">Materials</a></li>
+        <ul>
+          <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
+          <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
+        </ul>
+      </ul>
+    </td>    
+  </tr>
 </table>
 
 # Shaders
@@ -63,4 +74,46 @@ The function returns a reset function that can be used to remove the pcss from t
 ```javascript
 // Remove pcss from the shader chunk, and reset the scene
 reset(renderer, scene, camera)
+```
+
+# Materials
+
+#### MeshDiscardMaterial
+
+A material that discards fragments. It can be used to render nothing efficiently, but still have a mesh in the scene graph that throws shadows and can be raycast.
+
+```javascript
+const mesh = new THREE.Mesh(geometry, new MeshDiscardMaterial())
+```
+
+#### MeshTransmissionMaterial
+
+<p>
+  <a href="https://codesandbox.io/s/hmgdjq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/hmgdjq/screenshot.png" alt="Demo"/></a>
+</p>
+
+An improved THREE.MeshPhysicalMaterial. It acts like a normal PhysicalMaterial in terms of transmission support, thickness, ior, roughness, etc., but has chromatic aberration, noise-based roughness blur, (primitive) anisotropy support, and unlike the original it can "see" other transmissive or transparent objects which leads to improved visuals.
+
+Although it should be faster than MPM keep in mind that it can still be expensive as it causes an additional render pass of the scene. Low samples and low resolution will make it faster. If you use roughness consider using a tiny resolution, for instance 32x32 pixels, it will still look good but perform much faster.
+
+For performance and visual reasons the host mesh gets removed from the render-stack temporarily. If you have other objects that you don't want to see reflected in the material just add them to the parent mesh as children.
+
+```typescript
+  /* Transmission, default: 1 */
+  transmission?: number
+  /* Thickness (refraction), default: 0 */
+  thickness?: number
+  /* Roughness (blur), default: 0 */
+  roughness?: number
+  /* Chromatic aberration, default: 0.03 */
+  chromaticAberration?: number
+  /* Anisotropy, default: 0.1 */
+  anisotropy?: number
+  /* Distortion, default: 0 */
+  distortion?: number
+  /* Distortion scale, default: 0.5 */
+  distortionScale: number
+  /* Temporal distortion (speed of movement), default: 0.0 */
+  temporalDistortion: number
+}
 ```
