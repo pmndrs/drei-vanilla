@@ -2,7 +2,7 @@ name: release
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
       - 'beta'
       - 'alpha'
   pull_request: {}
@@ -26,7 +26,7 @@ jobs:
   release:
     needs: main
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'pmndrs/drei-vanilla' && contains('refs/heads/master,refs/heads/beta,refs/heads/alpha',github.ref) && github.event_name == 'push' }}
+    if: ${{ github.repository == 'pmndrs/drei-vanilla' && contains('refs/heads/main,refs/heads/beta,refs/heads/alpha',github.ref) && github.event_name == 'push' }}
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
@@ -49,7 +49,7 @@ jobs:
             @semantic-release/git
           branches: |
             [
-              'master',
+              'main',
               {name: 'beta', prerelease: true},
               {name: 'alpha', prerelease: true}
             ]
