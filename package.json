@@ -59,6 +59,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
     "camera-controls": "^2.1.0",
     "detect-gpu": "^5.0.10",
     "glsl-noise": "^0.0.0",
@@ -90,9 +92,7 @@
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
-    "@storybook/builder-webpack4": "^6.5.16",
     "@storybook/html": "^6.5.16",
-    "@storybook/manager-webpack4": "^6.5.16",
     "@storybook/testing-library": "^0.0.13",
     "@types/jest": "^26.0.10",
     "@types/lodash-es": "^4.17.3",

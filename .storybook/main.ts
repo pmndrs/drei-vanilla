@@ -2,6 +2,9 @@ import { resolve } from 'path'
 
 export default {
   staticDirs: ['./public'],
+  core: {
+    builder: '@storybook/builder-webpack5',
+  },
   stories: ['./stories/**/*.stories.{ts,tsx}'],
   addons: ['@storybook/addon-controls', '@storybook/addon-actions'],
   typescript: {
