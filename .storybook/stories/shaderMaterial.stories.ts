@@ -53,7 +53,7 @@ const { renderer, scene, camera, render } = Setup()
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 
-const texture = new TextureLoader().load('/photo-1678043639454-dbdf877f0ae8.jpeg')
+const texture = new TextureLoader().load('photo-1678043639454-dbdf877f0ae8.jpeg')
 
 const geometry = new BoxGeometry(1, 1, 1)
 const material = new MyMaterial({ map: texture })
