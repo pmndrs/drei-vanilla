@@ -7,41 +7,40 @@ import { OrbitControls } from 'three-stdlib'
 export default {
   title: 'Shaders/shaderMaterial',
   argTypes: { repeats: { control: { type: 'range', min: 1, max: 5, step: 1 } } },
-} as Meta
+} as Meta // TODO: this should be `satisfies Meta` but commit hooks lag behind TS
 
 const MyMaterial = shaderMaterial(
-  { map: new Texture(), repeats: 1 },
-  `
+  {
+    map: new Texture(),
+    repeats: 1,
+  },
+  /* glsl */ `
     varying vec2 vUv;
 
     void main()	{
       vUv = uv;
-      
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
-    `,
-  `
+  `,
+  /* glsl */ `
     varying vec2 vUv;
     uniform float repeats;
     uniform sampler2D map;
 
-    float random (vec2 st) {
-      return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-    }
+    // float random(vec2 st) {
+    //   return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+    // }
 
-    void main(){
-      vec2 uv = vUv;
-
-      uv *= repeats;
-      uv = fract(uv);
+    void main() {
+      vec2 uv = fract(vUv * repeats);
 
       vec3 color = vec3(
-        texture2D(map, uv).r,
-        texture2D(map, uv + vec2(0.01,0.01)).g,
-        texture2D(map, uv - vec2(0.01,0.01)).b
+        texture(map, uv).r,
+        texture(map, uv + vec2(0.01)).g,
+        texture(map, uv - vec2(0.01)).b
       );
-      
-      gl_FragColor = vec4(color,1.0);
+
+      gl_FragColor = vec4(color, 1.0);
 
       #include <tonemapping_fragment>
       #include <encodings_fragment>
@@ -49,29 +48,26 @@ const MyMaterial = shaderMaterial(
   `
 )
 
-export const ShaderMaterialStory = (args) => {
-  const { renderer, scene, camera, render } = Setup()
-  new OrbitControls(camera, renderer.domElement)
+const { renderer, scene, camera, render } = Setup()
 
-  const loader = new TextureLoader()
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = true
 
-  loader.load('https://source.unsplash.com/random/400x400', function (texture) {
-    const geometry = new BoxGeometry(1, 1, 1)
-    const material = new MyMaterial({
-      map: texture,
-      repeats: args.repeats,
-    })
+const texture = new TextureLoader().load('/photo-1678043639454-dbdf877f0ae8.jpeg')
 
-    const mesh = new Mesh(geometry, material)
-    scene.add(mesh)
+const geometry = new BoxGeometry(1, 1, 1)
+const material = new MyMaterial({ map: texture })
+const mesh = new Mesh(geometry, material)
+scene.add(mesh)
 
-    render(() => {
-      mesh.rotation.x += 0.005
-      mesh.rotation.y += 0.01
-    })
-  })
+render((time) => {
+  controls.update()
+  mesh.rotation.x = time / 5000
+  mesh.rotation.y = time / 2500
+})
 
-  return renderer.domElement
+export const ShaderMaterialStory = async (args) => {
+  material.repeats = args.repeats
 }
 
 ShaderMaterialStory.storyName = 'Default'

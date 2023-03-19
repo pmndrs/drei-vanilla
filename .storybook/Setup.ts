@@ -1,30 +1,43 @@
-import { PerspectiveCamera, Scene, WebGLRenderer } from 'three'
+import { PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer } from 'three'
+
+declare global {
+  interface Window {
+    root: HTMLDivElement
+    canvas: HTMLCanvasElement
+    context: WebGL2RenderingContext
+  }
+  const root: HTMLDivElement
+  const canvas: HTMLCanvasElement
+  const context: WebGL2RenderingContext
+}
+
+window.canvas = root.appendChild(document.createElement('canvas'))
+window.context = canvas.getContext('webgl2')!
 
 export const Setup = () => {
-  const root = document.querySelector('#root')!
-  let { width, height } = root?.getBoundingClientRect()
-  const camera = new PerspectiveCamera(45, width / height, 1, 1000)
+  const renderer = new WebGLRenderer({ alpha: true, canvas, context })
+  renderer.outputEncoding = sRGBEncoding
+
+  const camera = new PerspectiveCamera(45, 1, 1, 1000)
   camera.position.z = 3
-  const renderer = new WebGLRenderer()
+
   const scene = new Scene()
 
   const resize = () => {
-    let { width, height } = root?.getBoundingClientRect()
-    renderer.setSize(width, height)
-    camera.aspect = width / height
+    renderer.setPixelRatio(Math.min(2, Math.max(1, window.devicePixelRatio)))
+    renderer.setSize(root.clientWidth, root.clientHeight)
+    camera.aspect = root.clientWidth / root.clientHeight
     camera.updateProjectionMatrix()
   }
-
   resize()
   window.addEventListener('resize', resize)
 
-  const render = (toRender = () => {}) => {
-    toRender()
-
+  let toRender: XRFrameRequestCallback | undefined
+  renderer.setAnimationLoop((...args) => {
+    toRender?.(...args)
     renderer.render(scene, camera)
-
-    requestAnimationFrame(() => render(toRender))
-  }
+  })
+  const render = (callback: XRFrameRequestCallback) => void (toRender = callback)
 
   return { renderer, camera, scene, render }
 }
