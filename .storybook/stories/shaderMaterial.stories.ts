@@ -54,7 +54,7 @@ export const ShaderMaterialStory = async (args) => {
   const controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
 
-  const texture = await new TextureLoader().loadAsync('https://source.unsplash.com/random/400x400')
+  const texture = await new TextureLoader().loadAsync('/photo-1678043639454-dbdf877f0ae8.jpeg')
 
   const geometry = new BoxGeometry(1, 1, 1)
   const material = new MyMaterial({
