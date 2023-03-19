@@ -48,27 +48,26 @@ const MyMaterial = shaderMaterial(
   `
 )
 
+const { renderer, scene, camera, render } = Setup()
+
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = true
+
+const texture = new TextureLoader().load('/photo-1678043639454-dbdf877f0ae8.jpeg')
+
+const geometry = new BoxGeometry(1, 1, 1)
+const material = new MyMaterial({ map: texture })
+const mesh = new Mesh(geometry, material)
+scene.add(mesh)
+
+render((time) => {
+  controls.update()
+  mesh.rotation.x = time / 5000
+  mesh.rotation.y = time / 2500
+})
+
 export const ShaderMaterialStory = async (args) => {
-  const { renderer, scene, camera, render } = Setup()
-
-  const controls = new OrbitControls(camera, renderer.domElement)
-  controls.enableDamping = true
-
-  const texture = await new TextureLoader().loadAsync('/photo-1678043639454-dbdf877f0ae8.jpeg')
-
-  const geometry = new BoxGeometry(1, 1, 1)
-  const material = new MyMaterial({
-    map: texture,
-    repeats: args.repeats,
-  })
-  const mesh = new Mesh(geometry, material)
-  scene.add(mesh)
-
-  render((time) => {
-    controls.update()
-    mesh.rotation.x = time / 5000
-    mesh.rotation.y = time / 2500
-  })
+  material.repeats = args.repeats
 }
 
 ShaderMaterialStory.storyName = 'Default'
