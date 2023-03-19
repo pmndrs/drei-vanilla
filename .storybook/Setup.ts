@@ -25,8 +25,8 @@ export const Setup = () => {
 
   const resize = () => {
     renderer.setPixelRatio(Math.min(2, Math.max(1, window.devicePixelRatio)))
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight)
-    camera.aspect = canvas.clientWidth / canvas.clientHeight
+    renderer.setSize(root.clientWidth, root.clientHeight)
+    camera.aspect = root.clientWidth / root.clientHeight
     camera.updateProjectionMatrix()
   }
   resize()
