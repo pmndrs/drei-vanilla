@@ -1,4 +1,4 @@
-import { ColorManagement, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer } from 'three'
+import { PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer } from 'three'
 
 declare global {
   interface Window {
@@ -13,9 +13,6 @@ declare global {
 
 window.canvas = root.appendChild(document.createElement('canvas'))
 window.context = canvas.getContext('webgl2')!
-
-if ('enabled' in ColorManagement) ColorManagement.enabled = true
-else ColorManagement.legacyMode = false
 
 export const Setup = () => {
   const renderer = new WebGLRenderer({ alpha: true, canvas, context })
