@@ -38,6 +38,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#shadermaterial">shaderMaterial</a></li>
           <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
           <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
+          <li><a href="#spotLightMaterial">SpotLightMaterial</a></li>
         </ul>
       </ul>
     </td>    
@@ -168,3 +169,12 @@ const material = new MeshTransmissionMaterial({
   temporalDistortion: 0.0,
 })
 ```
+
+#### SpotLight
+
+<p>
+  <a href="https://codesandbox.io/s/tx1pq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/tx1pq/screenshot.png" alt="Demo"/></a>
+  <a href="https://codesandbox.io/s/wdzv4"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/wdzv4/screenshot.png" alt="Demo"/></a>
+</p>
+
+A Volumetric spotlight.
