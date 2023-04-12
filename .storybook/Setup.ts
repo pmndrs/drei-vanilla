@@ -1,4 +1,20 @@
 import { PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer } from 'three'
+import { addons } from '@storybook/addons'
+import { STORY_CHANGED } from '@storybook/core-events'
+
+const channel = addons.getChannel()
+
+const storyListener = () => {
+  console.log('custom force reload')
+  location.reload()
+}
+
+const setupStoryListener = () => {
+  channel.removeListener(STORY_CHANGED, storyListener)
+  channel.addListener(STORY_CHANGED, storyListener)
+}
+
+setupStoryListener()
 
 declare global {
   interface Window {

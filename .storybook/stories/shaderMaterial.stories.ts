@@ -3,10 +3,10 @@ import { shaderMaterial } from '../../src/core/shaderMaterial'
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
 import { OrbitControls } from 'three-stdlib'
+import { GUI } from 'lil-gui'
 
 export default {
   title: 'Shaders/shaderMaterial',
-  argTypes: { repeats: { control: { type: 'range', min: 1, max: 5, step: 1 } } },
 } as Meta // TODO: this should be `satisfies Meta` but commit hooks lag behind TS
 
 const MyMaterial = shaderMaterial(
@@ -48,29 +48,33 @@ const MyMaterial = shaderMaterial(
   `
 )
 
-const { renderer, scene, camera, render } = Setup()
+export const ShaderMaterialStory = async () => {
+  const params = {
+    repeats: 2,
+  }
+  const gui = new GUI({ title: ShaderMaterialStory.storyName })
+  const { renderer, scene, camera, render } = Setup()
+  const controls = new OrbitControls(camera, renderer.domElement)
+  controls.enableDamping = true
 
-const controls = new OrbitControls(camera, renderer.domElement)
-controls.enableDamping = true
+  const texture = new TextureLoader().load('photo-1678043639454-dbdf877f0ae8.jpeg')
 
-const texture = new TextureLoader().load('photo-1678043639454-dbdf877f0ae8.jpeg')
+  const geometry = new BoxGeometry(1, 1, 1)
+  const material = new MyMaterial({ map: texture })
+  const mesh = new Mesh(geometry, material)
+  scene.add(mesh)
 
-const geometry = new BoxGeometry(1, 1, 1)
-const material = new MyMaterial({ map: texture })
-const mesh = new Mesh(geometry, material)
-scene.add(mesh)
+  render((time) => {
+    controls.update()
+    mesh.rotation.x = time / 5000
+    mesh.rotation.y = time / 2500
+  })
+  material.repeats = params.repeats
 
-render((time) => {
-  controls.update()
-  mesh.rotation.x = time / 5000
-  mesh.rotation.y = time / 2500
-})
-
-export const ShaderMaterialStory = async (args) => {
-  material.repeats = args.repeats
+  const folder = gui.addFolder('Settings')
+  folder.add(params, 'repeats', 1, 5, 1).onChange((v) => {
+    material.repeats = v
+  })
 }
 
 ShaderMaterialStory.storyName = 'Default'
-ShaderMaterialStory.args = {
-  repeats: 2,
-}
