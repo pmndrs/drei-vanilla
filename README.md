@@ -38,6 +38,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#shadermaterial">shaderMaterial</a></li>
           <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
           <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
+          <li><a href="#spotlight">SpotLight</a></li>
         </ul>
       </ul>
     </td>    
@@ -168,3 +169,29 @@ const material = new MeshTransmissionMaterial({
   temporalDistortion: 0.0,
 })
 ```
+
+#### SpotLight
+
+<p>
+  <a href="https://codesandbox.io/s/tx1pq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/tx1pq/screenshot.png" alt="Demo"/></a>
+  <a href="https://codesandbox.io/s/wdzv4"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/wdzv4/screenshot.png" alt="Demo"/></a>
+</p>
+
+A Volumetric spotlight.
+
+```javascript
+const material = new SpotLightMaterial({
+  opacity: 1, // volume shader opacity
+  attenuation: 2.5, // how far the volume will travel
+  anglePower: 12, // volume edge fade
+  spotPosition: new Vector3(0, 0, 0), // spotlight's world position
+  lightColor: new Color('white'), // volume color
+
+  cameraNear: 0, // for depth
+  cameraFar: 1, // for depth
+  depth: null, // for depth , add depthTexture here
+  resolution: new Vector2(0, 0), // for depth , set viewport/canvas resolution here
+})
+```
+
+Optionally you can provide a depth-buffer which converts the spotlight into a soft particle.
