@@ -126,6 +126,8 @@ const mesh = new THREE.Mesh(geometry, new MeshDiscardMaterial())
 
 #### MeshTransmissionMaterial
 
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshtransmissionmaterial--mtm-story)
+
 <p>
   <a href="https://codesandbox.io/s/hmgdjq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/hmgdjq/screenshot.png" alt="Demo"/></a>
 </p>
