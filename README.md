@@ -48,6 +48,8 @@ import { pcss, ... } from '@pmndrs/vanilla'
 # Shaders
 
 #### pcss
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-pcss--pcss-story)
+
 
 <p>
   <a href="https://codesandbox.io/s/ykfpwf"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/ykfpwf/screenshot.png" alt="Demo"/></a>
@@ -173,6 +175,7 @@ const material = new MeshTransmissionMaterial({
 ```
 
 #### SpotLight
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)]([https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-shadermaterial--shader-material-story](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-volumetricspotlight--volumetric-spotlight-story))
 
 <p>
   <a href="https://codesandbox.io/s/tx1pq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/tx1pq/screenshot.png" alt="Demo"/></a>
