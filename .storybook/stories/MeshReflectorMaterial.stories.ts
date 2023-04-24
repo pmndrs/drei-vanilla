@@ -29,14 +29,14 @@ const params = {
 let gui: GUI
 let scene: THREE.Scene, camera: THREE.Camera, renderer: THREE.WebGLRenderer, animateLoop
 const textureLoader = new THREE.TextureLoader()
-export const MTMStory = async () => {
+export const MRMStory = async () => {
   const setupResult = Setup()
   scene = setupResult.scene
   camera = setupResult.camera
   renderer = setupResult.renderer
   animateLoop = setupResult.render
 
-  gui = new GUI({ title: MTMStory.storyName })
+  gui = new GUI({ title: MRMStory.storyName })
   renderer.shadowMap.enabled = true
   renderer.toneMapping = THREE.ACESFilmicToneMapping
   camera.position.set(12, 12, 12)
@@ -361,4 +361,4 @@ async function setupMeshReflectorMaterial() {
   })
 }
 
-MTMStory.storyName = 'TorusKnot'
+MRMStory.storyName = 'TorusKnot'
