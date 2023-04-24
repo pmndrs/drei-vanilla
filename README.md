@@ -35,21 +35,23 @@ import { pcss, ... } from '@pmndrs/vanilla'
       <ul>                
         <li><a href="#materials">Materials</a></li>
         <ul>
+          <li><a href="#meshreflectormaterial">MeshReflectorMaterial</a></li>
           <li><a href="#shadermaterial">shaderMaterial</a></li>
           <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
           <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
           <li><a href="#spotlight">SpotLight</a></li>
         </ul>
       </ul>
-    </td>    
+    </td>
+
   </tr>
 </table>
 
 # Shaders
 
 #### pcss
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-pcss--pcss-story)
 
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-pcss--pcss-story)
 
 <p>
   <a href="https://codesandbox.io/s/ykfpwf"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/ykfpwf/screenshot.png" alt="Demo"/></a>
@@ -175,7 +177,8 @@ const material = new MeshTransmissionMaterial({
 ```
 
 #### SpotLight
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)]([https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-shadermaterial--shader-material-story](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-volumetricspotlight--volumetric-spotlight-story))
+
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](<[https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-shadermaterial--shader-material-story](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-volumetricspotlight--volumetric-spotlight-story)>)
 
 <p>
   <a href="https://codesandbox.io/s/tx1pq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/tx1pq/screenshot.png" alt="Demo"/></a>
@@ -200,3 +203,14 @@ const material = new SpotLightMaterial({
 ```
 
 Optionally you can provide a depth-buffer which converts the spotlight into a soft particle.
+
+#### MeshReflectorMaterial
+
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshreflectormaterial--mrm-story)
+
+<p>
+  <a href="https://codesandbox.io/s/lx2h8"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/lx2h8/screenshot.png" alt="Demo"/></a>
+  <a href="https://codesandbox.io/s/l900i"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/l900i/screenshot.png" alt="Demo"/></a>
+</p>
+
+Easily add reflections and/or blur to any mesh. It takes surface roughness into account for a more realistic effect. This material extends from [THREE.MeshStandardMaterial](https://threejs.org/docs/#api/en/materials/MeshStandardMaterial) and accepts all its props.
