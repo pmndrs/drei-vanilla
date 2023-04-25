@@ -95,6 +95,18 @@ const setupEnvironment = () => {
     const groundProjection = new GroundProjectedEnv(exrTex)
     groundProjection.scale.setScalar(100)
     scene.add(groundProjection)
+
+    const envParams = {
+      envEnabled: true,
+    }
+    gui
+      .add(envParams, 'envEnabled')
+      .name('Environment')
+      .onChange((v) => {
+        scene.environment = v ? exrTex : null
+      })
+
+    gui.add(groundProjection, 'visible').name('Skybox')
   })
 }
 
@@ -111,20 +123,6 @@ async function setupMeshReflectorMaterial() {
   })
   model.position.set(0, 6, 0)
   scene.add(model)
-
-  // Add Reflector
-  // let mixBlur = 1,
-  //   mixStrength = 5,
-  //   minDepthThreshold = 0,
-  //   maxDepthThreshold = 1,
-  //   depthToBlurRatioBias = 0.25,
-  //   mirror = 0,
-  //   distortion = 0.25,
-  //   mixContrast = 1,
-  //   reflectorOffset = 0,
-  //   metalness = 0.6,
-  //   roughness = 1,
-  //   color = new THREE.Color('#151515')
 
   const gl = renderer
 
@@ -417,7 +415,7 @@ function createMeshReflectorGui() {
   })
   matProps.add(MRMParams, 'reflectorOffset', -5, 5)
 
-  matProps.add(MRMParams, 'mirror', 0, 1, 1).onChange((v) => {
+  matProps.add(MRMParams, 'mirror', 0, 1).onChange((v) => {
     meshReflectorMaterial.mirror = v
   })
   matProps.add(MRMParams, 'depthToBlurRatioBias', 0, 1).onChange((v) => {
