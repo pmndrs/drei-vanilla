@@ -4,7 +4,7 @@ import GUI from 'lil-gui'
 import { Meta } from '@storybook/html'
 import { EXRLoader, GroundProjectedEnv, OrbitControls } from 'three-stdlib'
 
-import { MeshReflectorMaterial, MeshReflectorMaterialProps } from '../../src/materials/MeshReflectorMaterial'
+import { MeshReflectorMaterial } from '../../src/materials/MeshReflectorMaterial'
 import { BlurPass } from '../../src/materials/BlurPass'
 
 export default {

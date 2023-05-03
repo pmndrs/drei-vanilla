@@ -28,7 +28,7 @@ export default {
 export const PcssStory = async () => {
   const gui = new GUI({ title: PcssStory.storyName })
   const args = {
-    enabled: false,
+    enabled: true,
     size: 25,
     focus: 0,
     samples: 10,
