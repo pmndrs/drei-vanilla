@@ -29,28 +29,46 @@ export class MeshTransmissionMaterial extends THREE.MeshPhysicalMaterial {
     buffer: Uniform<THREE.Texture | null>
   }
 
-  constructor(samples = 6, transmissionSampler = false) {
+  constructor({
+    samples = 6,
+    transmissionSampler = false,
+    chromaticAberration = 0.05,
+    transmission = 0,
+    _transmission = 1,
+    transmissionMap = null,
+    roughness = 0,
+    thickness = 0,
+    thicknessMap = null,
+    attenuationDistance = Infinity,
+    attenuationColor = new THREE.Color('white'),
+    anisotropy = 0.1,
+    time = 0,
+    distortion = 0.0,
+    distortionScale = 0.5,
+    temporalDistortion = 0.0,
+    buffer = null,
+  }) {
     super()
 
     this.uniforms = {
-      chromaticAberration: { value: 0.05 },
+      chromaticAberration: { value: chromaticAberration },
       // Transmission must always be 0, unless transmissionSampler is being used
-      transmission: { value: 0 },
+      transmission: { value: transmission },
       // Instead a workaround is used, see below for reasons why
-      _transmission: { value: 1 },
-      transmissionMap: { value: null },
+      _transmission: { value: _transmission },
+      transmissionMap: { value: transmissionMap },
       // Roughness is 1 in THREE.MeshPhysicalMaterial but it makes little sense in a transmission material
-      roughness: { value: 0 },
-      thickness: { value: 0 },
-      thicknessMap: { value: null },
-      attenuationDistance: { value: Infinity },
-      attenuationColor: { value: new THREE.Color('white') },
-      anisotropy: { value: 0.1 },
-      time: { value: 0 },
-      distortion: { value: 0.0 },
-      distortionScale: { value: 0.5 },
-      temporalDistortion: { value: 0.0 },
-      buffer: { value: null },
+      roughness: { value: roughness },
+      thickness: { value: thickness },
+      thicknessMap: { value: thicknessMap },
+      attenuationDistance: { value: attenuationDistance },
+      attenuationColor: { value: attenuationColor },
+      anisotropy: { value: anisotropy },
+      time: { value: time },
+      distortion: { value: distortion },
+      distortionScale: { value: distortionScale },
+      temporalDistortion: { value: temporalDistortion },
+      buffer: { value: buffer },
     }
 
     this.onBeforeCompile = (shader: THREE.Shader & { defines: { [key: string]: string } }) => {
