@@ -9,7 +9,7 @@ A growing collection of useful helpers and fully functional, ready-made abstract
 
 Storybook demos [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/)
 
-Storybook code available under [storybook/stories](https://github.com/pmndrs/drei-vanilla/tree/main/.storybook/stories)
+Storybook code available under [.storybook/stories](https://github.com/pmndrs/drei-vanilla/tree/main/.storybook/stories)
 
 ```bash
 npm install @pmndrs/vanilla
