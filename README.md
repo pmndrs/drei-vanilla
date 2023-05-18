@@ -7,8 +7,9 @@
 
 A growing collection of useful helpers and fully functional, ready-made abstractions for Threejs. If you make a component that is generic enough to be useful to others, think about making it available here through a PR!
 
-![Storybook demos](https://pmndrs.github.io/drei-vanilla/)
-Storybook code available under `pmndrs/drei-vanilla/tree/main/.storybook/stories`
+Storybook demos [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/)
+
+Storybook code available under [storybook/stories](https://github.com/pmndrs/drei-vanilla/tree/main/.storybook/stories)
 
 ```bash
 npm install @pmndrs/vanilla
