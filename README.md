@@ -7,6 +7,10 @@
 
 A growing collection of useful helpers and fully functional, ready-made abstractions for Threejs. If you make a component that is generic enough to be useful to others, think about making it available here through a PR!
 
+Storybook demos [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/)
+
+Storybook code available under [storybook/stories](https://github.com/pmndrs/drei-vanilla/tree/main/.storybook/stories)
+
 ```bash
 npm install @pmndrs/vanilla
 ```
@@ -41,6 +45,10 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
           <li><a href="#spotlight">SpotLight</a></li>
         </ul>
+        <li><a href="#staging">Staging</a></li>
+         <ul>
+          <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
+         </ul>
       </ul>
     </td>
 
@@ -214,3 +222,15 @@ Optionally you can provide a depth-buffer which converts the spotlight into a so
 </p>
 
 Easily add reflections and/or blur to any mesh. It takes surface roughness into account for a more realistic effect. This material extends from [THREE.MeshStandardMaterial](https://threejs.org/docs/#api/en/materials/MeshStandardMaterial) and accepts all its props.
+
+###  AccumulativeShadows
+
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-accumulativeshadows--acc-shadow-story)
+
+<p>
+  <a href="https://codesandbox.io/s/hxcc1x"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/hxcc1x/screenshot.png" alt="Demo"/></a>
+</p>
+
+A planar, Y-up oriented shadow-catcher that can accumulate into soft shadows and has zero performance impact after all frames have accumulated. It can be temporal, it will accumulate over time, or instantaneous, which might be expensive depending on how many frames you render.
+
+Refer to storybook code on how to use & what each variable does
