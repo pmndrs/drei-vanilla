@@ -85,6 +85,7 @@ const reset = pcss({ size: 25, samples: 10, focus: 0 })
 ```
 
 The function returns a reset function that can be used to remove the pcss from the shader chunk.
+Reset has to be called each time before setting a new parameter value,
 
 ```javascript
 // Remove pcss from the shader chunk, and reset the scene
@@ -131,6 +132,7 @@ const mesh = new THREE.Mesh(geometry, new ColorShiftMaterial())
 #### MeshDiscardMaterial
 
 A material that discards fragments. It can be used to render nothing efficiently, but still have a mesh in the scene graph that throws shadows and can be raycast.
+Used by Accumulative shadows and MeshTransmissionMaterial.
 
 ```javascript
 const mesh = new THREE.Mesh(geometry, new MeshDiscardMaterial())
