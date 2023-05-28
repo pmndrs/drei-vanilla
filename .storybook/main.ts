@@ -1,27 +1,16 @@
-import { resolve } from 'path'
+import type { StorybookConfig } from '@storybook/react-vite'
 
-export default {
+const config: StorybookConfig = {
   staticDirs: ['./public'],
-  core: {
-    builder: '@storybook/builder-webpack5',
-  },
   stories: ['./stories/**/*.stories.{ts,tsx}'],
   addons: [],
-  typescript: {
-    check: true,
+  framework: {
+    name: '@storybook/react-vite',
+    options: {},
   },
-  // https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-implicit-postcss-loader
-  features: {
-    postcss: false,
-  },
-  webpackFinal: (config) => {
-    config.module.rules.push({
-      test: /\.(glsl|vs|fs|vert|frag)$/,
-      exclude: /node_modules/,
-      use: ['raw-loader', 'glslify-loader'],
-      include: resolve(__dirname, '../'),
-    })
-
-    return config
+  docs: {
+    autodocs: true,
   },
 }
+
+export default config

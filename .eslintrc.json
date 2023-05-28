@@ -7,9 +7,10 @@
   },
   "extends": [
     "prettier",
-    "plugin:prettier/recommended",    
+    "plugin:prettier/recommended",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:storybook/recommended"
   ],
   "plugins": ["@typescript-eslint", "prettier", "import"],
   "parser": "@typescript-eslint/parser",
