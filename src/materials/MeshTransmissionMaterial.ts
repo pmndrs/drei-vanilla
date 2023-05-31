@@ -21,7 +21,7 @@ export class MeshTransmissionMaterial extends THREE.MeshPhysicalMaterial {
     thicknessMap: Uniform<THREE.Texture | null>
     attenuationDistance: Uniform<number>
     attenuationColor: Uniform<THREE.Color>
-    anisotropy: Uniform<number>
+    anisotropicBlur: Uniform<number>
     time: Uniform<number>
     distortion: Uniform<number>
     distortionScale: Uniform<number>
@@ -41,7 +41,7 @@ export class MeshTransmissionMaterial extends THREE.MeshPhysicalMaterial {
     thicknessMap = null,
     attenuationDistance = Infinity,
     attenuationColor = new THREE.Color('white'),
-    anisotropy = 0.1,
+    anisotropicBlur = 0.1,
     time = 0,
     distortion = 0.0,
     distortionScale = 0.5,
@@ -63,7 +63,7 @@ export class MeshTransmissionMaterial extends THREE.MeshPhysicalMaterial {
       thicknessMap: { value: thicknessMap },
       attenuationDistance: { value: attenuationDistance },
       attenuationColor: { value: attenuationColor },
-      anisotropy: { value: anisotropy },
+      anisotropicBlur: { value: anisotropicBlur },
       time: { value: time },
       distortion: { value: distortion },
       distortionScale: { value: distortionScale },
@@ -87,7 +87,7 @@ export class MeshTransmissionMaterial extends THREE.MeshPhysicalMaterial {
       shader.fragmentShader =
         /*glsl*/ `
       uniform float chromaticAberration;         
-      uniform float anisotropy;      
+      uniform float anisotropicBlur;      
       uniform float time;
       uniform float distortion;
       uniform float distortionScale;
@@ -283,7 +283,7 @@ export class MeshTransmissionMaterial extends THREE.MeshPhysicalMaterial {
         vec3 transmission = vec3(0.0);
         float transmissionR, transmissionB, transmissionG;
         float randomCoords = rand();
-        float thickness_smear = thickness * max(pow(roughnessFactor, 0.33), anisotropy);
+        float thickness_smear = thickness * max(pow(roughnessFactor, 0.33), anisotropicBlur);
         vec3 distortionNormal = vec3(0.0);
         vec3 temporalOffset = vec3(time, -time, -time) * temporalDistortion;
         if (distortion > 0.0) {
