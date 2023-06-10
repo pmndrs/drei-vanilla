@@ -17,31 +17,31 @@ type UniformValue =
   | Array<any>
   | null
 
-type Uniforms = { [name: string]: UniformValue }
+type UniformProps = { [name: string]: UniformValue }
 
-type ShaderMaterialInstance<TUniforms extends Uniforms> = THREE.ShaderMaterial & TUniforms
+type ShaderMaterialInstance<TProps extends UniformProps> = THREE.ShaderMaterial & TProps
 
-type ShaderMaterialParameters<TUniforms extends Uniforms> = THREE.ShaderMaterialParameters & Partial<TUniforms>
+type ShaderMaterialParameters<TProps extends UniformProps> = THREE.ShaderMaterialParameters & Partial<TProps>
 
-type ShaderMaterial<TUniforms extends Uniforms> = (new (
-  parameters?: ShaderMaterialParameters<TUniforms>
-) => ShaderMaterialInstance<TUniforms>) & { key: string }
+type ShaderMaterial<TProps extends UniformProps> = (new (
+  parameters?: ShaderMaterialParameters<TProps>
+) => ShaderMaterialInstance<TProps>) & { key: string }
 
-export function shaderMaterial<TUniforms extends Uniforms>(
-  uniforms: TUniforms,
+export function shaderMaterial<TProps extends UniformProps>(
+  uniforms: TProps,
   vertexShader: string,
   fragmentShader: string,
-  onInit?: (material: ShaderMaterialInstance<TUniforms>) => void
+  onInit?: (material: ShaderMaterialInstance<TProps>) => void
 ) {
   const entries = Object.entries(uniforms)
   const uniformDefs = Object.fromEntries(entries.map(([name, value]) => [name, { value }])) as {
-    [K in keyof TUniforms]: { value: TUniforms[K] }
+    [K in keyof TProps]: { value: TProps[K] }
   }
 
   class Material extends THREE.ShaderMaterial {
     static key = THREE.MathUtils.generateUUID()
 
-    constructor(parameters?: ShaderMaterialParameters<TUniforms>) {
+    constructor(parameters?: ShaderMaterialParameters<TProps>) {
       super({ ...parameters, uniforms: uniformDefs, vertexShader, fragmentShader })
 
       for (const [name] of entries) {
@@ -53,9 +53,9 @@ export function shaderMaterial<TUniforms extends Uniforms>(
 
       Object.assign(this, parameters)
 
-      onInit?.(this as unknown as ShaderMaterialInstance<TUniforms>)
+      onInit?.(this as unknown as ShaderMaterialInstance<TProps>)
     }
   }
 
-  return Material as ShaderMaterial<TUniforms>
+  return Material as ShaderMaterial<TProps>
 }
