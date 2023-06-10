@@ -36,7 +36,10 @@ export default {
 
 let spotLight: SpotLight, spotLightHelper: SpotLightHelper, gui: GUI
 
-let volumeMaterial: ShaderMaterial, volumeMesh: Mesh, depthTexture: DepthTexture, depthTarget: WebGLRenderTarget
+let volumeMaterial: InstanceType<typeof SpotLightMaterial>,
+  volumeMesh: Mesh,
+  depthTexture: DepthTexture,
+  depthTarget: WebGLRenderTarget
 
 const { renderer, scene, camera, render } = Setup()
 
