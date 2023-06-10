@@ -12,19 +12,20 @@ function isGeometry(object: any): object is THREE.Mesh {
 
 type SoftShadowMaterialProps = {
   map: THREE.Texture | null
-  color?: THREE.Color
-  alphaTest?: number
-  blend?: number
+  color: THREE.Color
+  alphaTest: number
+  opacity: number
+  blend: number
 }
 
-const SoftShadowMaterial = shaderMaterial(
+const SoftShadowMaterial = shaderMaterial<SoftShadowMaterialProps>(
   {
     color: new THREE.Color(0x000000),
     blend: 2.0,
     alphaTest: 0.75,
     opacity: 0,
     map: null,
-  } as SoftShadowMaterialProps,
+  },
   `varying vec2 vUv;
    void main() {
      gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.);

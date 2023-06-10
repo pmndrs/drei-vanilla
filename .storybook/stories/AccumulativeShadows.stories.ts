@@ -19,7 +19,7 @@ let gui: GUI,
 let plm: ProgressiveLightMap, // class handles the shadow accumulation part
   gLights: THREE.Group, // group containing all the random lights
   gPlane: THREE.Mesh, // shadow catching plane
-  shadowMaterial: any // instance of SoftShadowMaterial material applied to plane to make only the shadows visible
+  shadowMaterial: InstanceType<typeof SoftShadowMaterial> // instance of SoftShadowMaterial material applied to plane to make only the shadows visible
 
 const shadowParams = {
   /** Temporal accumulates shadows over time which is more performant but has a visual regression over instant results, false  */
