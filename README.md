@@ -128,6 +128,35 @@ const ColorShiftMaterial = shaderMaterial(
 const mesh = new THREE.Mesh(geometry, new ColorShiftMaterial())
 ```
 
+<details>
+  <summary>TypeScript usage</summary>
+
+Uniform types can be inferred from the `uniforms` argument or passed as a generic type argument.
+
+```typescript
+  type MyMaterialProps = {
+    time: number,
+    color: THREE.Color,
+    map: THREE.Texture | null
+  }
+
+  const MyMaterial = shaderMaterial<MyMaterialProps>(
+    {
+      time: 0,
+      color: new THREE.Color(0.2, 0.0, 0.1)
+      map: null
+    },
+    vertexShader,
+    fragmentShader
+  )
+
+  const material = new MyMaterial()
+  material.time
+        // ^? (property) time: number
+```
+
+</details>
+
 #### MeshDiscardMaterial
 
 A material that discards fragments. It can be used to render nothing efficiently, but still have a mesh in the scene graph that throws shadows and can be raycast.
