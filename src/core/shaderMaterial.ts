@@ -1,58 +1,61 @@
 import * as THREE from 'three'
 
-export function shaderMaterial(
-  uniforms: {
-    [name: string]:
-      | THREE.CubeTexture
-      | THREE.Texture
-      | Int32Array
-      | Float32Array
-      | THREE.Matrix4
-      | THREE.Matrix3
-      | THREE.Quaternion
-      | THREE.Vector4
-      | THREE.Vector3
-      | THREE.Vector2
-      | THREE.Color
-      | number
-      | boolean
-      | Array<any>
-      | null
-  },
+type UniformValue =
+  | THREE.CubeTexture
+  | THREE.Texture
+  | Int32Array
+  | Float32Array
+  | THREE.Matrix4
+  | THREE.Matrix3
+  | THREE.Quaternion
+  | THREE.Vector4
+  | THREE.Vector3
+  | THREE.Vector2
+  | THREE.Color
+  | number
+  | boolean
+  | Array<any>
+  | null
+
+type Uniforms = { [name: string]: UniformValue }
+
+type ShaderMaterialInstance<TUniforms extends Uniforms> = THREE.ShaderMaterial & TUniforms
+
+type ShaderMaterialParameters<TUniforms extends Uniforms> = THREE.ShaderMaterialParameters & Partial<TUniforms>
+
+type ShaderMaterial<TUniforms extends Uniforms> = (new (
+  parameters?: ShaderMaterialParameters<TUniforms>
+) => ShaderMaterialInstance<TUniforms>) & { key: string }
+
+export function shaderMaterial<TUniforms extends Uniforms>(
+  uniforms: TUniforms,
   vertexShader: string,
   fragmentShader: string,
-  onInit?: (material?: THREE.ShaderMaterial) => void
+  onInit?: (material: ShaderMaterialInstance<TUniforms>) => void
 ) {
-  const material = class extends THREE.ShaderMaterial {
-    public key: string = ''
-    constructor(parameters = {}) {
-      const entries = Object.entries(uniforms)
-      // Create unforms and shaders
-      super({
-        uniforms: entries.reduce((acc, [name, value]) => {
-          const uniform = THREE.UniformsUtils.clone({ [name]: { value } })
-          return {
-            ...acc,
-            ...uniform,
-          }
-        }, {}),
-        vertexShader,
-        fragmentShader,
-      })
-      // Create getter/setters
-      entries.forEach(([name]) =>
+  const entries = Object.entries(uniforms)
+  const uniformDefs = Object.fromEntries(entries.map(([name, value]) => [name, { value }])) as {
+    [K in keyof TUniforms]: { value: TUniforms[K] }
+  }
+
+  class Material extends THREE.ShaderMaterial {
+    static key = THREE.MathUtils.generateUUID()
+
+    constructor(parameters?: ShaderMaterialParameters<TUniforms>) {
+      super({ ...parameters, uniforms: uniformDefs, vertexShader, fragmentShader })
+
+      for (const [name] of entries) {
         Object.defineProperty(this, name, {
           get: () => this.uniforms[name].value,
           set: (v) => (this.uniforms[name].value = v),
         })
-      )
+      }
 
-      // Assign parameters, this might include uniforms
       Object.assign(this, parameters)
-      // Call onInit
-      if (onInit) onInit(this)
+
+      onInit?.(this as unknown as ShaderMaterialInstance<TUniforms>)
     }
-  } as unknown as typeof THREE.ShaderMaterial & { key: string }
-  material.key = THREE.MathUtils.generateUUID()
-  return material
+  }
+
+  return Material as ShaderMaterial<TUniforms>
 }
