@@ -1,7 +1,21 @@
-import { Color, Vector2, Vector3 } from 'three'
+import { Color, Vector2, Vector3, type Texture } from 'three'
 import { shaderMaterial } from '../core/shaderMaterial'
 
-export const SpotLightMaterial = shaderMaterial(
+type SpotLightMaterialProps = {
+  depth: Texture | null
+  opacity: number
+  attenuation: number
+  anglePower: number
+  spotPosition: Vector3
+  lightColor: Color
+  cameraNear: number
+  cameraFar: number
+  resolution: Vector2
+  transparent: boolean
+  depthWrite: boolean
+}
+
+export const SpotLightMaterial = shaderMaterial<SpotLightMaterialProps>(
   {
     depth: null,
     opacity: 1,
