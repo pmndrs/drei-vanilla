@@ -48,6 +48,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
         <li><a href="#staging">Staging</a></li>
          <ul>
           <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
+          <li><a href="#caustics">Caustics</a></li>
          </ul>
       </ul>
     </td>
@@ -263,3 +264,82 @@ Easily add reflections and/or blur to any mesh. It takes surface roughness into 
 A planar, Y-up oriented shadow-catcher that can accumulate into soft shadows and has zero performance impact after all frames have accumulated. It can be temporal, it will accumulate over time, or instantaneous, which might be expensive depending on how many frames you render.
 
 Refer to storybook code on how to use & what each variable does
+
+#### Caustics
+
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-caustics--caustics-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#caustics)
+
+Caustics are swirls of light that appear when light passes through transmissive surfaces. This component uses a raymarching technique to project caustics onto a catcher plane. It is based on [github/N8python/caustics](https://github.com/N8python/caustics).
+
+```tsx
+type CausticsProps =  {
+  /** How many frames it will render, set it to Infinity for runtime, default: 1 */
+  frames?: number
+  /** Will display caustics only and skip the models, default: false */
+  causticsOnly: boolean
+  /** Will include back faces and enable the backsideIOR prop, default: false */
+  backside: boolean
+  /** The IOR refraction index, default: 1.1 */
+  ior?: number
+  /** The IOR refraction index for back faces (only available when backside is enabled), default: 1.1 */
+  backsideIOR?: number
+  /** The texel size, default: 0.3125 */
+  worldRadius?: number
+  /** Intensity of the projected caustics, default: 0.05 */
+  intensity?: number
+  /** Caustics color, default: THREE.Color('white') */
+  color?: THREE.Color
+  /** Buffer resolution, default: 2048 */
+  resolution?: number
+  /** Caustics camera position, it will point towards the contents bounds center, default: THREE.Vector3(5,5,5) */
+  lightSource?: <THREE.Vector3>| <THREE.Object3D>
+  /** Caustics camera far, when 0 its automatically computed in render loop, default: 0 .Use this if the auto computed value looks incorrect(Happens in very small models)*/
+  far?: number
+}
+```
+
+It will create a transparent plane that blends the caustics of the objects it receives into your scene. It will only render once and not take resources any longer!
+
+Make sure to configure the props above as some can be micro fractional depending on the models (intensity, worldRadius, ior and backsideIOR especially).
+
+The light source can either be defined by Vector3 or by an object3d. Use the latter if you want to control the light source, for instance in order to move or animate it. Runtime caustics with frames set to `Infinity`, a low resolution and no backside can be feasible.
+
+```js
+let caustics = Caustics(renderer, {
+  frames: Infinity,
+  resolution: 1024,
+  worldRadius: 0.3,
+  ...
+})
+
+scene.add(caustics.group) // add caustics group to your scene
+
+caustics.scene.add(yourMesh) // add the mesh you want caustics from into the 'caustics scene'
+
+// call the update() method in your animate loop for runtime (frames=Infinity case) else call it just once to compute the caustics
+caustics.update()
+
+// to see the camera helper
+caustics.scene.add(caustics.helper)
+
+```
+
+Caustics function returns the following
+
+```js
+export type CausticsType = {
+  scene: THREE.Scene // internal caustics scene
+  group: THREE.Group // group for user to add into your scene
+  helper: THREE.CameraHelper // helper to visualize the caustics camera
+  params: CausticsProps // all properties from CausticsProps
+  update: () => void // function to render the caustics output
+
+  //internally used render targets
+  normalTarget: THREE.WebGLRenderTarget
+  normalTargetB: THREE.WebGLRenderTarget
+  causticsTarget: THREE.WebGLRenderTarget
+  causticsTargetB: THREE.WebGLRenderTarget
+}
+```
