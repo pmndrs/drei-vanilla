@@ -17,7 +17,7 @@ const params = {
 }
 
 export const CausticsStory = async () => {
-  gui = new GUI({ title: CausticsStory.storyName })
+  gui = new GUI({ title: 'Caustics Story', closeFolders: true })
   const { renderer, scene, camera, render } = Setup()
   renderer.shadowMap.enabled = true
   camera.position.set(-15, 15, 15)
