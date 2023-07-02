@@ -139,15 +139,9 @@ function addCausticsGui(caustics: CausticsType) {
 
   // params.lightSource can be vector3 or an object3d
   if (caustics.params.lightSource instanceof THREE.Vector3) {
-    folder.add(caustics.params.lightSource, 'x', -1, 1)
-    folder.add(caustics.params.lightSource, 'y', -1, 1)
-    folder.add(caustics.params.lightSource, 'z', -1, 1)
-  }
-
-  if (caustics.params.lightSource instanceof THREE.Object3D) {
-    folder.add(caustics.params.lightSource.position, 'x', -1, 1)
-    folder.add(caustics.params.lightSource.position, 'y', -1, 1)
-    folder.add(caustics.params.lightSource.position, 'z', -1, 1)
+    folder.add(caustics.params.lightSource, 'x', -1, 1).name('lightSource X')
+    folder.add(caustics.params.lightSource, 'y', -1, 1).name('lightSource Y')
+    folder.add(caustics.params.lightSource, 'z', -1, 1).name('lightSource Z')
   }
 }
 
