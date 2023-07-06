@@ -8,3 +8,6 @@ export * from './AccumulativeShadows'
 
 // Misc
 export * from './useFBO'
+
+// Gizmos
+export * from './Grid'

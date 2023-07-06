@@ -38,18 +38,22 @@ import { pcss, ... } from '@pmndrs/vanilla'
     <td valign="top">
       <ul>                
         <li><a href="#materials">Materials</a></li>
-        <ul>
-          <li><a href="#meshreflectormaterial">MeshReflectorMaterial</a></li>
-          <li><a href="#shadermaterial">shaderMaterial</a></li>
-          <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
-          <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
-          <li><a href="#spotlight">SpotLight</a></li>
-        </ul>
+          <ul>
+            <li><a href="#meshreflectormaterial">MeshReflectorMaterial</a></li>
+            <li><a href="#shadermaterial">shaderMaterial</a></li>
+            <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
+            <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
+            <li><a href="#spotlight">SpotLight</a></li>
+          </ul>
         <li><a href="#staging">Staging</a></li>
          <ul>
           <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
           <li><a href="#caustics">Caustics</a></li>
          </ul>
+        <li><a href="#gizmos">Gizmos</a></li>
+          <ul>   
+            <li><a href="#grid">Grid</a></li>
+          </ul>
       </ul>
     </td>
 
@@ -341,5 +345,72 @@ export type CausticsType = {
   normalTargetB: THREE.WebGLRenderTarget
   causticsTarget: THREE.WebGLRenderTarget
   causticsTargetB: THREE.WebGLRenderTarget
+}
+```
+
+#### Grid
+
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-grid--grid-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#grid)
+
+A y-up oriented, shader-based grid implementation.
+
+```tsx
+export type GridProps = {
+  /** plane-geometry size, default: [1,1] */
+  args?: Array<number>
+  /** Cell size, default: 0.5 */
+  cellSize?: number
+  /** Cell thickness, default: 0.5 */
+  cellThickness?: number
+  /** Cell color, default: black */
+  cellColor?: THREE.ColorRepresentation
+  /** Section size, default: 1 */
+  sectionSize?: number
+  /** Section thickness, default: 1 */
+  sectionThickness?: number
+  /** Section color, default: #2080ff */
+  sectionColor?: THREE.ColorRepresentation
+  /** Follow camera, default: false */
+  followCamera?: boolean
+  /** Display the grid infinitely, default: false */
+  infiniteGrid?: boolean
+  /** Fade distance, default: 100 */
+  fadeDistance?: number
+  /** Fade strength, default: 1 */
+  fadeStrength?: number
+}
+```
+
+```jsx
+grid = Grid({
+  args: [10.5, 10.5],
+  cellSize: 0.6,
+  cellThickness: 1,
+  cellColor: new THREE.Color('#6f6f6f'),
+  sectionSize: 3.3,
+  sectionThickness: 1.5,
+  sectionColor: new THREE.Color('#9d4b4b'),
+  fadeDistance: 25,
+  fadeStrength: 1,
+  followCamera: false,
+  infiniteGrid: true,
+})
+
+scene.add(grid.mesh)
+
+// call in animate loop
+grid.update(camera)
+```
+
+Grid function returns the following
+
+```jsx
+export type GridType = {
+  /* Mesh with gridMaterial to add to your scene  */
+  mesh: THREE.Mesh
+  /* Call in animate loop to update grid w.r.t camera */
+  update: (camera: THREE.Camera) => void
 }
 ```
