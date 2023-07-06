@@ -23,7 +23,7 @@ export const GridStory = async () => {
 
   const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(60, 60).rotateX(-Math.PI / 2),
-    new THREE.ShadowMaterial({ opacity: 0.3 })
+    new THREE.ShadowMaterial({ opacity: 0.3, transparent: true, depthWrite: false, depthTest: true })
   )
   floor.receiveShadow = true
   scene.add(floor)
