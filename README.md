@@ -382,7 +382,7 @@ export type GridProps = {
   fadeStrength?: number
 }
 ```
-
+Usage
 ```jsx
 grid = Grid({
   args: [10.5, 10.5],

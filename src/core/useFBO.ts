@@ -13,7 +13,10 @@ function useFBO(
   /** Height in pixels */
   height = 1024,
   /**Settings */
-  settings: FBOSettings
+  settings: FBOSettings = {
+    samples: 0,
+    depth: false,
+  }
 ): THREE.WebGLRenderTarget {
   var _width = width
   var _height = height
