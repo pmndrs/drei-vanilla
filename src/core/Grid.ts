@@ -1,5 +1,10 @@
 import * as THREE from 'three'
 import { shaderMaterial } from './shaderMaterial'
+/** Based on
+    https://github.com/Fyrestar/THREE.InfiniteGridHelper by https://github.com/Fyrestar
+    and https://github.com/threlte/threlte/blob/main/packages/extras/src/lib/components/Grid/Grid.svelte
+    by https://github.com/grischaerbe and https://github.com/jerzakm
+*/
 
 export type GridProps = {
   /** plane-geometry size, default: [1,1] */
