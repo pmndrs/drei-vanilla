@@ -152,6 +152,7 @@ function setupMeshTransmissionMaterial() {
         state.gl.setRenderTarget(fboMain)
         state.gl.render(state.scene, state.camera)
 
+        mesh.material = meshTransmissionMaterial
         mesh.material.thickness = mtmParams.thickness
         mesh.material.side = oldSide
         mesh.material.buffer = fboMain.texture
@@ -159,7 +160,6 @@ function setupMeshTransmissionMaterial() {
         // Set old state back
         state.scene.background = oldBg
         state.gl.setRenderTarget(null)
-        mesh.material = meshTransmissionMaterial
         state.gl.toneMapping = oldTone
       }
     }
