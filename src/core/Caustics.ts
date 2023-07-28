@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { shaderMaterial } from './shaderMaterial'
-import { FullScreenQuad } from 'three-stdlib'
+import { FullScreenQuad } from 'three/examples/jsm/postprocessing/Pass'
 import { useFBO } from './useFBO'
 
 const isVector3 = (object: any): object is THREE.Vector3 => object?.isVector3
