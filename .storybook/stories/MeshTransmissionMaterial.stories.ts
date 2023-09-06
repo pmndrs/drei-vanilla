@@ -76,7 +76,7 @@ const setupEnvironment = () => {
  */
 function setupMeshTransmissionMaterial() {
   const discardMaterial = new MeshDiscardMaterial()
-  const meshTransmissionMaterial = new MeshTransmissionMaterial(6, false)
+  const meshTransmissionMaterial = new MeshTransmissionMaterial()
 
   const geometry = new THREE.TorusKnotGeometry(3, 1, 100, 32).translate(0, 6, 0)
   const model = new THREE.Mesh(geometry, meshTransmissionMaterial)
