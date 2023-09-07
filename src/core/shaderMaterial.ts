@@ -42,7 +42,7 @@ export function shaderMaterial<TProps extends UniformProps>(
     static key = THREE.MathUtils.generateUUID()
 
     constructor(parameters?: ShaderMaterialParameters<TProps>) {
-      super({ ...parameters, uniforms: uniformDefs, vertexShader, fragmentShader })
+      super({ uniforms: uniformDefs, vertexShader, fragmentShader })
 
       for (const [name] of entries) {
         Object.defineProperty(this, name, {
