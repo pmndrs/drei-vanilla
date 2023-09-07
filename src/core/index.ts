@@ -11,3 +11,4 @@ export * from './useFBO'
 
 // Gizmos
 export * from './Grid'
+export * from './Outlines'
