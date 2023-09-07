@@ -121,7 +121,7 @@ export function Outlines({
       }
       updateProps(props)
     },
-    render: () => {
+    render() {
       updateMesh(shapeProps.angle)
       updateProps(shapeProps)
     },
