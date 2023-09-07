@@ -118,9 +118,6 @@ export function Outlines({
     get group() {
       return group
     },
-    /**
-     * **Warning**: Should update group if called this method.
-     */
     updateProps(props: Partial<OutlinesProps>) {
       const angle = props.angle ?? shapeProps.angle
       if (angle !== shapeProps.angle) {
@@ -129,6 +126,9 @@ export function Outlines({
       updateProps(props)
       render()
     },
+    /**
+     * **Note**: Call this method after adding group to mesh.
+     */
     render,
   }
 }
