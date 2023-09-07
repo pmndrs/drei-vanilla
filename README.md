@@ -382,7 +382,9 @@ export type GridProps = {
   fadeStrength?: number
 }
 ```
+
 Usage
+
 ```jsx
 grid = Grid({
   args: [10.5, 10.5],
@@ -412,5 +414,51 @@ export type GridType = {
   mesh: THREE.Mesh
   /* Call in animate loop to update grid w.r.t camera */
   update: (camera: THREE.Camera) => void
+}
+```
+
+#### Outlines
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-outlines--outlines-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#outlines)
+
+An ornamental component that extracts the geometry from its parent and displays an inverted-hull outline. Supported parents are `THREE.Mesh`, `THREE.SkinnedMesh` and `THREE.InstancedMesh`.
+
+```tsx
+export type OutlinesProps = {
+  /** Outline color, default: black */
+  color: THREE.Color
+  /** Outline opacity, default: 1 */
+  opacity: number
+  /** Outline transparency, default: false */
+  transparent: boolean
+  /** Outline thickness, default 0.05 */
+  thickness: number
+  /** Geometry crease angle (0 === no crease), default: Math.PI */
+  angle: number
+}
+```
+
+Usage
+
+```jsx
+const outlines = Outlines()
+const mesh = new THREE.Mesh(geometry, material)
+mesh.add(outlines.group)
+
+// must call render() if added
+outlines.render()
+
+scene.add(mesh)
+```
+
+Grid function returns the following
+
+```jsx
+export type OutlinesType = {
+  group: THREE.Group
+  updateProps: (props: Partial<OutlinesProps>) => void
+  render: () => void
 }
 ```
