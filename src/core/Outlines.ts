@@ -19,6 +19,9 @@ export type OutlinesProps = {
 export type OutlinesType = {
   group: THREE.Group
   updateProps: (props: Partial<OutlinesProps>) => void
+  /**
+   * **Note**: Call this method after adding group to mesh.
+   */
   render: () => void
 }
 
@@ -126,9 +129,6 @@ export function Outlines({
       updateProps(props)
       render()
     },
-    /**
-     * **Note**: Call this method after adding group to mesh.
-     */
     render,
   }
 }
