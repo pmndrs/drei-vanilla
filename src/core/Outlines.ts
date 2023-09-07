@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import { toCreasedNormals } from 'three-stdlib'
 import { shaderMaterial } from './shaderMaterial'
-import { assign } from 'lodash-es'
 
 export type OutlinesProps = {
   /** Outline color, default: black */
@@ -108,7 +107,7 @@ export function Outlines({
     const mesh = group.children[0] as THREE.Mesh<THREE.BufferGeometry, THREE.Material>
     if (mesh) {
       const { transparent, thickness, color, opacity } = shapeProps
-      assign(mesh.material, { transparent, thickness, color, opacity })
+      Object.assign(mesh.material, { transparent, thickness, color, opacity })
     }
   }
 
