@@ -112,23 +112,18 @@ export function Outlines({
     }
   }
 
-  function render() {
-    updateMesh(shapeProps.angle)
-    updateProps(shapeProps)
-  }
-
   return {
-    get group() {
-      return group
-    },
+    group,
     updateProps(props: Partial<OutlinesProps>) {
       const angle = props.angle ?? shapeProps.angle
       if (angle !== shapeProps.angle) {
         updateMesh(angle)
       }
       updateProps(props)
-      render()
     },
-    render,
+    render: () => {
+      updateMesh(shapeProps.angle)
+      updateProps(shapeProps)
+    },
   }
 }
