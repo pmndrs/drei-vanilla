@@ -4,6 +4,7 @@ import { Meta } from '@storybook/html'
 import { OrbitControls } from 'three-stdlib'
 import { GUI } from 'lil-gui'
 import { Billboard, BillboardProps, BillboardType } from '../../src/core/Billboard'
+import { Text } from '../../src/core/Text'
 
 export default {
   title: 'Abstractions/Billboard',
@@ -11,7 +12,7 @@ export default {
 
 let gui: GUI
 
-let globalBillboard: BillboardType
+let globalBillboards: BillboardType[] = []
 
 const billboardParams = {
   follow: true,
@@ -20,34 +21,27 @@ const billboardParams = {
   lockZ: false,
 } as BillboardProps
 
-const setupTourMesh = (position: [number, number, number]) => {
-  const geometry = new THREE.TorusKnotGeometry(1, 0.35, 100, 32)
-  const mat = new THREE.MeshStandardMaterial({
-    roughness: 0,
-  })
-
-  const torusMesh = new THREE.Mesh(geometry, mat)
-
-  const billboard = (globalBillboard = Billboard())
-  const group = billboard.group
-  torusMesh.traverse((child) => {
-    if (child instanceof THREE.Mesh) {
-      child.castShadow = true
-      child.receiveShadow = true
-    }
-  })
-  torusMesh.position.fromArray(position)
-
-  group.add(torusMesh)
-  return group
-}
-
 const setupBox = () => {
   const geometry = new THREE.BoxGeometry(2, 2, 2)
   const mat = new THREE.MeshBasicMaterial()
   const boxMesh = new THREE.Mesh(geometry, mat)
 
   return boxMesh
+}
+
+const setupText = (pos: [number, number, number]) => {
+  const billboard = Billboard({
+    ...billboardParams,
+  })
+  const text = Text({
+    text: 'Hello World',
+    fontSize: 1,
+    color: 'red',
+  })
+  text.mesh.position.fromArray(pos)
+  billboard.group.add(text.mesh)
+  globalBillboards.push(billboard)
+  return billboard.group
 }
 
 const setupLight = () => {
@@ -75,14 +69,16 @@ export const BillboardStory = async () => {
 
   camera.position.set(10, 10, 10)
   scene.add(setupLight())
-  scene.add(setupTourMesh([0, 5, 0]))
-  scene.add(setupTourMesh([6, 2, -4]))
 
   const box = setupBox()
   scene.add(box)
 
+  scene.add(setupText([0, 2, 0]))
+  scene.add(setupText([8, 2, 0]))
+  scene.add(setupText([-8, 2, 0]))
+
   render(() => {
-    globalBillboard!.update(camera)
+    globalBillboards.forEach((b) => b.update(camera))
   })
 
   addOutlineGui()
@@ -93,17 +89,11 @@ BillboardStory.storyName = 'Default'
 const addOutlineGui = () => {
   const params = Object.assign({}, billboardParams)
   const folder = gui.addFolder('B I L L B O A R D')
-  folder.open()
-  folder.add(params, 'follow').onChange((value) => {
-    globalBillboard.updateProps({ follow: value })
+  folder.open().onChange(() => {
+    globalBillboards.forEach((b) => b.updateProps(params))
   })
-  folder.add(params, 'lockX').onChange((value) => {
-    globalBillboard.updateProps({ lockX: value })
-  })
-  folder.add(params, 'lockY').onChange((value) => {
-    globalBillboard.updateProps({ lockY: value })
-  })
-  folder.add(params, 'lockZ').onChange((value) => {
-    globalBillboard.updateProps({ lockZ: value })
-  })
+  folder.add(params, 'follow')
+  folder.add(params, 'lockX')
+  folder.add(params, 'lockY')
+  folder.add(params, 'lockZ')
 }

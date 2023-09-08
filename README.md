@@ -526,6 +526,8 @@ export type BillboardType = {
 
 Hi-quality text rendering w/ signed distance fields (SDF) and antialiasing, using [troika-3d-text](https://github.com/protectwise/troika/tree/master/packages/troika-3d-text). All of troikas props are valid!
 
+> Required `troika-three-text` >= `0.46.4`
+
 ```ts
 export type TextProps = {
   characters?: string
@@ -560,6 +562,7 @@ export type TextProps = {
   debugSDF?: boolean
   onSync?: (troika: any) => void
   onPreloadEnd?: () => void
+}
 ```
 
 Usage
