@@ -419,7 +419,7 @@ export type GridType = {
 
 #### Outlines
 
-[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-outlines--outlines-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-outlines--outlines-story)
 
 [drei counterpart](https://github.com/pmndrs/drei#outlines)
 
@@ -453,12 +453,67 @@ outlines.render()
 scene.add(mesh)
 ```
 
-Grid function returns the following
+Outlines function returns the following
 
 ```jsx
 export type OutlinesType = {
   group: THREE.Group
   updateProps: (props: Partial<OutlinesProps>) => void
   render: () => void
+}
+```
+
+#### Billboard
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://drei.pmnd.rs/?path=/story/abstractions-billboard--billboard-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#billboard)
+
+Adds a `THREE.Group` that always faces the camera.
+
+```tsx
+export type BillboardProps = {
+  /**
+   * @default true
+   */
+  follow?: boolean
+  /**
+   * @default false
+   */
+  lockX?: boolean
+  /**
+   * @default false
+   */
+  lockY?: boolean
+  /**
+   * @default false
+   */
+  lockZ?: boolean
+}
+```
+
+Usage
+
+```js
+const billboard = Billboard()
+const mesh = new THREE.Mesh(geometry, material)
+billboard.group.add(mesh)
+
+scene.add(billboard)
+
+// call in animate loop
+billboard.update(camera)
+```
+
+Billboard function returns the following
+
+```js
+export type BillboardType = {
+  group: THREE.Group
+  /**
+   * Should called every frame to update the billboard
+   */
+  update: (camera: THREE.Camera) => void
+  updateProps: (newProps: Partial<BillboardProps>) => void
 }
 ```
