@@ -47,7 +47,7 @@ export class MeshTransmissionMaterial extends THREE.MeshPhysicalMaterial {
     distortionScale = 0.5,
     temporalDistortion = 0.0,
     buffer = null,
-  }) {
+  } = {}) {
     super()
 
     this.uniforms = {

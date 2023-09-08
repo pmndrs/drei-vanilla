@@ -105,7 +105,7 @@ const GridMaterial = shaderMaterial<GridProps & any>(
         if (gl_FragColor.a <= 0.0) discard;
   
         #include <tonemapping_fragment>
-        #include <encodings_fragment>
+        #include <${parseInt(THREE.REVISION.replace(/\D+/g, '')) >= 154 ? 'colorspace_fragment' : 'encodings_fragment'}>
       }
     `
 )
