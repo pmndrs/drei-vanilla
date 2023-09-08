@@ -2,10 +2,10 @@
 import { Text as TextMeshImpl, preloadFont } from 'troika-three-text'
 
 export type TextProps = {
+  /** The content of text */
+  text: string
   characters?: string
   color?: number | string
-  // the text content
-  text: string
   /** Font size, default: 1 */
   fontSize?: number
   maxWidth?: number
@@ -36,6 +36,17 @@ export type TextProps = {
   onPreloadEnd?: () => void
 }
 
+const externalProps = ['onSync', 'onPreloadEnd', 'characters']
+
+function removeExternalProps(props: Partial<TextProps>) {
+  return Object.keys(props).reduce((result, key) => {
+    if (externalProps.indexOf(key) === -1) {
+      result[key] = props[key]
+    }
+    return result
+  }, {} as Partial<TextProps>)
+}
+
 export type TextType = {
   mesh: THREE.Mesh
   updateProps: (newProps: Partial<TextProps>) => void
@@ -58,7 +69,7 @@ export const Text = ({
   }
   const troikaMesh = new TextMeshImpl()
 
-  Object.assign(troikaMesh, props)
+  Object.assign(troikaMesh, removeExternalProps(props))
 
   if (props.font && props.characters) {
     preloadFont(
@@ -75,7 +86,7 @@ export const Text = ({
   return {
     mesh: troikaMesh,
     updateProps(newProps) {
-      Object.assign(troikaMesh, newProps)
+      Object.assign(troikaMesh, removeExternalProps(newProps))
       troikaMesh.sync(() => {
         props.onSync && props.onSync(troikaMesh)
       })
