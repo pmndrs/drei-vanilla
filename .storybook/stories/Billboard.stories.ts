@@ -3,58 +3,50 @@ import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
 import { OrbitControls } from 'three-stdlib'
 import { GUI } from 'lil-gui'
-import { Outlines, OutlinesType } from '../../src/core/Outlines'
+import { Billboard, BillboardProps, BillboardType } from '../../src/core/Billboard'
 
 export default {
-  title: 'Abstractions/Outlines',
+  title: 'Abstractions/Billboard',
 } as Meta
 
 let gui: GUI
 
-let allOutlines: OutlinesType[] = []
+let globalBillboard: BillboardType
 
-const outlinesParams = {
-  color: '#ffccff',
-  thickness: 0.1,
-}
+const billboardParams = {
+  follow: true,
+  lockX: false,
+  lockY: false,
+  lockZ: false,
+} as BillboardProps
 
-const generateOutlines = () => {
-  return Outlines({
-    color: new THREE.Color(outlinesParams.color),
-    thickness: outlinesParams.thickness,
-  })
-}
-
-const setupTourMesh = () => {
+const setupTourMesh = (position: [number, number, number]) => {
   const geometry = new THREE.TorusKnotGeometry(1, 0.35, 100, 32)
   const mat = new THREE.MeshStandardMaterial({
     roughness: 0,
   })
+
   const torusMesh = new THREE.Mesh(geometry, mat)
 
-  const outlines = generateOutlines()
+  const billboard = (globalBillboard = Billboard())
+  const group = billboard.group
   torusMesh.traverse((child) => {
     if (child instanceof THREE.Mesh) {
       child.castShadow = true
       child.receiveShadow = true
     }
   })
-  torusMesh.position.set(0, 5, 0)
-  torusMesh.add(outlines.group)
-  outlines.render()
-  allOutlines.push(outlines)
-  return torusMesh
+  torusMesh.position.fromArray(position)
+
+  group.add(torusMesh)
+  return group
 }
 
 const setupBox = () => {
   const geometry = new THREE.BoxGeometry(2, 2, 2)
   const mat = new THREE.MeshBasicMaterial()
   const boxMesh = new THREE.Mesh(geometry, mat)
-  const outlines = generateOutlines()
 
-  allOutlines.push(outlines)
-  boxMesh.add(outlines.group)
-  outlines.render()
   return boxMesh
 }
 
@@ -72,8 +64,8 @@ const setupLight = () => {
   return dirLight
 }
 
-export const OutlinesStory = async () => {
-  gui = new GUI({ title: 'Outlines Story', closeFolders: true })
+export const BillboardStory = async () => {
+  gui = new GUI({ title: 'Billboard Story', closeFolders: true })
   const { renderer, scene, camera, render } = Setup()
   renderer.shadowMap.enabled = true
   camera.position.set(5, 5, 5)
@@ -83,32 +75,35 @@ export const OutlinesStory = async () => {
 
   camera.position.set(10, 10, 10)
   scene.add(setupLight())
-  scene.add(setupTourMesh())
+  scene.add(setupTourMesh([0, 5, 0]))
+  scene.add(setupTourMesh([6, 2, -4]))
 
   const box = setupBox()
   scene.add(box)
 
   render(() => {
-    box.rotation.y += 0.02
+    globalBillboard!.update(camera)
   })
 
   addOutlineGui()
 }
 
-OutlinesStory.storyName = 'Default'
+BillboardStory.storyName = 'Default'
 
 const addOutlineGui = () => {
-  const params = Object.assign({}, outlinesParams)
-  const folder = gui.addFolder('O U T L I N E S')
+  const params = Object.assign({}, billboardParams)
+  const folder = gui.addFolder('B I L L B O A R D')
   folder.open()
-  folder.addColor(params, 'color').onChange((color: string) => {
-    allOutlines.forEach((outline) => {
-      outline.updateProps({ color: new THREE.Color(color) })
-    })
+  folder.add(params, 'follow').onChange((value) => {
+    globalBillboard.updateProps({ follow: value })
   })
-  folder.add(params, 'thickness', 0, 0.1, 0.01).onChange((thickness: number) => {
-    allOutlines.forEach((outline) => {
-      outline.updateProps({ thickness })
-    })
+  folder.add(params, 'lockX').onChange((value) => {
+    globalBillboard.updateProps({ lockX: value })
+  })
+  folder.add(params, 'lockY').onChange((value) => {
+    globalBillboard.updateProps({ lockY: value })
+  })
+  folder.add(params, 'lockZ').onChange((value) => {
+    globalBillboard.updateProps({ lockZ: value })
   })
 }
