@@ -14,7 +14,7 @@ let gui: GUI
 let allOutlines: OutlinesType[] = []
 
 const outlinesParams = {
-  color: '#ffff00',
+  color: '#ffff00' as THREE.ColorRepresentation,
   thickness: 0.1,
 }
 
@@ -42,7 +42,7 @@ const setupTourMesh = () => {
   })
   torusMesh.position.set(0, 5, 0)
   torusMesh.add(outlines.group)
-  outlines.render()
+  outlines.generate()
   allOutlines.push(outlines)
   return torusMesh
 }
@@ -57,7 +57,7 @@ const setupBox = () => {
   allOutlines.push(outlines)
   boxMesh.add(outlines.group)
   boxMesh.castShadow = true
-  outlines.render()
+  outlines.generate()
   return boxMesh
 }
 
@@ -113,7 +113,7 @@ const addOutlineGui = () => {
   const params = Object.assign({}, outlinesParams)
   const folder = gui.addFolder('O U T L I N E S')
   folder.open()
-  folder.addColor(params, 'color').onChange((color: string) => {
+  folder.addColor(params, 'color').onChange((color: THREE.ColorRepresentation) => {
     allOutlines.forEach((outline) => {
       outline.updateProps({ color: new THREE.Color(color) })
     })

@@ -19,9 +19,9 @@ export type OutlinesType = {
   group: THREE.Group
   updateProps: (props: Partial<OutlinesProps>) => void
   /**
-   * **Note**: Call this method after adding group to mesh.
+   * **Note**: Call this method to generate the outline mesh
    */
-  render: () => void
+  generate: () => void
 }
 
 const OutlinesMaterial = shaderMaterial(
@@ -120,7 +120,7 @@ export function Outlines({
       }
       updateProps(props)
     },
-    render() {
+    generate() {
       updateMesh(shapeProps.angle)
       updateProps(shapeProps)
     },
