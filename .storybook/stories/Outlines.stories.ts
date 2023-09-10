@@ -62,7 +62,7 @@ const setupBox = () => {
 }
 
 const setupLight = () => {
-  const dirLight = new THREE.DirectionalLight(0xffffff, 1)
+  const dirLight = new THREE.DirectionalLight(0xffffff, 3)
   dirLight.position.set(15, 15, 15)
   dirLight.castShadow = true
   dirLight.shadow.mapSize.width = 1024
