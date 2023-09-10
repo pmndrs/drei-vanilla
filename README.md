@@ -451,8 +451,8 @@ const outlines = Outlines()
 const mesh = new THREE.Mesh(geometry, material)
 mesh.add(outlines.group)
 
-// must call render() if added
-outlines.render()
+// must call generate() to create the outline mesh
+outlines.generate()
 
 scene.add(mesh)
 ```
@@ -463,7 +463,7 @@ Outlines function returns the following
 export type OutlinesType = {
   group: THREE.Group
   updateProps: (props: Partial<OutlinesProps>) => void
-  render: () => void
+  generate: () => void
 }
 ```
 
