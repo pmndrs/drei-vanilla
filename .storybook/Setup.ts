@@ -1,4 +1,4 @@
-import { PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer } from 'three'
+import { PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer, REVISION, ACESFilmicToneMapping } from 'three'
 import { addons } from '@storybook/addons'
 import { STORY_CHANGED } from '@storybook/core-events'
 
@@ -32,8 +32,7 @@ window.context = canvas.getContext('webgl2')!
 
 export const Setup = () => {
   const renderer = new WebGLRenderer({ alpha: true, canvas, context })
-  renderer.outputEncoding = sRGBEncoding
-
+  renderer.toneMapping = ACESFilmicToneMapping
   const camera = new PerspectiveCamera(45, 1, 1, 1000)
   camera.position.z = 3
 

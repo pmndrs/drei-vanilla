@@ -23,7 +23,7 @@ import {
   WebGLRenderTarget,
 } from 'three'
 import { Setup } from '../Setup'
-import { OrbitControls } from 'three-stdlib'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Meta } from '@storybook/html'
 import GUI from 'lil-gui'
 

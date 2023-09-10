@@ -54,6 +54,10 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <ul>   
             <li><a href="#grid">Grid</a></li>
           </ul>
+         <li><a href="#misc">Misc</a></li>
+        <ul>
+          <li><a href="#sprite-animator">Sprite Animator</a></li>
+        </ul>
       </ul>
     </td>
 
@@ -64,7 +68,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
 
 #### pcss
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-pcss--pcss-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-pcss--pcss-story)
 
 <p>
   <a href="https://codesandbox.io/s/ykfpwf"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/ykfpwf/screenshot.png" alt="Demo"/></a>
@@ -100,7 +104,7 @@ reset(renderer, scene, camera)
 
 #### shaderMaterial
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-shadermaterial--shader-material-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-shadermaterial--shader-material-story)
 
 <p>
   <a href="https://codesandbox.io/s/ni6v4"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/ni6v4/screenshot.png" alt="Demo"/></a>
@@ -172,7 +176,7 @@ const mesh = new THREE.Mesh(geometry, new MeshDiscardMaterial())
 
 #### MeshTransmissionMaterial
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshtransmissionmaterial--mtm-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshtransmissionmaterial--mtm-story)
 
 <p>
   <a href="https://codesandbox.io/s/hmgdjq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/hmgdjq/screenshot.png" alt="Demo"/></a>
@@ -220,7 +224,7 @@ const material = new MeshTransmissionMaterial({
 
 #### SpotLight
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](<[https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-shadermaterial--shader-material-story](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-volumetricspotlight--volumetric-spotlight-story)>)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](<[https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-shadermaterial--shader-material-story](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-volumetricspotlight--volumetric-spotlight-story)>)
 
 <p>
   <a href="https://codesandbox.io/s/tx1pq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/tx1pq/screenshot.png" alt="Demo"/></a>
@@ -248,7 +252,7 @@ Optionally you can provide a depth-buffer which converts the spotlight into a so
 
 #### MeshReflectorMaterial
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshreflectormaterial--mrm-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshreflectormaterial--mrm-story)
 
 <p>
   <a href="https://codesandbox.io/s/lx2h8"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/lx2h8/screenshot.png" alt="Demo"/></a>
@@ -259,7 +263,7 @@ Easily add reflections and/or blur to any mesh. It takes surface roughness into 
 
 ###  AccumulativeShadows
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-accumulativeshadows--acc-shadow-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-accumulativeshadows--acc-shadow-story)
 
 <p>
   <a href="https://codesandbox.io/s/hxcc1x"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/hxcc1x/screenshot.png" alt="Demo"/></a>
@@ -271,7 +275,7 @@ Refer to storybook code on how to use & what each variable does
 
 #### Caustics
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-caustics--caustics-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-caustics--caustics-story)
 
 [drei counterpart](https://github.com/pmndrs/drei#caustics)
 
@@ -350,7 +354,7 @@ export type CausticsType = {
 
 #### Grid
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-grid--grid-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-grid--grid-story)
 
 [drei counterpart](https://github.com/pmndrs/drei#grid)
 
@@ -447,8 +451,8 @@ const outlines = Outlines()
 const mesh = new THREE.Mesh(geometry, material)
 mesh.add(outlines.group)
 
-// must call render() if added
-outlines.render()
+// must call generate() to create the outline mesh
+outlines.generate()
 
 scene.add(mesh)
 ```
@@ -459,13 +463,13 @@ Outlines function returns the following
 export type OutlinesType = {
   group: THREE.Group
   updateProps: (props: Partial<OutlinesProps>) => void
-  render: () => void
+  generate: () => void
 }
 ```
 
 #### Billboard
 
-[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://drei.pmnd.rs/?path=/story/abstractions-billboard--billboard-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-billboard--billboard-story)
 
 [drei counterpart](https://github.com/pmndrs/drei#billboard)
 
@@ -517,6 +521,7 @@ export type BillboardType = {
   updateProps: (newProps: Partial<BillboardProps>) => void
 }
 ```
+
 
 #### Text
 
@@ -595,5 +600,92 @@ const preloadRelatedParams = {
   onPreloadEnd: () => {
     // this is the callback when font and characters are loaded
   },
+=======
+  
+#### Sprite Animator
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/misc-spriteanimator--sprite-animator-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#sprite-animator)
+
+```tsx
+type SpriteAnimatorProps = {
+  /** The start frame of the animation */
+  startFrame?: number
+  /** The end frame of the animation */
+  endFrame?: number
+  /** The desired frames per second of the animaiton */
+  fps?: number
+  /** The frame identifier to use, has to be one of animationNames */
+  frameName?: string
+  /** The URL of the texture JSON (if using JSON-Array or JSON-Hash) */
+  textureDataURL?: string
+  /** The URL of the texture image */
+  textureImageURL?: string
+  /** Whether or not the animation should loop */
+  loop?: boolean
+  /** The number of frames of the animation (required if using plain spritesheet without JSON) */
+  numberOfFrames?: number
+  /** Whether or not the animation should auto-start when all assets are loaded */
+  autoPlay?: boolean
+  /** The animation names of the spritesheet (if the spritesheet -with JSON- contains more animation sequences) */
+  animationNames?: Array<string>
+  /** Event callback when the animation starts */
+  onStart?: Function
+  /** Event callback when the animation ends */
+  onEnd?: Function
+  /** Event callback when the animation loops */
+  onLoopEnd?: Function
+  /** Event callback when each frame changes */
+  onFrame?: Function
+  /** Control when the animation runs */
+  play?: boolean
+  /** Control when the animation pauses */
+  pause?: boolean
+  /** Whether or not the Sprite should flip sides on the x-axis */
+  flipX?: boolean
+  /** Sets the alpha value to be used when running an alpha test. https://threejs.org/docs/#api/en/materials/Material.alphaTest */
+  alphaTest?: number
+  /** Displays the texture on a SpriteGeometry always facing the camera, if set to false, it renders on a PlaneGeometry */
+  asSprite?: boolean
+}
+```
+
+The SpriteAnimator is a powerful tool for animating sprites in a simple and efficient manner. It allows you to create sprite animations by cycling through a sequence of frames from a sprite sheet image or JSON data.
+
+Notes:
+
+- The SpriteAnimator uses `.update()` method added to requestAnimation frame loop to for efficient frame updates and rendering.
+- The sprites should contain equal size frames
+- Trimming of spritesheet frames is not yet supported
+
+Usage
+
+```js
+const alienSpriteAnimator = SpriteAnimator({
+  startFrame: 0,
+  autoPlay: true,
+  loop: true,
+  numberOfFrames: 16,
+  alphaTest: 0.01,
+  textureImageURL: './sprites/alien.png',
+})
+await AlienSpriteAnimator.init() // file fetching happens here
+
+alienSpriteAnimator.group.position.set(0, 0.5, 2)
+
+scene.add(alienSpriteAnimator.group)
+```
+
+SpriteAnimator function returns the following object
+
+```js
+export type SpriteAnimatorType = {
+  group: THREE.Group // A reference to the THREE.Group used for holding the sprite or plane.
+  init: Function // Function to initialize, fetch the files and start the animations.
+  update: Function // Function to update the sprite animation, needs to be called every frame.
+  pauseAnimation: Function // Function to pause the animation.
+  playAnimation: Function // Function to play the animation.
+  setFrameName: Function // Function to set the frame identifier to use, has to be one of animationNames.
 }
 ```
