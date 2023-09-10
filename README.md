@@ -54,6 +54,10 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <ul>   
             <li><a href="#grid">Grid</a></li>
           </ul>
+         <li><a href="#misc">Misc</a></li>
+        <ul>
+          <li><a href="#sprite-animator">Sprite Animator</a></li>
+        </ul>
       </ul>
     </td>
 
@@ -516,4 +520,90 @@ export type BillboardType = {
   update: (camera: THREE.Camera) => void
   updateProps: (newProps: Partial<BillboardProps>) => void
 }
+```
+
+#### Sprite Animator
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://drei.pmnd.rs/?path=/story/misc-spriteanimator--sprite-animator-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#sprite-animator)
+
+```tsx
+type SpriteAnimatorProps = {
+  /** The start frame of the animation */
+  startFrame?: number
+  /** The end frame of the animation */
+  endFrame?: number
+  /** The desired frames per second of the animaiton */
+  fps?: number
+  /** The frame identifier to use, has to be one of animationNames */
+  frameName?: string
+  /** The URL of the texture JSON (if using JSON-Array or JSON-Hash) */
+  textureDataURL?: string
+  /** The URL of the texture image */
+  textureImageURL?: string
+  /** Whether or not the animation should loop */
+  loop?: boolean
+  /** The number of frames of the animation (required if using plain spritesheet without JSON) */
+  numberOfFrames?: number
+  /** Whether or not the animation should auto-start when all assets are loaded */
+  autoPlay?: boolean
+  /** The animation names of the spritesheet (if the spritesheet -with JSON- contains more animation sequences) */
+  animationNames?: Array<string>
+  /** Event callback when the animation starts */
+  onStart?: Function
+  /** Event callback when the animation ends */
+  onEnd?: Function
+  /** Event callback when the animation loops */
+  onLoopEnd?: Function
+  /** Event callback when each frame changes */
+  onFrame?: Function
+  /** Control when the animation runs */
+  play?: boolean
+  /** Control when the animation pauses */
+  pause?: boolean
+  /** Whether or not the Sprite should flip sides on the x-axis */
+  flipX?: boolean
+  /** Sets the alpha value to be used when running an alpha test. https://threejs.org/docs/#api/en/materials/Material.alphaTest */
+  alphaTest?: number
+  /** Displays the texture on a SpriteGeometry always facing the camera, if set to false, it renders on a PlaneGeometry */
+  asSprite?: boolean
+}
+```
+
+The SpriteAnimator is a powerful tool for animating sprites in a simple and efficient manner. It allows you to create sprite animations by cycling through a sequence of frames from a sprite sheet image or JSON data.
+
+Notes:
+
+- The SpriteAnimator uses `.update()` method added to requestAnimation frame loop to for efficient frame updates and rendering.
+- The sprites should contain equal size frames
+- Trimming of spritesheet frames is not yet supported
+
+SpriteAnimator function returns the following object
+
+```js
+export type SpriteAnimatorType = {
+  group: THREE.Group // A reference to the THREE.Group used for holding the sprite or plane.
+  init: Function // Function to initialize the fetch the file and start the animations.
+  update: Function // Function to update the sprite animation need to be called every frame.
+  pauseAnimation: Function // Function to pause the animation.
+  playAnimation: Function // Function to play the animation.
+  setFrameName: Function // Function to set the frame name.
+}
+```
+
+```js
+const alienSpriteAnimator = SpriteAnimator({
+  startFrame: 0,
+  autoPlay: true,
+  loop: true,
+  numberOfFrames: 16,
+  alphaTest: 0.01,
+  textureImageURL: './sprites/alien.png',
+})
+await AlienSpriteAnimator.init() // file fetching happens here
+
+alienSpriteAnimator.group.position.set(0, 0.5, 2)
+
+scene.add(alienSpriteAnimator.group)
 ```
