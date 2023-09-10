@@ -2,10 +2,13 @@ import * as THREE from 'three'
 import { Setup } from '../Setup'
 import GUI from 'lil-gui'
 import { Meta } from '@storybook/html'
-import { EXRLoader, GroundProjectedEnv, OrbitControls } from 'three-stdlib'
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader'
+import { GroundProjectedSkybox } from 'three/examples/jsm/objects/GroundProjectedSkybox'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import { MeshTransmissionMaterial } from '../../src/materials/MeshTransmissionMaterial'
 import { MeshDiscardMaterial } from '../../src/materials/MeshDiscardMaterial'
+import { useFBO } from '../../src/core/useFBO'
 
 export default {
   title: 'Shaders/MeshTransmissionMaterial',
@@ -65,7 +68,7 @@ const setupEnvironment = () => {
     scene.environment = exrTex
     // scene.background = exrTex
 
-    const groundProjection = new GroundProjectedEnv(exrTex)
+    const groundProjection = new GroundProjectedSkybox(exrTex)
     groundProjection.scale.setScalar(100)
     scene.add(groundProjection)
   })
@@ -93,19 +96,9 @@ function setupMeshTransmissionMaterial() {
   })
   scene.add(model)
 
-  const fboBack = new THREE.WebGLRenderTarget(512, 512, {
-    minFilter: THREE.LinearFilter,
-    magFilter: THREE.LinearFilter,
-    encoding: renderer.outputEncoding,
-    type: THREE.HalfFloatType,
-  })
+  const fboBack = useFBO(512, 512)
 
-  const fboMain = new THREE.WebGLRenderTarget(512, 512, {
-    minFilter: THREE.LinearFilter,
-    magFilter: THREE.LinearFilter,
-    encoding: renderer.outputEncoding,
-    type: THREE.HalfFloatType,
-  })
+  const fboMain = useFBO(512, 512)
 
   meshTransmissionMaterial.buffer = fboMain.texture
 

@@ -18,7 +18,7 @@ import {
 import { pcss } from '../../src/core/pcss'
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
-import { OrbitControls } from 'three-stdlib'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import GUI from 'lil-gui'
 
 export default {
@@ -107,7 +107,6 @@ export const PcssStory = async () => {
   }
 
   render((time) => {
-    // console.log('pcss render call')
     // make spheres go up/down
     for (const [index, sphere] of sphereGroup.children.entries()) {
       sphere.position.y = Math.sin(time / 1000 + index) + 1
@@ -120,12 +119,10 @@ export const PcssStory = async () => {
     if (reset) {
       reset(renderer, scene, camera)
       reset = null
-      console.log('reset')
     }
 
     if (enabled) {
       reset = pcss({ focus, size, samples })
-      console.log(enabled, { focus, size, samples })
 
       scene.traverse((object) => {
         if (object instanceof Mesh) {
