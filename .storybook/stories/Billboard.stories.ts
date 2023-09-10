@@ -4,6 +4,7 @@ import { Meta } from '@storybook/html'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GUI } from 'lil-gui'
 import { Billboard, BillboardProps, BillboardType } from '../../src/core/Billboard'
+import { Text } from '../../src/core/Text'
 
 export default {
   title: 'Abstractions/Billboard',
@@ -13,12 +14,14 @@ let gui: GUI
 
 let globalBillboards: BillboardType
 
+
 const billboardParams = {
   follow: true,
   lockX: false,
   lockY: false,
   lockZ: false,
 } as BillboardProps
+
 
 const getTorusMesh = () => {
   const geometry = new THREE.TorusKnotGeometry(1, 0.35, 100, 32)
@@ -30,6 +33,21 @@ const getTorusMesh = () => {
   torusMesh.castShadow = true
   torusMesh.receiveShadow = true
   return torusMesh
+}
+
+const setupText = (pos: [number, number, number]) => {
+  const billboard = Billboard({
+    ...billboardParams,
+  })
+  const text = Text({
+    text: 'Hello World',
+    fontSize: 1,
+    color: 'red',
+  })
+  text.mesh.position.fromArray(pos)
+  billboard.group.add(text.mesh)
+  globalBillboards.push(billboard)
+  return billboard.group
 }
 
 const setupLight = () => {
@@ -77,6 +95,10 @@ export const BillboardStory = async () => {
   plane.position.set(-3, 2, 0)
   globalBillboards.group.add(plane)
 
+  scene.add(setupText([0, 2, 0]))
+  scene.add(setupText([8, 2, 0]))
+  scene.add(setupText([-8, 2, 0]))
+
   render(() => {
     globalBillboards.update(camera)
   })
@@ -102,4 +124,8 @@ const addOutlineGui = () => {
   folder.add(params, 'lockZ').onChange((value: boolean) => {
     globalBillboards.updateProps({ lockZ: value })
   })
+  folder.add(params, 'follow')
+  folder.add(params, 'lockX')
+  folder.add(params, 'lockY')
+  folder.add(params, 'lockZ')
 }

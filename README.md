@@ -522,6 +522,86 @@ export type BillboardType = {
 }
 ```
 
+
+#### Text
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-text--text-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#text)
+
+Hi-quality text rendering w/ signed distance fields (SDF) and antialiasing, using [troika-3d-text](https://github.com/protectwise/troika/tree/master/packages/troika-3d-text). All of troikas props are valid!
+
+> Required `troika-three-text` >= `0.46.4`
+
+```ts
+export type TextProps = {
+  characters?: string
+  color?: number | string
+  // the text content
+  text: string
+  /** Font size, default: 1 */
+  fontSize?: number
+  maxWidth?: number
+  lineHeight?: number
+  letterSpacing?: number
+  textAlign?: 'left' | 'right' | 'center' | 'justify'
+  font?: string
+  anchorX?: number | 'left' | 'center' | 'right'
+  anchorY?: number | 'top' | 'top-baseline' | 'middle' | 'bottom-baseline' | 'bottom'
+  clipRect?: [number, number, number, number]
+  depthOffset?: number
+  direction?: 'auto' | 'ltr' | 'rtl'
+  overflowWrap?: 'normal' | 'break-word'
+  whiteSpace?: 'normal' | 'overflowWrap' | 'nowrap'
+  outlineWidth?: number | string
+  outlineOffsetX?: number | string
+  outlineOffsetY?: number | string
+  outlineBlur?: number | string
+  outlineColor?: number | string
+  outlineOpacity?: number
+  strokeWidth?: number | string
+  strokeColor?: number | string
+  strokeOpacity?: number
+  fillOpacity?: number
+  sdfGlyphSize?: number
+  debugSDF?: boolean
+  onSync?: (troika: any) => void
+  onPreloadEnd?: () => void
+}
+```
+
+Usage
+
+```jsx
+const text = Text({
+  text: 'Hello World',
+})
+const mesh = new THREE.Mesh(geometry, material)
+mesh.add(text.mesh)
+```
+
+Text function returns the following
+
+```jsx
+export type TextType = {
+  mesh: THREE.Mesh
+  updateProps: (newProps: Partial<TextProps>) => void
+  dispose: () => void
+}
+```
+
+You can preload the font and characters:
+
+```ts
+const preloadRelatedParams = {
+  // support ttf/otf/woff(woff2 is not supported)
+  font: '/your/font/path',
+  characters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!?.,:;\'"()[]{}<>|/@\\^$-%+=#_&~*',
+  onPreloadEnd: () => {
+    // this is the callback when font and characters are loaded
+  },
+=======
+  
 #### Sprite Animator
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/misc-spriteanimator--sprite-animator-story)
