@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
-import { OrbitControls } from 'three-stdlib'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GUI } from 'lil-gui'
 import { Outlines, OutlinesType } from '../../src/core/Outlines'
 
@@ -14,7 +14,7 @@ let gui: GUI
 let allOutlines: OutlinesType[] = []
 
 const outlinesParams = {
-  color: '#ffccff',
+  color: '#ffff00',
   thickness: 0.1,
 }
 
@@ -29,6 +29,7 @@ const setupTourMesh = () => {
   const geometry = new THREE.TorusKnotGeometry(1, 0.35, 100, 32)
   const mat = new THREE.MeshStandardMaterial({
     roughness: 0,
+    color: 0xffffff * Math.random(),
   })
   const torusMesh = new THREE.Mesh(geometry, mat)
 
@@ -48,23 +49,25 @@ const setupTourMesh = () => {
 
 const setupBox = () => {
   const geometry = new THREE.BoxGeometry(2, 2, 2)
-  const mat = new THREE.MeshBasicMaterial()
+  const mat = new THREE.MeshBasicMaterial({ color: 'grey' })
   const boxMesh = new THREE.Mesh(geometry, mat)
+  boxMesh.position.y = 1.2
   const outlines = generateOutlines()
 
   allOutlines.push(outlines)
   boxMesh.add(outlines.group)
+  boxMesh.castShadow = true
   outlines.render()
   return boxMesh
 }
 
 const setupLight = () => {
-  const dirLight = new THREE.DirectionalLight(0xabcdef, 5)
+  const dirLight = new THREE.DirectionalLight(0xffffff, 1)
   dirLight.position.set(15, 15, 15)
   dirLight.castShadow = true
   dirLight.shadow.mapSize.width = 1024
   dirLight.shadow.mapSize.height = 1024
-  const size = 5
+  const size = 6
   dirLight.shadow.camera.top = size
   dirLight.shadow.camera.bottom = -size
   dirLight.shadow.camera.left = -size
@@ -81,12 +84,21 @@ export const OutlinesStory = async () => {
   controls.target.set(0, 1, 0)
   controls.update()
 
+  scene.add(new THREE.AmbientLight(0xffffff, 0.1))
+
   camera.position.set(10, 10, 10)
   scene.add(setupLight())
   scene.add(setupTourMesh())
 
   const box = setupBox()
   scene.add(box)
+
+  const floor = new THREE.Mesh(
+    new THREE.CircleGeometry(10, 32).rotateX(-Math.PI / 2),
+    new THREE.MeshStandardMaterial({ color: 'azure' })
+  )
+  floor.receiveShadow = true
+  scene.add(floor)
 
   render(() => {
     box.rotation.y += 0.02

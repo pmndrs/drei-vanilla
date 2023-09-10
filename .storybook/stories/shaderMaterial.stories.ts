@@ -2,7 +2,7 @@ import { BoxGeometry, Mesh, Texture, TextureLoader } from 'three'
 import { shaderMaterial } from '../../src/core/shaderMaterial'
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
-import { OrbitControls } from 'three-stdlib'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GUI } from 'lil-gui'
 
 export default {

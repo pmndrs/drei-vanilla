@@ -1,7 +1,9 @@
 import * as THREE from 'three'
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
-import { EXRLoader, GroundProjectedEnv, OrbitControls } from 'three-stdlib'
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+
 import { GUI } from 'lil-gui'
 import { Grid, GridType } from '../../src/core/Grid'
 
@@ -86,10 +88,6 @@ const setupEnvironment = (scene: THREE.Scene) => {
 
     scene.backgroundBlurriness = 0.7
     scene.backgroundIntensity = 0.1
-
-    // const groundProjection = new GroundProjectedEnv(exrTex)
-    // groundProjection.scale.setScalar(100)
-    // scene.add(groundProjection)
   })
 }
 
