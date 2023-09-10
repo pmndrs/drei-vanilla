@@ -4,7 +4,6 @@ import { Meta } from '@storybook/html'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GUI } from 'lil-gui'
 import { Billboard, BillboardProps, BillboardType } from '../../src/core/Billboard'
-import { Text } from '../../src/core/Text'
 
 export default {
   title: 'Abstractions/Billboard',
@@ -12,16 +11,7 @@ export default {
 
 let gui: GUI
 
-let globalBillboards: BillboardType
-
-
-const billboardParams = {
-  follow: true,
-  lockX: false,
-  lockY: false,
-  lockZ: false,
-} as BillboardProps
-
+let globalBillboards: BillboardType[] = []
 
 const getTorusMesh = () => {
   const geometry = new THREE.TorusKnotGeometry(1, 0.35, 100, 32)
@@ -33,21 +23,6 @@ const getTorusMesh = () => {
   torusMesh.castShadow = true
   torusMesh.receiveShadow = true
   return torusMesh
-}
-
-const setupText = (pos: [number, number, number]) => {
-  const billboard = Billboard({
-    ...billboardParams,
-  })
-  const text = Text({
-    text: 'Hello World',
-    fontSize: 1,
-    color: 'red',
-  })
-  text.mesh.position.fromArray(pos)
-  billboard.group.add(text.mesh)
-  globalBillboards.push(billboard)
-  return billboard.group
 }
 
 const setupLight = () => {
@@ -82,50 +57,62 @@ export const BillboardStory = async () => {
   torusNormal.position.set(0, 8, 0)
   scene.add(torusNormal)
 
+  // Torus billboard
+  const torusBillboardParams = {
+    follow: true,
+    lockX: false,
+    lockY: false,
+    lockZ: false,
+  } as BillboardProps
+
+  const torusBillboard = Billboard()
   const torus = getTorusMesh()
   torus.position.set(1, 2, 0)
+  torusBillboard.group.add(torus)
+  scene.add(torusBillboard.group)
+  globalBillboards.push(torusBillboard)
+  addBillboardGui('torus', torusBillboard, torusBillboardParams)
 
-  globalBillboards = Billboard()
-  globalBillboards.group.add(torus)
-  scene.add(globalBillboards.group)
+  // Plane billboard
+  const planeBillboardParams = {
+    follow: true,
+    lockX: false,
+    lockY: false,
+    lockZ: false,
+  } as BillboardProps
 
   const texture = new THREE.TextureLoader().load('photo-1678043639454-dbdf877f0ae8.jpeg')
-
+  const planeBillboard = Billboard()
   const plane = new THREE.Mesh(new THREE.PlaneGeometry(3, 3), new THREE.MeshStandardMaterial({ map: texture }))
-  plane.position.set(-3, 2, 0)
-  globalBillboards.group.add(plane)
-
-  scene.add(setupText([0, 2, 0]))
-  scene.add(setupText([8, 2, 0]))
-  scene.add(setupText([-8, 2, 0]))
+  plane.position.set(-3, 2, -5)
+  planeBillboard.group.add(plane)
+  scene.add(planeBillboard.group)
+  globalBillboards.push(planeBillboard)
+  addBillboardGui('plane', planeBillboard, planeBillboardParams)
 
   render(() => {
-    globalBillboards.update(camera)
+    globalBillboards.forEach((billboard) => {
+      billboard.update(camera)
+    })
   })
+}
 
-  addOutlineGui()
+const addBillboardGui = (name: string, billboard: BillboardType, params: BillboardProps) => {
+  const folder = gui.addFolder(name + ' Billboard')
+  folder.open()
+
+  folder.add(params, 'follow').onChange((value: boolean) => {
+    billboard.updateProps({ follow: value })
+  })
+  folder.add(params, 'lockX').onChange((value: boolean) => {
+    billboard.updateProps({ lockX: value })
+  })
+  folder.add(params, 'lockY').onChange((value: boolean) => {
+    billboard.updateProps({ lockY: value })
+  })
+  folder.add(params, 'lockZ').onChange((value: boolean) => {
+    billboard.updateProps({ lockZ: value })
+  })
 }
 
 BillboardStory.storyName = 'Default'
-
-const addOutlineGui = () => {
-  const params = Object.assign({}, billboardParams)
-  const folder = gui.addFolder('B I L L B O A R D')
-  folder.open()
-  folder.add(params, 'follow').onChange((value: boolean) => {
-    globalBillboards.updateProps({ follow: value })
-  })
-  folder.add(params, 'lockX').onChange((value: boolean) => {
-    globalBillboards.updateProps({ lockX: value })
-  })
-  folder.add(params, 'lockY').onChange((value: boolean) => {
-    globalBillboards.updateProps({ lockY: value })
-  })
-  folder.add(params, 'lockZ').onChange((value: boolean) => {
-    globalBillboards.updateProps({ lockZ: value })
-  })
-  folder.add(params, 'follow')
-  folder.add(params, 'lockX')
-  folder.add(params, 'lockY')
-  folder.add(params, 'lockZ')
-}
