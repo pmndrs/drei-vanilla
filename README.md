@@ -579,18 +579,7 @@ Notes:
 - The sprites should contain equal size frames
 - Trimming of spritesheet frames is not yet supported
 
-SpriteAnimator function returns the following object
-
-```js
-export type SpriteAnimatorType = {
-  group: THREE.Group // A reference to the THREE.Group used for holding the sprite or plane.
-  init: Function // Function to initialize, fetch the files and start the animations.
-  update: Function // Function to update the sprite animation, needs to be called every frame.
-  pauseAnimation: Function // Function to pause the animation.
-  playAnimation: Function // Function to play the animation.
-  setFrameName: Function // Function to set the frame identifier to use, has to be one of animationNames.
-}
-```
+Usage
 
 ```js
 const alienSpriteAnimator = SpriteAnimator({
@@ -606,4 +595,17 @@ await AlienSpriteAnimator.init() // file fetching happens here
 alienSpriteAnimator.group.position.set(0, 0.5, 2)
 
 scene.add(alienSpriteAnimator.group)
+```
+
+SpriteAnimator function returns the following object
+
+```js
+export type SpriteAnimatorType = {
+  group: THREE.Group // A reference to the THREE.Group used for holding the sprite or plane.
+  init: Function // Function to initialize, fetch the files and start the animations.
+  update: Function // Function to update the sprite animation, needs to be called every frame.
+  pauseAnimation: Function // Function to pause the animation.
+  playAnimation: Function // Function to play the animation.
+  setFrameName: Function // Function to set the frame identifier to use, has to be one of animationNames.
+}
 ```
