@@ -26,7 +26,7 @@ const getTorusMesh = () => {
 }
 
 const setupLight = () => {
-  const dirLight = new THREE.DirectionalLight(0xabcdef, 5)
+  const dirLight = new THREE.DirectionalLight(0xabcdef, 12)
   dirLight.position.set(15, 15, 15)
   dirLight.castShadow = true
   dirLight.shadow.mapSize.width = 1024

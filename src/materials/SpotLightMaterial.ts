@@ -1,4 +1,4 @@
-import { Color, Vector2, Vector3, type Texture } from 'three'
+import { Color, Vector2, Vector3, REVISION, type Texture } from 'three'
 import { shaderMaterial } from '../core/shaderMaterial'
 
 type SpotLightMaterialProps = {
@@ -92,6 +92,6 @@ export const SpotLightMaterial = shaderMaterial<SpotLightMaterialProps>(
     gl_FragColor = vec4(lightColor, intensity * opacity);
 
     #include <tonemapping_fragment>
-    #include <encodings_fragment>
+    #include <${parseInt(REVISION.replace(/\D+/g, '')) >= 154 ? 'colorspace_fragment' : 'encodings_fragment'}>
   }`
 )

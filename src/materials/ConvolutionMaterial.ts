@@ -1,4 +1,4 @@
-import { NoBlending, ShaderMaterial, Uniform, Vector2 } from 'three'
+import { NoBlending, ShaderMaterial, Uniform, Vector2, REVISION } from 'three'
 
 export class ConvolutionMaterial extends ShaderMaterial {
   readonly kernel: Float32Array
@@ -53,7 +53,7 @@ export class ConvolutionMaterial extends ShaderMaterial {
 
           #include <dithering_fragment>
           #include <tonemapping_fragment>
-          #include <encodings_fragment>
+          #include <${parseInt(REVISION.replace(/\D+/g, '')) >= 154 ? 'colorspace_fragment' : 'encodings_fragment'}>
         }`,
       vertexShader: `uniform vec2 texelSize;
         uniform vec2 halfTexelSize;

@@ -1,6 +1,6 @@
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
-import { OrbitControls } from 'three-stdlib'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GUI } from 'lil-gui'
 import { Text, TextProps, TextType } from '../../src/core/Text'
 
@@ -59,12 +59,12 @@ export const TextStory = async () => {
     if (runtimeParams.animate) textMesh.rotation.y += 0.01
   })
 
-  addOutlineGui()
+  addTextGui()
 }
 
 TextStory.storyName = 'Default'
 
-const addOutlineGui = () => {
+const addTextGui = () => {
   const params = Object.assign({}, textParams)
   const folder = gui.addFolder('T E X T')
   folder.open().onChange(() => {

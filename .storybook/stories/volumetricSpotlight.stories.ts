@@ -74,7 +74,7 @@ export const VolumetricSpotlightStory = async () => {
  * Setup a volumetric spotlight
  */
 function setupSpotlight() {
-  spotLight = new SpotLight(0xabcdef, 10)
+  spotLight = new SpotLight(0xabcdef, 500)
   spotLight.position.set(1, 4, 1)
   spotLight.angle = Math.PI / 6
   spotLight.distance = 10
@@ -142,7 +142,6 @@ function updateDepthTargets() {
   depthTarget = new WebGLRenderTarget(volumeParams.depthResolution, volumeParams.depthResolution, {
     minFilter: LinearFilter,
     magFilter: LinearFilter,
-    encoding: renderer.outputEncoding,
     type: HalfFloatType,
     depthTexture,
     samples: 0,
@@ -238,7 +237,7 @@ function addSpotLightGui(gui: GUI) {
     spotLightHelper.visible = v
   })
 
-  folder.add(spotLight, 'intensity', 0, 50)
+  folder.add(spotLight, 'intensity', 0, 2000)
 
   folder.add(spotLight, 'penumbra', 0, 1)
 

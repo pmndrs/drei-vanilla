@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, Texture, TextureLoader } from 'three'
+import { BoxGeometry, Mesh, Texture, TextureLoader, REVISION } from 'three'
 import { shaderMaterial } from '../../src/core/shaderMaterial'
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
@@ -43,7 +43,7 @@ const MyMaterial = shaderMaterial(
       gl_FragColor = vec4(color, 1.0);
 
       #include <tonemapping_fragment>
-      #include <encodings_fragment>
+      #include <${parseInt(REVISION.replace(/\D+/g, '')) >= 154 ? 'colorspace_fragment' : 'encodings_fragment'}>
     }
   `
 )

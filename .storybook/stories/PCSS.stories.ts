@@ -55,7 +55,7 @@ export const PcssStory = async () => {
 
   scene.add(new AmbientLight(0x666666))
 
-  const light = new DirectionalLight(0xdfebff, 1.75)
+  const light = new DirectionalLight(0xdfebff, 5)
   light.position.set(2, 8, 4)
 
   light.castShadow = true

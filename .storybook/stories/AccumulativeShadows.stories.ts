@@ -62,7 +62,7 @@ const lightParams = {
   amount: 8,
 
   /** Light intensity */
-  intensity: 1,
+  intensity: parseInt(THREE.REVISION.replace(/\D+/g, '')) >= 155 ? Math.PI : 1,
 
   /** Ambient occlusion, lower values mean less AO, hight more, you can mix AO and directional light */
   ambient: 0.5,

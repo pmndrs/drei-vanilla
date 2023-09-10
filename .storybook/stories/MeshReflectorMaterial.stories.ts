@@ -32,7 +32,7 @@ const MRMParams = {
 }
 
 const params = {
-  color: new THREE.Color('#151515'),
+  color: new THREE.Color('#333333'),
   useRoughnessMap: false,
   roughness: 1,
   metalness: 0.6,
