@@ -584,11 +584,11 @@ SpriteAnimator function returns the following object
 ```js
 export type SpriteAnimatorType = {
   group: THREE.Group // A reference to the THREE.Group used for holding the sprite or plane.
-  init: Function // Function to initialize the fetch the file and start the animations.
-  update: Function // Function to update the sprite animation need to be called every frame.
+  init: Function // Function to initialize, fetch the files and start the animations.
+  update: Function // Function to update the sprite animation, needs to be called every frame.
   pauseAnimation: Function // Function to pause the animation.
   playAnimation: Function // Function to play the animation.
-  setFrameName: Function // Function to set the frame name.
+  setFrameName: Function // Function to set the frame identifier to use, has to be one of animationNames.
 }
 ```
 
