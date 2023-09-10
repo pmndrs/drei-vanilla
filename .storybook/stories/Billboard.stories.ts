@@ -32,36 +32,6 @@ const getTorusMesh = () => {
   return torusMesh
 }
 
-// const setupTourMesh = (position: [number, number, number]) => {
-//   const geometry = new THREE.TorusKnotGeometry(1, 0.35, 100, 32)
-//   const mat = new THREE.MeshStandardMaterial({
-//     roughness: 0,
-//   })
-
-//   const torusMesh = new THREE.Mesh(geometry, mat)
-
-//   const torusBillboard = Billboard()
-//   const group = billboard.group
-//   torusMesh.traverse((child) => {
-//     if (child instanceof THREE.Mesh) {
-//       child.castShadow = true
-//       child.receiveShadow = true
-//     }
-//   })
-//   torusMesh.position.fromArray(position)
-
-//   group.add(torusMesh)
-//   return group
-// }
-
-const setupBox = () => {
-  const geometry = new THREE.BoxGeometry(2, 2, 2)
-  const mat = new THREE.MeshBasicMaterial()
-  const boxMesh = new THREE.Mesh(geometry, mat)
-
-  return boxMesh
-}
-
 const setupLight = () => {
   const dirLight = new THREE.DirectionalLight(0xabcdef, 5)
   dirLight.position.set(15, 15, 15)
@@ -120,16 +90,16 @@ const addOutlineGui = () => {
   const params = Object.assign({}, billboardParams)
   const folder = gui.addFolder('B I L L B O A R D')
   folder.open()
-  folder.add(params, 'follow').onChange((value) => {
-    globalBillboard.updateProps({ follow: value })
+  folder.add(params, 'follow').onChange((value: boolean) => {
+    globalBillboards.updateProps({ follow: value })
   })
-  folder.add(params, 'lockX').onChange((value) => {
-    globalBillboard.updateProps({ lockX: value })
+  folder.add(params, 'lockX').onChange((value: boolean) => {
+    globalBillboards.updateProps({ lockX: value })
   })
-  folder.add(params, 'lockY').onChange((value) => {
-    globalBillboard.updateProps({ lockY: value })
+  folder.add(params, 'lockY').onChange((value: boolean) => {
+    globalBillboards.updateProps({ lockY: value })
   })
-  folder.add(params, 'lockZ').onChange((value) => {
-    globalBillboard.updateProps({ lockZ: value })
+  folder.add(params, 'lockZ').onChange((value: boolean) => {
+    globalBillboards.updateProps({ lockZ: value })
   })
 }
