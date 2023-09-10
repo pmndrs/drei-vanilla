@@ -94,7 +94,7 @@ SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM ID EST LABORUM.`,
   fontSize: 2,
   maxWidth: 40,
   lineHeight: 1,
-  font: '/font/Kalam-Regular.ttf',
+  font: './font/Kalam-Regular.ttf',
   characters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!?.,:;\'"()[]{}<>|/@\\^$-%+=#_&~*',
   onPreloadEnd: () => {
     console.log('loaded')
