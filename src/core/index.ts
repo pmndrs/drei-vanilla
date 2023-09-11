@@ -9,6 +9,10 @@ export * from './AccumulativeShadows'
 // Misc
 export * from './useFBO'
 
+// Abstractions
+export * from './Outlines'
+export * from './Billboard'
+export * from './Text'
+
 // Gizmos
 export * from './Grid'
-export * from './Outlines'

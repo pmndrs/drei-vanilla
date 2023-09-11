@@ -50,6 +50,12 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
           <li><a href="#caustics">Caustics</a></li>
          </ul>
+        <li><a href="#staging">Abstractions</a></li>
+        <ul>
+          <li><a href="#outlines">Outlines</a></li>
+          <li><a href="#billboard">Billboard</a></li>
+          <li><a href="#text">Text</a></li>
+        </ul>
         <li><a href="#gizmos">Gizmos</a></li>
           <ul>   
             <li><a href="#grid">Grid</a></li>
@@ -522,7 +528,6 @@ export type BillboardType = {
 }
 ```
 
-
 #### Text
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-text--text-story)
@@ -592,7 +597,7 @@ export type TextType = {
 
 You can preload the font and characters:
 
-```ts
+````ts
 const preloadRelatedParams = {
   // support ttf/otf/woff(woff2 is not supported)
   font: '/your/font/path',
@@ -601,7 +606,7 @@ const preloadRelatedParams = {
     // this is the callback when font and characters are loaded
   },
 =======
-  
+
 #### Sprite Animator
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/misc-spriteanimator--sprite-animator-story)
@@ -649,7 +654,7 @@ type SpriteAnimatorProps = {
   /** Displays the texture on a SpriteGeometry always facing the camera, if set to false, it renders on a PlaneGeometry */
   asSprite?: boolean
 }
-```
+````
 
 The SpriteAnimator is a powerful tool for animating sprites in a simple and efficient manner. It allows you to create sprite animations by cycling through a sequence of frames from a sprite sheet image or JSON data.
 
