@@ -597,7 +597,7 @@ export type TextType = {
 
 You can preload the font and characters:
 
-````ts
+```ts
 const preloadRelatedParams = {
   // support ttf/otf/woff(woff2 is not supported)
   font: '/your/font/path',
@@ -605,7 +605,7 @@ const preloadRelatedParams = {
   onPreloadEnd: () => {
     // this is the callback when font and characters are loaded
   },
-=======
+```
 
 #### Sprite Animator
 
@@ -654,7 +654,7 @@ type SpriteAnimatorProps = {
   /** Displays the texture on a SpriteGeometry always facing the camera, if set to false, it renders on a PlaneGeometry */
   asSprite?: boolean
 }
-````
+```
 
 The SpriteAnimator is a powerful tool for animating sprites in a simple and efficient manner. It allows you to create sprite animations by cycling through a sequence of frames from a sprite sheet image or JSON data.
 
