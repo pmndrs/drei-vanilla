@@ -8,6 +8,7 @@ export * from './AccumulativeShadows'
 
 // Misc
 export * from './useFBO'
+export * from './SpriteAnimator'
 
 // Abstractions
 export * from './Outlines'
