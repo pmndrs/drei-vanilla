@@ -50,6 +50,12 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
           <li><a href="#caustics">Caustics</a></li>
          </ul>
+        <li><a href="#staging">Abstractions</a></li>
+        <ul>
+          <li><a href="#outlines">Outlines</a></li>
+          <li><a href="#billboard">Billboard</a></li>
+          <li><a href="#text">Text</a></li>
+        </ul>
         <li><a href="#gizmos">Gizmos</a></li>
           <ul>   
             <li><a href="#grid">Grid</a></li>
@@ -522,7 +528,6 @@ export type BillboardType = {
 }
 ```
 
-
 #### Text
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-text--text-story)
@@ -600,8 +605,8 @@ const preloadRelatedParams = {
   onPreloadEnd: () => {
     // this is the callback when font and characters are loaded
   },
-=======
-  
+```
+
 #### Sprite Animator
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/misc-spriteanimator--sprite-animator-story)
