@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { toCreasedNormals } from 'three-stdlib'
+import { toCreasedNormals } from 'three/examples/jsm/utils/BufferGeometryUtils'
 import { shaderMaterial } from './shaderMaterial'
 
 export type OutlinesProps = {
