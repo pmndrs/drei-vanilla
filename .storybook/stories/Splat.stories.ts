@@ -11,10 +11,8 @@ export default {
 
 let gui: GUI
 
-const SplatParams = {}
-
 export const SplatStory = async () => {
-  // gui = new GUI({ title: 'Splat Story', closeFolders: true })
+  gui = new GUI({ title: 'Splat Story', closeFolders: true })
   const { renderer, scene, camera } = Setup()
 
   const controls = new OrbitControls(camera, renderer.domElement)
@@ -33,14 +31,10 @@ async function loadSplats(renderer: THREE.WebGLRenderer, camera: THREE.Perspecti
   const dylanebert = 'https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/kitchen'
 
   const loader = new SplatLoader(renderer)
-  const [
-    shoeSplat,
-    plushSplat,
-    // kitchenSplat
-  ] = await Promise.all([
+  const [shoeSplat, plushSplat, kitchenSplat] = await Promise.all([
     loader.loadAsync(`${cakewalk}/nike.splat`),
     loader.loadAsync(`${cakewalk}/plush.splat`),
-    // loader.loadAsync(`${dylanebert}/kitchen-7k.splat`),
+    loader.loadAsync(`${dylanebert}/kitchen-7k.splat`),
   ])
 
   const shoe1 = new Splat(shoeSplat, camera, { alphaTest: 0.1 })
@@ -60,14 +54,20 @@ async function loadSplats(renderer: THREE.WebGLRenderer, camera: THREE.Perspecti
   plush.position.set(-1.5, 1.6, 1)
   scene.add(plush)
 
-  // const kitchen = new Splat(kitchenSplat, camera)
-  // kitchen.position.set(0, 0.25, 0)
-  // scene.add(kitchen)
-}
+  const kitchen = new Splat(kitchenSplat, camera)
+  kitchen.position.set(0, 0.25, 0)
+  scene.add(kitchen)
 
-const addSplatGui = () => {
-  const params = Object.assign({}, SplatParams)
+  // add gui
   const folder = gui.addFolder('SPLAT')
+
+  folder.add(shoe1, 'visible').name('Shoe 1 visible')
+
+  folder.add(shoe2, 'visible').name('Shoe 2 visible')
+
+  folder.add(plush, 'visible').name('Plush visible')
+
+  folder.add(kitchen, 'visible').name('Kitchen visible')
 }
 
 SplatStory.storyName = 'Default'
