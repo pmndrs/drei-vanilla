@@ -55,6 +55,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#outlines">Outlines</a></li>
           <li><a href="#billboard">Billboard</a></li>
           <li><a href="#text">Text</a></li>
+          <li><a href="#splat">Splat</a></li>
         </ul>
         <li><a href="#gizmos">Gizmos</a></li>
           <ul>   
@@ -605,6 +606,46 @@ const preloadRelatedParams = {
   onPreloadEnd: () => {
     // this is the callback when font and characters are loaded
   },
+```
+
+#### Splat
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-splat--splat-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#splat)
+
+A declarative abstraction around [antimatter15/splat](https://github.com/antimatter15/splat). It supports re-use, multiple splats with correct depth sorting, splats can move and behave as a regular object3d's, supports alphahash & alphatest, and stream-loading.
+
+```js
+const loader = new SplatLoader(renderer)
+
+const [shoeSplat, plushSplat, kitchenSplat] = await Promise.all([
+  loader.loadAsync(`shoe.splat`),
+  loader.loadAsync(`plush.splat`),
+  loader.loadAsync(`kitchen.splat`),
+])
+
+const shoe1 = new Splat(shoeSplat, camera, { alphaTest: 0.1 })
+shoe1.position.set(0, 1.6, 2)
+scene.add(shoe1)
+
+// This will re-use the same data, only one load, one parse, one worker, one buffer
+const shoe2 = new Splat(shoeSplat, camera, { alphaTest: 0.1 })
+scene.add(shoe2)
+
+const plush = new Splat(plushSplat, camera, { alphaTest: 0.1 })
+scene.add(plush)
+
+const kitchen = new Splat(kitchenSplat, camera)
+scene.add(kitchen)
+```
+
+In order to depth sort multiple splats correctly you can either use alphaTest, for instance with a low value. But keep in mind that this can show a slight outline under some viewing conditions.
+
+You can also use alphaHash, but this can be slower and create some noise, you would typically get rid of the noise in postprocessing with a TAA pass. You don't have to use alphaHash on all splats.
+
+```js
+const plush = new Splat(plushSplat, camera, { alphaHash: true })
 ```
 
 #### Sprite Animator

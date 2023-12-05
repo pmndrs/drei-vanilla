@@ -34,15 +34,22 @@ export function shaderMaterial<TProps extends UniformProps>(
   onInit?: (material: ShaderMaterialInstance<TProps>) => void
 ) {
   const entries = Object.entries(uniforms)
-  const uniformDefs = Object.fromEntries(entries.map(([name, value]) => [name, { value }])) as {
-    [K in keyof TProps]: { value: TProps[K] }
-  }
 
   class Material extends THREE.ShaderMaterial {
     static key = THREE.MathUtils.generateUUID()
 
     constructor(parameters?: ShaderMaterialParameters<TProps>) {
-      super({ uniforms: uniformDefs, vertexShader, fragmentShader })
+      super({
+        uniforms: entries.reduce((acc, [name, value]) => {
+          const uniform = THREE.UniformsUtils.clone({ [name]: { value } })
+          return {
+            ...acc,
+            ...uniform,
+          }
+        }, {}),
+        vertexShader,
+        fragmentShader,
+      })
 
       for (const [name] of entries) {
         Object.defineProperty(this, name, {
