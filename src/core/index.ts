@@ -14,6 +14,7 @@ export * from './SpriteAnimator'
 export * from './Outlines'
 export * from './Billboard'
 export * from './Text'
+export * from './Splat'
 
 // Gizmos
 export * from './Grid'
