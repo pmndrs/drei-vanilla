@@ -616,14 +616,9 @@ function pushDataBuffer(shared: SharedState, buffer: ArrayBufferLike, vertexCoun
 }
 
 export class Splat extends THREE.Mesh {
-  camera: THREE.Camera
-  shared: any
-  alphaHash: boolean
   constructor(shared: any, camera: THREE.Camera, { toneMapped = false, alphaTest = 0, alphaHash = false } = {}) {
     super()
-    this.shared = shared
-    this.camera = camera
-    this.alphaHash = alphaHash
+
     this.frustumCulled = false
     this.onBeforeRender = () => shared.update(this, camera, alphaHash)
     this.material = new SplatMaterial()
@@ -640,9 +635,5 @@ export class Splat extends THREE.Mesh {
       toneMapped: toneMapped,
     })
     shared.connect(this)
-  }
-
-  splatUpdate() {
-    this.shared.update(this, this.camera, this.alphaHash)
   }
 }

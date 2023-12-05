@@ -17,11 +17,10 @@ export const SplatStory = async () => {
 
   const controls = new OrbitControls(camera, renderer.domElement)
   controls.target.set(0, 1, 0)
+  camera.position.set(10, 10, 10)
   controls.update()
 
   scene.background = new THREE.Color('white')
-
-  camera.position.set(10, 10, 10)
 
   loadSplats(renderer, camera, scene)
 }
