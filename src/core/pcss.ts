@@ -27,8 +27,15 @@ type SoftShadowsProps = {
 function reset(gl, scene, camera) {
   scene.traverse((object) => {
     if (object.material) {
-      gl.properties.remove(object.material)
-      object.material.dispose()
+      if (Array.isArray(object.material)) {
+        object.material.forEach((mat) => {
+          gl.properties.remove(mat)
+          mat.dispose()
+        })
+      } else {
+        gl.properties.remove(object.material)
+        object.material.dispose()
+      }
     }
   })
   gl.info.programs.length = 0
