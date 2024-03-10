@@ -49,6 +49,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
          <ul>
           <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
           <li><a href="#caustics">Caustics</a></li>
+          <li><a href="#cloud">Cloud</a></li>
          </ul>
         <li><a href="#staging">Abstractions</a></li>
         <ul>
@@ -58,7 +59,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#splat">Splat</a></li>
         </ul>
         <li><a href="#gizmos">Gizmos</a></li>
-          <ul>   
+          <ul>
             <li><a href="#grid">Grid</a></li>
           </ul>
          <li><a href="#misc">Misc</a></li>
@@ -357,6 +358,76 @@ export type CausticsType = {
   causticsTarget: THREE.WebGLRenderTarget
   causticsTargetB: THREE.WebGLRenderTarget
 }
+```
+
+#### Cloud
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/staging-clouds--cloud-story)
+
+[drei counterpart](https://github.com/pmndrs/drei#cloud)
+
+Instanced Mesh/Particle based cloud.
+
+```tsx
+type CloudsProps = {
+  /** cloud texture*/
+  texture?: Texture | undefined
+  /** Maximum number of segments, default: 200 (make this tight to save memory!) */
+  limit?: number
+  /** How many segments it renders, default: undefined (all) */
+  range?: number
+  /** Which material it will override, default: MeshLambertMaterial */
+  material?: typeof Material
+  /** Frustum culling, default: true */
+  frustumCulled?: boolean
+}
+```
+
+```ts
+type CloudProps = {
+  /** A seeded random will show the same cloud consistently, default: Math.random() */
+  seed?: number
+  /** How many segments or particles the cloud will have, default: 20 */
+  segments?: number
+  /** The box3 bounds of the cloud, default: [5, 1, 1] */
+  bounds?: Vector3
+  /** How to arrange segment volume inside the bounds, default: inside (cloud are smaller at the edges) */
+  concentrate?: 'random' | 'inside' | 'outside'
+  /** The general scale of the segments */
+  scale?: Vector3
+  /** The volume/thickness of the segments, default: 6 */
+  volume?: number
+  /** The smallest volume when distributing clouds, default: 0.25 */
+  smallestVolume?: number
+  /** An optional function that allows you to distribute points and volumes (overriding all settings), default: null
+   *  Both point and volume are factors, point x/y/z can be between -1 and 1, volume between 0 and 1 */
+  distribute?: ((cloud: CloudState, index: number) => { point: Vector3; volume?: number }) | null
+  /** Growth factor for animated clouds (speed > 0), default: 4 */
+  growth?: number
+  /** Animation factor, default: 0 */
+  speed?: number
+  /** Camera distance until the segments will fade, default: 10 */
+  fade?: number
+  /** Opacity, default: 1 */
+  opacity?: number
+  /** Color, default: white */
+  color?: Color
+}
+```
+
+Usage
+
+```jsx
+// create main clouds group
+clouds = new Clouds({ texture: cloudTexture })
+scene.add(clouds)
+
+// create cloud and add it to clouds group
+cloud0 = new Cloud()
+clouds.add(cloud0)
+
+// call in animate loop
+clouds.update(camera, clock.getElapsedTime(), clock.getDelta())
 ```
 
 #### Grid

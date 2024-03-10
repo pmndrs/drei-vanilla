@@ -5,6 +5,7 @@ export * from './shaderMaterial'
 
 // Staging/Prototyping
 export * from './AccumulativeShadows'
+export * from './Cloud'
 
 // Misc
 export * from './useFBO'
