@@ -288,7 +288,7 @@ export class Cloud extends Group {
     this.ref = this
 
     this.cloudStateArray = []
-    this.updateClouds()
+    this.updateCloud()
   }
 
   /**
@@ -326,7 +326,7 @@ export class Cloud extends Group {
     }
   }
 
-  updateClouds() {
+  updateCloud() {
     const {
       volume,
       color,
