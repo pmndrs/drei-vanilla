@@ -423,8 +423,9 @@ clouds = new Clouds({ texture: cloudTexture })
 scene.add(clouds)
 
 // create cloud and add it to clouds group
-cloud0 = new Cloud()
-clouds.add(cloud0)
+cloud_0 = new Cloud()
+clouds.add(cloud_0)
+// call "cloud_0.updateCloud()" after changing any cloud parameter to see latest changes
 
 // call in animate loop
 clouds.update(camera, clock.getElapsedTime(), clock.getDelta())

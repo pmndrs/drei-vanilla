@@ -139,7 +139,7 @@ const addCloudGui = (cloud: Cloud) => {
   const fol = gui.addFolder('Edit: ' + cloud.name)
 
   // during runtime call "cloud.updateCloud()" after changing any cloud property
-  fol.onChange(() => cloud.updateClouds())
+  fol.onChange(() => cloud.updateCloud())
 
   fol.addColor(cloud, 'color')
   fol.add(cloud, 'seed', 0, 100, 1)
