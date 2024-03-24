@@ -582,7 +582,7 @@ const billboard = Billboard()
 const mesh = new THREE.Mesh(geometry, material)
 billboard.group.add(mesh)
 
-scene.add(billboard)
+scene.add(billboard.group)
 
 // call in animate loop
 billboard.update(camera)
