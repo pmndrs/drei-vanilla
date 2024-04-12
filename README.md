@@ -511,15 +511,23 @@ An ornamental component that extracts the geometry from its parent and displays 
 ```tsx
 export type OutlinesProps = {
   /** Outline color, default: black */
-  color: THREE.Color
+  color?: THREE.Color
+  /** Line thickness is independent of zoom, default: false */
+  screenspace?: boolean
   /** Outline opacity, default: 1 */
-  opacity: number
+  opacity?: number
   /** Outline transparency, default: false */
-  transparent: boolean
+  transparent?: boolean
   /** Outline thickness, default 0.05 */
-  thickness: number
+  thickness?: number
   /** Geometry crease angle (0 === no crease), default: Math.PI */
-  angle: number
+  angle?: number
+  toneMapped?: boolean
+  polygonOffset?: boolean
+  polygonOffsetFactor?: number
+  renderOrder?: number
+  /** needed if `screenspace` is true */
+  gl?: THREE.WebGLRenderer
 }
 ```
 
