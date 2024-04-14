@@ -16,16 +16,19 @@ let allOutlines: OutlinesType[] = []
 const outlinesParams = {
   color: '#ffff00' as THREE.ColorRepresentation,
   thickness: 0.1,
+  screenspace: false,
 }
 
-const generateOutlines = () => {
+const generateOutlines = (gl: THREE.WebGLRenderer) => {
   return Outlines({
     color: new THREE.Color(outlinesParams.color),
     thickness: outlinesParams.thickness,
+    screenspace: outlinesParams.screenspace,
+    gl,
   })
 }
 
-const setupTourMesh = () => {
+const setupTourMesh = (gl: THREE.WebGLRenderer) => {
   const geometry = new THREE.TorusKnotGeometry(1, 0.35, 100, 32)
   const mat = new THREE.MeshStandardMaterial({
     roughness: 0,
@@ -33,7 +36,7 @@ const setupTourMesh = () => {
   })
   const torusMesh = new THREE.Mesh(geometry, mat)
 
-  const outlines = generateOutlines()
+  const outlines = generateOutlines(gl)
   torusMesh.traverse((child) => {
     if (child instanceof THREE.Mesh) {
       child.castShadow = true
@@ -47,12 +50,12 @@ const setupTourMesh = () => {
   return torusMesh
 }
 
-const setupBox = () => {
+const setupBox = (gl: THREE.WebGLRenderer) => {
   const geometry = new THREE.BoxGeometry(2, 2, 2)
   const mat = new THREE.MeshBasicMaterial({ color: 'grey' })
   const boxMesh = new THREE.Mesh(geometry, mat)
   boxMesh.position.y = 1.2
-  const outlines = generateOutlines()
+  const outlines = generateOutlines(gl)
 
   allOutlines.push(outlines)
   boxMesh.add(outlines.group)
@@ -88,9 +91,9 @@ export const OutlinesStory = async () => {
 
   camera.position.set(10, 10, 10)
   scene.add(setupLight())
-  scene.add(setupTourMesh())
+  scene.add(setupTourMesh(renderer))
 
-  const box = setupBox()
+  const box = setupBox(renderer)
   scene.add(box)
 
   const floor = new THREE.Mesh(
@@ -118,9 +121,14 @@ const addOutlineGui = () => {
       outline.updateProps({ color: new THREE.Color(color) })
     })
   })
-  folder.add(params, 'thickness', 0, 0.1, 0.01).onChange((thickness: number) => {
+  folder.add(params, 'thickness', 0, 2, 0.01).onChange((thickness: number) => {
     allOutlines.forEach((outline) => {
       outline.updateProps({ thickness })
+    })
+  })
+  folder.add(params, 'screenspace').onChange((screenspace: boolean) => {
+    allOutlines.forEach((outline) => {
+      outline.updateProps({ screenspace })
     })
   })
 }
