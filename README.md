@@ -42,6 +42,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
             <li><a href="#meshreflectormaterial">MeshReflectorMaterial</a></li>
             <li><a href="#shadermaterial">shaderMaterial</a></li>
             <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
+            <li><a href="#meshdistortmaterial">MeshDistortMaterial</a></li>
             <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
             <li><a href="#spotlight">SpotLight</a></li>
           </ul>
@@ -181,6 +182,16 @@ A material that discards fragments. It can be used to render nothing efficiently
 ```javascript
 const mesh = new THREE.Mesh(geometry, new MeshDiscardMaterial())
 ```
+
+#### MeshDistortMaterial
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshtransmissionmaterial--mdm-story)
+
+<p>
+  <a href="https://codesandbox.io/s/l03yb"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/l03yb/screenshot.png" alt="Demo"/></a>
+</p>
+
+This material makes your geometry distort following simplex noise.
 
 #### MeshTransmissionMaterial
 
