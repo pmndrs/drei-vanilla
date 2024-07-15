@@ -378,6 +378,33 @@ export type CausticsType = {
 }
 ```
 
+##### Integrating with frontend frameworks
+
+If you are using a frontend framework, the construction of `Caustics` effect by calling `Caustics()` _might not_ be enough due to how frameworks handle the component life-cycle, changes when props change, and content projection / rendering children.
+
+To accommodate this use-case, `@pmndrs/vanilla` exports the following symbols to help you integrate the caustics effect with your frontend framework:
+
+- `CausticsProjectionMaterial`: A material that projects the caustics onto the catcher plane.
+- `CausticsMaterial`: A material that renders the caustics.
+- `createCausticsUpdate`: A function that accepts an `updateParameters` function/getter and creates an `update` function for the caustics effect. This function should be called in the animation loop implementation of your framework, and `updateParameters` should return the latest value of the parameters based on your framework's state management.
+
+```ts
+export function createCausticsUpdate(
+  updateParameters: () => {
+    params: Omit<CausticsProps, 'color'>
+    scene: THREE.Scene
+    group: THREE.Group
+    camera: THREE.OrthographicCamera
+    plane: THREE.Mesh<PlaneGeometry, InstanceType<typeof CausticsProjectionMaterial>>
+    normalTarget: THREE.WebGLRenderTarget
+    normalTargetB: THREE.WebGLRenderTarget
+    causticsTarget: THREE.WebGLRenderTarget
+    causticsTargetB: THREE.WebGLRenderTarget
+    helper?: THREE.CameraHelper | null
+  }
+): (gl: THREE.WebGLRenderer) => void
+```
+
 #### Cloud
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/staging-clouds--cloud-story)

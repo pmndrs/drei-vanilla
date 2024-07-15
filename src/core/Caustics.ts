@@ -2,10 +2,11 @@ import * as THREE from 'three'
 import { shaderMaterial } from './shaderMaterial'
 import { FullScreenQuad } from 'three/examples/jsm/postprocessing/Pass'
 import { useFBO } from './useFBO'
+import { PlaneGeometry } from 'three'
 
 const isVector3 = (object: any): object is THREE.Vector3 => object?.isVector3
 
-type CausticsProjectionMaterialType = THREE.MeshNormalMaterial & {
+export type CausticsProjectionMaterialType = THREE.MeshNormalMaterial & {
   viewMatrix: { value?: THREE.Matrix4 }
   color?: THREE.Color
   causticsTexture?: THREE.Texture
@@ -14,7 +15,7 @@ type CausticsProjectionMaterialType = THREE.MeshNormalMaterial & {
   lightViewMatrix?: THREE.Matrix4
 }
 
-type CausticsProps = {
+export type CausticsProps = {
   /** How many frames it will render, set it to Infinity for runtime, default: 1 */
   frames?: number
   /** Will display caustics only and skip the models, default: false */
@@ -60,7 +61,7 @@ function createNormalMaterial(side: THREE.Side = THREE.FrontSide) {
   })
 }
 
-type CausticsProjectionShaderType = {
+export type CausticsProjectionShaderType = {
   causticsTexture?: THREE.Texture | null
   causticsTextureB?: THREE.Texture | null
   color?: THREE.Color
@@ -68,7 +69,7 @@ type CausticsProjectionShaderType = {
   lightViewMatrix?: THREE.Matrix4
 }
 
-const CausticsProjectionMaterial = shaderMaterial<CausticsProjectionShaderType>(
+export const CausticsProjectionMaterial = shaderMaterial<CausticsProjectionShaderType>(
   {
     causticsTexture: null,
     causticsTextureB: null,
@@ -101,7 +102,7 @@ const CausticsProjectionMaterial = shaderMaterial<CausticsProjectionShaderType>(
    }`
 )
 
-type CausticsMaterialType = {
+export type CausticsMaterialType = {
   cameraMatrixWorld: THREE.Matrix4
   cameraProjectionMatrixInv: THREE.Matrix4
   normalTexture: THREE.Texture | null
@@ -120,7 +121,7 @@ type CausticsMaterialType = {
   intensity: number
 }
 
-const CausticsMaterial = shaderMaterial<CausticsMaterialType>(
+export const CausticsMaterial = shaderMaterial<CausticsMaterialType>(
   {
     cameraMatrixWorld: new THREE.Matrix4(),
     cameraProjectionMatrixInv: new THREE.Matrix4(),
@@ -277,85 +278,26 @@ export type CausticsType = {
   causticsTargetB: THREE.WebGLRenderTarget
 }
 
-export const Caustics = (
-  renderer: THREE.WebGLRenderer,
-  {
-    frames = 1,
-    causticsOnly = false,
-    ior = 1.1,
-    backside = false,
-    backsideIOR = 1.1,
-    worldRadius = 0.3125,
-    color = new THREE.Color('white'),
-    intensity = 0.05,
-    resolution = 2024,
-    lightSource = new THREE.Vector3(1, 1, 1),
-    near = 0.1,
-    far = 0, // auto calculates if zero
-  }: CausticsProps = {}
-): CausticsType => {
-  const params = {
-    frames,
-    ior,
-    color,
-    causticsOnly,
-    backside,
-    backsideIOR,
-    worldRadius,
-    intensity,
-    resolution,
-    lightSource,
-    near,
-    far,
+export function createCausticsUpdate(
+  updateParameters: () => {
+    params: Omit<CausticsProps, 'color'>
+    scene: THREE.Scene
+    group: THREE.Group
+    camera: THREE.OrthographicCamera
+    plane: THREE.Mesh<PlaneGeometry, InstanceType<typeof CausticsProjectionMaterial>>
+    normalTarget: THREE.WebGLRenderTarget
+    normalTargetB: THREE.WebGLRenderTarget
+    causticsTarget: THREE.WebGLRenderTarget
+    causticsTargetB: THREE.WebGLRenderTarget
+    helper?: THREE.CameraHelper | null
   }
-  const group = new THREE.Group()
-  group.name = 'caustics_group'
-  const ref = group
-
-  const camera = new THREE.OrthographicCamera()
-
-  const scene = new THREE.Scene()
-  scene.name = 'caustics_scene'
-
-  const gl = renderer
-
-  const helper = new THREE.CameraHelper(camera)
-  helper.name = 'caustics_helper'
-
-  // Buffers for front and back faces
-  const res = params.resolution
-  const normalTarget = useFBO(res, res, NORMALPROPS)
-  const normalTargetB = useFBO(res, res, NORMALPROPS)
-  const causticsTarget = useFBO(res, res, CAUSTICPROPS)
-  const causticsTargetB = useFBO(res, res, CAUSTICPROPS)
+) {
   // Normal materials for front and back faces
   const normalMat = createNormalMaterial()
   const normalMatB = createNormalMaterial(THREE.BackSide)
   // The quad that catches the caustics
   const causticsMaterial = new CausticsMaterial()
   const causticsQuad = new FullScreenQuad(causticsMaterial)
-
-  const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(1, 1),
-    new CausticsProjectionMaterial({
-      transparent: true,
-      color: params.color,
-      causticsTexture: causticsTarget.texture,
-      causticsTextureB: causticsTargetB.texture,
-      blending: THREE.CustomBlending,
-      blendSrc: THREE.OneFactor,
-      blendDst: THREE.SrcAlphaFactor,
-      depthWrite: false,
-    })
-  )
-
-  plane.name = 'caustics_plane'
-  plane.rotation.x = -Math.PI / 2
-  plane.renderOrder = 2
-  group.add(scene, plane)
-  // scene.add(activeModel) //add glb to caustics scene
-  // mainObjects.add(group, helper) // add entire group to scene
-  group.updateWorldMatrix(false, true)
 
   let count = 0
 
@@ -383,10 +325,26 @@ export const Caustics = (
     lightDirs.push(new THREE.Vector3())
   }
 
-  const update = () => {
-    if (params.frames === Infinity || count++ < params.frames) {
-      if (isVector3(lightSource)) lightDir.copy(lightSource).normalize()
-      else lightDir.copy(ref.worldToLocal(lightSource.getWorldPosition(v)).normalize())
+  return function update(gl: THREE.WebGLRenderer) {
+    const {
+      params,
+      helper,
+      camera,
+      plane,
+      normalTarget,
+      normalTargetB,
+      causticsTarget,
+      causticsTargetB,
+      scene,
+      group,
+    } = updateParameters()
+
+    if (params.frames === Infinity || (params.frames && count++ < params.frames)) {
+      if (isVector3(params.lightSource)) {
+        lightDir.copy(params.lightSource).normalize()
+      } else if (params.lightSource) {
+        lightDir.copy(group.worldToLocal(params.lightSource.getWorldPosition(v)).normalize())
+      }
 
       lightDirInv.copy(lightDir).multiplyScalar(-1)
 
@@ -422,7 +380,7 @@ export const Caustics = (
       camera.right = radius
       camera.top = radius
       camera.bottom = -radius
-      camera.near = params.near
+      if (params.near) camera.near = params.near
       if (params.far) {
         camera.far = params.far
       } else {
@@ -449,7 +407,7 @@ export const Caustics = (
       plane.scale.setScalar(maxSize)
       plane.position.copy(centerPos)
 
-      if (helper.parent) helper.update()
+      if (helper?.parent) helper.update()
 
       // Inject uniforms
       normalMatB.viewMatrix.value = normalMat.viewMatrix.value = camera.matrixWorldInverse
@@ -467,10 +425,11 @@ export const Caustics = (
 
       causticsMaterial.near = camera.near
       causticsMaterial.far = camera.far
-      causticsMaterial.resolution = params.resolution
+      if (params.resolution) causticsMaterial.resolution = params.resolution
       causticsMaterial.size = radius
-      causticsMaterial.intensity = params.intensity
-      causticsMaterial.worldRadius = params.worldRadius
+
+      if (params.intensity) causticsMaterial.intensity = params.intensity
+      if (params.worldRadius) causticsMaterial.worldRadius = params.worldRadius
 
       // Switch the scene on
       scene.visible = true
@@ -492,7 +451,7 @@ export const Caustics = (
       // Remove the override material
       scene.overrideMaterial = null
       // Render front face caustics
-      causticsMaterial.ior = params.ior
+      if (params.ior) causticsMaterial.ior = params.ior
       plane.material.lightProjMatrix = camera.projectionMatrix
       plane.material.lightViewMatrix = camera.matrixWorldInverse
       causticsMaterial.normalTexture = normalTarget.texture
@@ -502,7 +461,7 @@ export const Caustics = (
       causticsQuad.render(gl)
 
       // Render back face caustics, if enabled
-      causticsMaterial.ior = params.backsideIOR
+      if (params.backsideIOR) causticsMaterial.ior = params.backsideIOR
       causticsMaterial.normalTexture = normalTargetB.texture
       causticsMaterial.depthTexture = normalTargetB.depthTexture
       gl.setRenderTarget(causticsTargetB)
@@ -516,13 +475,100 @@ export const Caustics = (
       if (params.causticsOnly) scene.visible = false
     }
   }
+}
+
+export const Caustics = (
+  renderer: THREE.WebGLRenderer,
+  {
+    frames = 1,
+    causticsOnly = false,
+    ior = 1.1,
+    backside = false,
+    backsideIOR = 1.1,
+    worldRadius = 0.3125,
+    color = new THREE.Color('white'),
+    intensity = 0.05,
+    resolution = 2024,
+    lightSource = new THREE.Vector3(1, 1, 1),
+    near = 0.1,
+    far = 0, // auto calculates if zero
+  }: CausticsProps = {}
+): CausticsType => {
+  const params = {
+    frames,
+    ior,
+    color,
+    causticsOnly,
+    backside,
+    backsideIOR,
+    worldRadius,
+    intensity,
+    resolution,
+    lightSource,
+    near,
+    far,
+  }
+  const group = new THREE.Group()
+  group.name = 'caustics_group'
+
+  const camera = new THREE.OrthographicCamera()
+
+  const scene = new THREE.Scene()
+  scene.name = 'caustics_scene'
+
+  const gl = renderer
+
+  const helper = new THREE.CameraHelper(camera)
+  helper.name = 'caustics_helper'
+
+  // Buffers for front and back faces
+  const res = params.resolution
+  const normalTarget = useFBO(res, res, NORMALPROPS)
+  const normalTargetB = useFBO(res, res, NORMALPROPS)
+  const causticsTarget = useFBO(res, res, CAUSTICPROPS)
+  const causticsTargetB = useFBO(res, res, CAUSTICPROPS)
+
+  const plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 1),
+    new CausticsProjectionMaterial({
+      transparent: true,
+      color: params.color,
+      causticsTexture: causticsTarget.texture,
+      causticsTextureB: causticsTargetB.texture,
+      blending: THREE.CustomBlending,
+      blendSrc: THREE.OneFactor,
+      blendDst: THREE.SrcAlphaFactor,
+      depthWrite: false,
+    })
+  )
+
+  plane.name = 'caustics_plane'
+  plane.rotation.x = -Math.PI / 2
+  plane.renderOrder = 2
+  group.add(scene, plane)
+  // scene.add(activeModel) //add glb to caustics scene
+  // mainObjects.add(group, helper) // add entire group to scene
+  group.updateWorldMatrix(false, true)
+
+  const update = createCausticsUpdate(() => ({
+    params,
+    scene,
+    group,
+    camera,
+    plane,
+    normalTarget,
+    normalTargetB,
+    causticsTarget,
+    causticsTargetB,
+    helper,
+  }))
 
   return {
     scene,
     group,
     helper,
     params,
-    update,
+    update: update.bind({}, gl),
 
     normalTarget,
     normalTargetB,
