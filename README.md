@@ -43,6 +43,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
             <li><a href="#shadermaterial">shaderMaterial</a></li>
             <li><a href="#discardmaterial">MeshDiscardMaterial</a></li>
             <li><a href="#meshdistortmaterial">MeshDistortMaterial</a></li>
+            <li><a href="#meshwobblematerial">MeshWobbleMaterial</a></li>
             <li><a href="#meshtransmissionmaterial">MeshTransmissionMaterial</a></li>
             <li><a href="#spotlight">SpotLight</a></li>
           </ul>
@@ -185,13 +186,19 @@ const mesh = new THREE.Mesh(geometry, new MeshDiscardMaterial())
 
 #### MeshDistortMaterial
 
-[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshtransmissionmaterial--mdm-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshdistortmaterial--mdm-story)
 
 <p>
   <a href="https://codesandbox.io/s/l03yb"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/l03yb/screenshot.png" alt="Demo"/></a>
 </p>
 
 This material makes your geometry distort following simplex noise.
+
+#### MeshWobbleMaterial
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshwobblematerial--mwm-story)
+
+This material makes your geometry wobble and wave around. It was taken from the [threejs-examples](https://threejs.org/examples/#webgl_materials_modified) and adapted into a self-contained material.
 
 #### MeshTransmissionMaterial
 

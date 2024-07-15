@@ -3,10 +3,10 @@ import { Setup } from '../Setup'
 import GUI from 'lil-gui'
 import { Meta } from '@storybook/html'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { MeshDistortMaterial } from '../../src/materials/MeshDistortMaterial'
+import { MeshWobbleMaterial } from '../../src/materials/MeshWobbleMaterial'
 
 export default {
-  title: 'Shaders/MeshDistortMaterial',
+  title: 'Shaders/MeshWobbleMaterial',
 } as Meta // TODO: this should be `satisfies Meta` but commit hooks lag behind TS
 
 let gui: GUI, materialGuiFolder: GUI
@@ -14,16 +14,16 @@ let scene: THREE.Scene,
   camera: THREE.PerspectiveCamera,
   renderer: THREE.WebGLRenderer,
   animateLoop: (arg0: (time: number) => void) => void,
-  meshDistortMaterial: MeshDistortMaterial
+  meshWobbleMaterial: MeshWobbleMaterial
 
-export const MDMStory = async () => {
+export const MWMStory = async () => {
   const setupResult = Setup()
   scene = setupResult.scene
   camera = setupResult.camera
   renderer = setupResult.renderer
   animateLoop = setupResult.render
 
-  gui = new GUI({ title: MDMStory.storyName })
+  gui = new GUI({ title: MWMStory.storyName })
   camera.position.set(0, 0, 5)
 
   const controls = new OrbitControls(camera, renderer.domElement)
@@ -39,40 +39,38 @@ export const MDMStory = async () => {
   dirLight.shadow.mapSize.height = 1024
   scene.add(dirLight)
 
-  setupMeshDistortMaterial()
+  setupMeshWobbleMaterial()
 }
 
-async function setupMeshDistortMaterial() {
-  const geometry = new THREE.SphereGeometry(1, 32, 32)
-  meshDistortMaterial = new MeshDistortMaterial({ color: '#f25042', radius: 0.2 })
+async function setupMeshWobbleMaterial() {
+  const geometry = new THREE.TorusGeometry(1, 0.25, 16, 100)
+  meshWobbleMaterial = new MeshWobbleMaterial({ color: '#f25042', factor: 0.75 })
 
-  const mesh = new THREE.Mesh(geometry, meshDistortMaterial)
-  mesh.scale.set(2, 4, 1)
+  const mesh = new THREE.Mesh(geometry, meshWobbleMaterial)
 
   scene.add(mesh)
 
-  createMeshDistortGUI()
+  createMeshWobbleGUI()
 
   animateLoop((time) => {
-    meshDistortMaterial.time = time * 0.0025
-    meshDistortMaterial.distort = THREE.MathUtils.lerp(meshDistortMaterial.distort, 0.4, 0.05)
+    meshWobbleMaterial.time = time * 0.0025
   })
 }
 
 /**
  * Create gui for material properties
  */
-function createMeshDistortGUI() {
+function createMeshWobbleGUI() {
   if (materialGuiFolder) {
     materialGuiFolder.destroy()
   }
 
-  const matProps = gui.addFolder('MeshDistortMaterial id: ' + meshDistortMaterial.id)
+  const matProps = gui.addFolder('MeshWobbleMaterial id: ' + meshWobbleMaterial.id)
 
-  matProps.addColor(meshDistortMaterial, 'color')
-  matProps.add(meshDistortMaterial._radius, 'value').min(0.01).max(0.5).step(0.01).name('radius')
+  matProps.addColor(meshWobbleMaterial, 'color')
+  matProps.add(meshWobbleMaterial._factor, 'value').min(0.5).max(4).step(0.1).name('factor')
 
   materialGuiFolder = matProps
 }
 
-MDMStory.storyName = 'Sphere'
+MWMStory.storyName = 'Torus'

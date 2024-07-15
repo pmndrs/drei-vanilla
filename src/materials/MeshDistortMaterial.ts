@@ -2,17 +2,28 @@ import { IUniform, MeshPhysicalMaterial, MeshPhysicalMaterialParameters } from '
 // @ts-ignore
 import distort from '../helpers/glsl/distort.vert.glsl'
 
+export interface MeshDistortMaterialParameters {
+  time?: number
+  distort?: number
+  radius?: number
+}
+
 export class MeshDistortMaterial extends MeshPhysicalMaterial {
   _time: IUniform<number>
   _distort: IUniform<number>
   _radius: IUniform<number>
 
-  constructor(parameters: MeshPhysicalMaterialParameters = {}) {
+  constructor({
+    time = 0,
+    distort = 0.4,
+    radius = 1,
+    ...parameters
+  }: MeshDistortMaterialParameters & MeshPhysicalMaterialParameters = {}) {
     super(parameters)
     this.setValues(parameters)
-    this._time = { value: 0 }
-    this._distort = { value: 0.4 }
-    this._radius = { value: 1 }
+    this._time = { value: time }
+    this._distort = { value: distort }
+    this._radius = { value: radius }
   }
 
   // FIXME Use `THREE.WebGLProgramParametersWithUniforms` type when able to target @types/three@0.160.0
