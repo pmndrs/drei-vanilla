@@ -1,6 +1,6 @@
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GUI } from 'lil-gui'
 import { Text, TextProps, TextType } from '../../src/core/Text'
 

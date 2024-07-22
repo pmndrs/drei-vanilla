@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
-import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 import { GUI } from 'lil-gui'
 import { Grid, GridType } from '../../src/core/Grid'
