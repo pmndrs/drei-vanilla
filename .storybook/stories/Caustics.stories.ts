@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import { Setup } from '../Setup'
 import { Meta } from '@storybook/html'
-import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader'
-import { GroundProjectedSkybox } from 'three/examples/jsm/objects/GroundProjectedSkybox'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
+import { GroundedSkybox } from 'three/examples/jsm/objects/GroundedSkybox.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 import { GUI } from 'lil-gui'
 import { Caustics, CausticsType } from '../../src/core/Caustics'
@@ -76,10 +76,10 @@ const setupEnvironment = (scene: THREE.Scene) => {
   exrLoader.load('round_platform_1k.exr', (exrTex) => {
     exrTex.mapping = THREE.EquirectangularReflectionMapping
     scene.environment = exrTex
-    // scene.background = exrTex
+    scene.background = exrTex
 
-    const groundProjection = new GroundProjectedSkybox(exrTex)
-    groundProjection.scale.setScalar(100)
+    const groundProjection = new GroundedSkybox(exrTex, 5, 50)
+    groundProjection.position.set(0, 5, 0)
     scene.add(groundProjection)
   })
 }
@@ -107,7 +107,7 @@ const setupCaustics = (scene: THREE.Scene, renderer: THREE.WebGLRenderer) => {
   caustics.helper.visible = false // start hidden
   scene.add(caustics.group, caustics.helper)
 
-  caustics.group.position.y = 0.001 // to prevent z-fighting with groundProjectedSkybox
+  caustics.group.position.y = 0.001 // to prevent z-fighting with GroundedSkybox
 
   caustics.scene.add(torusMesh)
 

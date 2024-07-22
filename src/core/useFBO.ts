@@ -5,7 +5,7 @@ type FBOSettings = {
   samples?: number
   /** If set, the scene depth will be rendered into buffer.depthTexture. Default: false */
   depth?: boolean
-} & THREE.WebGLRenderTargetOptions
+} & THREE.RenderTargetOptions
 
 function useFBO(
   /** Width in pixels */

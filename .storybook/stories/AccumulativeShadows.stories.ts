@@ -2,8 +2,8 @@ import * as THREE from 'three'
 import { Setup } from '../Setup'
 import GUI from 'lil-gui'
 import { Meta } from '@storybook/html'
-import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 import { ProgressiveLightMap, SoftShadowMaterial } from '../../src/core/AccumulativeShadows'
 

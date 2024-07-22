@@ -1,4 +1,5 @@
 // @ts-ignore
+import { Mesh } from 'three'
 import { Text as TextMeshImpl, preloadFont } from 'troika-three-text'
 
 export type TextProps = {
@@ -48,7 +49,7 @@ function removeExternalProps(props: Partial<TextProps>) {
 }
 
 export type TextType = {
-  mesh: THREE.Mesh
+  mesh: Mesh
   updateProps: (newProps: Partial<TextProps>) => void
   dispose: () => void
 }

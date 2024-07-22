@@ -10,10 +10,8 @@ import {
   LinearFilter,
   MathUtils,
   Mesh,
-  MeshBasicMaterial,
   MeshStandardMaterial,
   PlaneGeometry,
-  ShaderMaterial,
   SphereGeometry,
   SpotLight,
   SpotLightHelper,
@@ -23,7 +21,7 @@ import {
   WebGLRenderTarget,
 } from 'three'
 import { Setup } from '../Setup'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Meta } from '@storybook/html'
 import GUI from 'lil-gui'
 

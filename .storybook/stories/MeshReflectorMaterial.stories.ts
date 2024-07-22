@@ -2,9 +2,9 @@ import * as THREE from 'three'
 import { Setup } from '../Setup'
 import GUI from 'lil-gui'
 import { Meta } from '@storybook/html'
-import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader'
-import { GroundProjectedSkybox } from 'three/examples/jsm/objects/GroundProjectedSkybox'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
+import { GroundedSkybox } from 'three/examples/jsm/objects/GroundedSkybox.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { MeshReflectorMaterial } from '../../src/materials/MeshReflectorMaterial'
 import { BlurPass } from '../../src/materials/BlurPass'
 
@@ -91,10 +91,10 @@ const setupEnvironment = () => {
   exrLoader.load('dancing_hall_1k.exr', (exrTex) => {
     exrTex.mapping = THREE.EquirectangularReflectionMapping
     scene.environment = exrTex
-    // scene.background = exrTex
+    scene.background = exrTex
 
-    const groundProjection = new GroundProjectedSkybox(exrTex)
-    groundProjection.scale.setScalar(100)
+    const groundProjection = new GroundedSkybox(exrTex, 10, 50)
+    groundProjection.position.set(0, 10, 0)
     scene.add(groundProjection)
 
     const envParams = {

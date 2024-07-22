@@ -71,6 +71,7 @@ export class MeshTransmissionMaterial extends THREE.MeshPhysicalMaterial {
       buffer: { value: buffer },
     }
 
+    // @ts-ignore
     this.onBeforeCompile = (shader: THREE.Shader & { defines: { [key: string]: string } }) => {
       shader.uniforms = {
         ...shader.uniforms,

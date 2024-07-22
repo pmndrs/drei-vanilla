@@ -13,6 +13,7 @@ import {
   PlaneGeometry,
   InstancedBufferAttribute,
   BufferAttribute,
+  Camera,
 } from 'three'
 import { setUpdateRange } from '../../src/helpers/deprecated'
 
@@ -125,7 +126,7 @@ export class Clouds extends Group {
   ref: Group
   instance: InstancedMesh
   cloudMaterial: Material
-  update: (camera: THREE.Camera, time: number, delta: number) => void
+  update: (camera: Camera, time: number, delta: number) => void
 
   constructor({ limit = 200, range, material = MeshLambertMaterial, texture, frustumCulled = true }: CloudsProps = {}) {
     super()
