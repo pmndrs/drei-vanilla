@@ -99,13 +99,13 @@ const CloudMaterialMaker = (material: typeof Material) => {
       const opaque_fragment = parseInt(REVISION.replace(/\D+/g, '')) >= 154 ? 'opaque_fragment' : 'output_fragment'
       this.onBeforeCompile = (shader) => {
         shader.vertexShader =
-          `attribute float opacity;
+          `attribute float cloudOpacity;
                varying float vOpacity;
               ` +
           shader.vertexShader.replace(
             '#include <fog_vertex>',
             `#include <fog_vertex>
-                 vOpacity = opacity;
+                 vOpacity = cloudOpacity;
                 `
           )
         shader.fragmentShader =
@@ -140,7 +140,7 @@ export class Clouds extends Group {
 
     const opAttr = new InstancedBufferAttribute(opacities, 1)
     opAttr.setUsage(DynamicDrawUsage)
-    planeGeometry.setAttribute('opacity', opAttr)
+    planeGeometry.setAttribute('cloudOpacity', opAttr)
 
     const CloudMaterial = CloudMaterialMaker(material)
 
@@ -195,7 +195,7 @@ export class Clouds extends Group {
       if (instance.instanceColor) {
         setUpdateRange(instance.instanceColor, { offset: 0, count: count * 3 })
       }
-      setUpdateRange(instance.geometry.attributes.opacity as BufferAttribute, { offset: 0, count: count })
+      setUpdateRange(instance.geometry.attributes.cloudOpacity as BufferAttribute, { offset: 0, count: count })
     }
 
     let t = 0
@@ -233,7 +233,7 @@ export class Clouds extends Group {
       }
 
       // Update instance
-      instance.geometry.attributes.opacity.needsUpdate = true
+      instance.geometry.attributes.cloudOpacity.needsUpdate = true
       instance.instanceMatrix.needsUpdate = true
       if (instance.instanceColor) instance.instanceColor.needsUpdate = true
     }
