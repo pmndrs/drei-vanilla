@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { shaderMaterial } from './shaderMaterial'
-import { FullScreenQuad } from 'three/examples/jsm/postprocessing/Pass'
+import { FullScreenQuad } from 'three/examples/jsm/postprocessing/Pass.js'
 import { useFBO } from './useFBO'
 import { PlaneGeometry } from 'three'
 
