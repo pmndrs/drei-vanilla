@@ -14,7 +14,6 @@ export * from './SpriteAnimator'
 // Abstractions
 export * from './Outlines'
 export * from './Billboard'
-export * from './Text'
 export * from './Splat'
 
 // Gizmos

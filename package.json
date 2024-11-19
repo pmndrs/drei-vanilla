@@ -59,8 +59,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "glsl-noise": "^0.0.0",
-    "troika-three-text": "0.47.2"
+    "glsl-noise": "^0.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
