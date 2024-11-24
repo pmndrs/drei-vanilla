@@ -112,7 +112,7 @@ function setupPortalScene() {
     portalScene.background = exrTex
   })
 
-  // add the portal mesh
+  // setup the portal
   portalParams.renderTarget.setSize(portalParams.resolution, portalParams.resolution)
 
   renderer.getSize(rendererSize)
