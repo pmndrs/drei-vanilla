@@ -793,14 +793,17 @@ export type SpriteAnimatorType = {
 
 #### MeshPortalMaterial
 
-[drei counterpart](https://github.com/pmndrs/drei#sprite-animator)
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshportalmaterial-basic--mpm-story)
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshportalmaterial-sdf--mpm-story)
 
+[drei counterpart](http://drei.docs.pmnd.rs/portals/mesh-portal-material)
+
+A material that creates a portal into another scene. It is drawn onto the geometry of the mesh that it is applied to. It uses RenderTexture internally, but counteracts the perspective shift of the texture surface, the portals contents are thereby masked by it but otherwise in the same position as if they were in the original scene.
+
 ```tsx
 export type PortalMaterialType = {
-  /** Texture from WebGlRenderTarget */
-  map?: THREE.Texture | null
+  /** Texture from WebGLRenderTarget */
+  map: THREE.Texture
   /** vector 2 containing three.js canvas resolution to keep the portals aligned*/
   resolution: THREE.Vector2
   /** sdf texture to fade the edges of the portal */
@@ -810,33 +813,33 @@ export type PortalMaterialType = {
 }
 ```
 
-A material that creates a portal into another scene. It is drawn onto the geometry of the mesh that it is applied to. It uses RenderTexture internally, but counteracts the perspective shift of the texture surface, the portals contents are thereby masked by it but otherwise in the same position as if they were in the original scene.
+Usage:
 
 ```jsx
-const portalParams = {
-  resolution: 1024,
-  renderTarget: new THREE.WebGLRenderTarget(),
-}
+const rendererSize = new THREE.Vector2()
+const portalRenderTarget = new THREE.WebGLRenderTarget(512, 512)
+
+const scene = new THREE.Scene() // main scene
+const portalScene = new THREE.Scene() // content inside portal
 
 const portalGeometry = new THREE.PlaneGeometry(2, 2)
-  const portalMaterial = new MeshPortalMaterial({
-    map: portalParams.renderTarget.texture,
-    resolution: rendererSize,
-  })
+const portalMaterial = new MeshPortalMaterial({
+  map: portalRenderTarget.texture,
+  resolution: rendererSize,
+})
 portalMesh = new THREE.Mesh(portalGeometry, portalMaterial)
 
-# during resize update the rendererSize vector2
-window.onresize=()=>{
+// During resize: update the rendererSize Vector2
+window.onresize = () => {
   ...
   renderer.getSize(rendererSize)
   rendererSize.multiplyScalar(renderer.getPixelRatio())
 }
 
-# in animate loop
-
+// In the animation loop
 renderer.setAnimationLoop(() => {
   // render portal scene
-  renderer.setRenderTarget(portalParams.renderTarget)
+  renderer.setRenderTarget(portalRenderTarget)
   renderer.render(portalScene, camera)
   renderer.setRenderTarget(null)
 
@@ -845,17 +848,19 @@ renderer.setAnimationLoop(() => {
 })
 ```
 
-You can optionally fade or blur the edges of the portal by providing a `blur` prop, do not forget to make the material transparent in that case. It uses SDF flood-fill to determine the shape, you can thereby blur any geometry.Import the helper function `meshPortalMaterialApplySDF` to auto apply the sdf mask
+You can optionally fade or blur the edges of the portal by providing a sdf texture, do not forget to make the material transparent in that case. It uses SDF flood-fill to determine the shape, you can thereby blur any geometry. Import the helper function `meshPortalMaterialApplySDF` to auto apply the sdf mask.
 
 ```jsx
+// Create portal material with SDF and edge blur
 const portalMaterial = new MeshPortalMaterial({
-  map: portalParams.renderTarget.texture,
+  map: portalRenderTarget.texture,
   resolution: rendererSize,
-  transparent: true,
-  blur: 0.5,
+  transparent: true, // Transparency is required for fading/blur
+  blur: 0.5, // Adjust edge blur
 })
 
+// Auto-apply SDF mask to the mesh
 portalMesh = new THREE.Mesh(portalGeometry, portalMaterial)
-meshPortalMaterialApplySDF(portalMesh, 512, renderer)
+meshPortalMaterialApplySDF(portalMesh, 512, renderer) // 512 is SDF texture resolution
 scene.add(portalMesh)
 ```
