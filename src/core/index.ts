@@ -18,3 +18,6 @@ export * from './Splat'
 
 // Gizmos
 export * from './Grid'
+
+// Portals
+export * from './MeshPortalMaterial'
