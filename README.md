@@ -67,6 +67,9 @@ import { pcss, ... } from '@pmndrs/vanilla'
          <li><a href="#misc">Misc</a></li>
         <ul>
           <li><a href="#sprite-animator">Sprite Animator</a></li>
+        </ul <li><a href="#portals">Portals</a></li>        
+        <ul>         
+          <li><a href="#meshportalmaterial">MeshPortalMaterial</a></li>
         </ul>
       </ul>
     </td>
@@ -786,4 +789,73 @@ export type SpriteAnimatorType = {
   playAnimation: Function // Function to play the animation.
   setFrameName: Function // Function to set the frame identifier to use, has to be one of animationNames.
 }
+```
+
+#### MeshPortalMaterial
+
+[drei counterpart](https://github.com/pmndrs/drei#sprite-animator)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshportalmaterial-basic--mpm-story)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-meshportalmaterial-sdf--mpm-story)
+
+```tsx
+export type PortalMaterialType = {
+  /** Texture from WebGlRenderTarget */
+  map?: THREE.Texture | null
+  /** vector 2 containing three.js canvas resolution to keep the portals aligned*/
+  resolution: THREE.Vector2
+  /** sdf texture to fade the edges of the portal */
+  sdf?: THREE.Texture | null
+  /** edge fade blur when using sdf texture */
+  blur: number
+}
+```
+
+A material that creates a portal into another scene. It is drawn onto the geometry of the mesh that it is applied to. It uses RenderTexture internally, but counteracts the perspective shift of the texture surface, the portals contents are thereby masked by it but otherwise in the same position as if they were in the original scene.
+
+```jsx
+const portalParams = {
+  resolution: 1024,
+  renderTarget: new THREE.WebGLRenderTarget(),
+}
+
+const portalGeometry = new THREE.PlaneGeometry(2, 2)
+  const portalMaterial = new MeshPortalMaterial({
+    map: portalParams.renderTarget.texture,
+    resolution: rendererSize,
+  })
+portalMesh = new THREE.Mesh(portalGeometry, portalMaterial)
+
+# during resize update the rendererSize vector2
+window.onresize=()=>{
+  ...
+  renderer.getSize(rendererSize)
+  rendererSize.multiplyScalar(renderer.getPixelRatio())
+}
+
+# in animate loop
+
+renderer.setAnimationLoop(() => {
+  // render portal scene
+  renderer.setRenderTarget(portalParams.renderTarget)
+  renderer.render(portalScene, camera)
+  renderer.setRenderTarget(null)
+
+  // render main scene
+  renderer.render(scene, camera)
+})
+```
+
+You can optionally fade or blur the edges of the portal by providing a `blur` prop, do not forget to make the material transparent in that case. It uses SDF flood-fill to determine the shape, you can thereby blur any geometry.Import the helper function `meshPortalMaterialApplySDF` to auto apply the sdf mask
+
+```jsx
+const portalMaterial = new MeshPortalMaterial({
+  map: portalParams.renderTarget.texture,
+  resolution: rendererSize,
+  transparent: true,
+  blur: 0.5,
+})
+
+portalMesh = new THREE.Mesh(portalGeometry, portalMaterial)
+meshPortalMaterialApplySDF(portalMesh, 512, renderer)
+scene.add(portalMesh)
 ```

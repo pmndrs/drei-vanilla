@@ -6,7 +6,6 @@ import { FullScreenQuad } from 'three-stdlib'
 export type PortalMaterialType = {
   resolution: THREE.Vector2
   blur: number
-  blend: number
   size?: number
   sdf?: THREE.Texture | null
   map?: THREE.Texture | null
@@ -17,7 +16,6 @@ export const MeshPortalMaterial = shaderMaterial<PortalMaterialType>(
     blur: 0,
     map: null,
     sdf: null,
-    blend: 0,
     size: 0,
     resolution: /* @__PURE__ */ new THREE.Vector2(),
   },

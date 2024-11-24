@@ -1,4 +1,4 @@
-import { PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer, REVISION, ACESFilmicToneMapping } from 'three'
+import { PerspectiveCamera, Scene, WebGLRenderer, ACESFilmicToneMapping } from 'three'
 import { addons } from '@storybook/addons'
 import { STORY_CHANGED } from '@storybook/core-events'
 

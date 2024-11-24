@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import GUI from 'lil-gui'
 import { Meta } from '@storybook/html'
+import { Setup } from '../Setup'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { MeshPortalMaterial, meshPortalMaterialApplySDF } from '../../src/core/MeshPortalMaterial'
 import { EXRLoader } from 'three/examples/jsm/Addons.js'
