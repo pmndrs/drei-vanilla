@@ -29,6 +29,7 @@ declare global {
 
 window.canvas = root.appendChild(document.createElement('canvas'))
 window.context = canvas.getContext('webgl2')!
+window.canvas.style.display = 'block'
 
 export const Setup = () => {
   const renderer = new WebGLRenderer({ alpha: true, canvas, context })
