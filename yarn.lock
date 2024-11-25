@@ -3175,11 +3175,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/draco3d@^1.4.0":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@types/draco3d/-/draco3d-1.4.2.tgz#7faccb809db2a5e19b9efb97c5f2eb9d64d527ea"
-  integrity sha512-goh23EGr6CLV6aKPwN1p8kBD/7tT5V/bLpToSbarKrwVejqNrspVrv8DhliteYkkhZYrlq/fwKZRRUzH4XN88w==
-
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
   resolved "https://registry.npmjs.org/@types/eslint-scope/-/eslint-scope-3.7.4.tgz"
@@ -3350,11 +3345,6 @@
   resolved "https://registry.npmjs.org/@types/npmlog/-/npmlog-4.1.4.tgz"
   integrity sha512-WKG4gTr8przEZBiJ5r3s8ZIAoMXNbOgQ+j/d5O4X3x6kZJRLNvyUJuUK/KoG3+8BaOHPhp2m7WC6JKKeovDSzQ==
 
-"@types/offscreencanvas@^2019.6.4":
-  version "2019.7.0"
-  resolved "https://registry.npmjs.org/@types/offscreencanvas/-/offscreencanvas-2019.7.0.tgz"
-  integrity sha512-PGcyveRIpL1XIqK8eBsmRBt76eFgtzuPiSTyKHZxnGemp2yzGzWpjYKAfK3wIMiU7eH+851yEpiuP8JZerTmWg==
-
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz"
@@ -3465,11 +3455,6 @@
   version "0.5.1"
   resolved "https://registry.npmjs.org/@types/webxr/-/webxr-0.5.1.tgz"
   integrity sha512-xlFXPfgJR5vIuDefhaHuUM9uUgvPaXB6GKdXy2gdEh8gBWQZ2ul24AJz3foUd8NNKlSTQuWYJpCb1/pL81m1KQ==
-
-"@types/webxr@^0.5.2":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@types/webxr/-/webxr-0.5.4.tgz#3d55a6427f9281d456843d754c99bf7804657fe3"
-  integrity sha512-41gfGLTtqXZhcmoDlLDHqMJDuwAMwhHwXf9Q2job3TUBsvkNfPNI/3IWVEtLH4tyY1ElWtfwIaoNeqeEX238/Q==
 
 "@types/yargs-parser@*":
   version "21.0.0"
@@ -6200,11 +6185,6 @@ dotenv@^8.0.0:
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-8.6.0.tgz"
   integrity sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==
 
-draco3d@^1.4.1:
-  version "1.5.2"
-  resolved "https://registry.npmjs.org/draco3d/-/draco3d-1.5.2.tgz"
-  integrity sha512-AeRQ25Fb29c14vpjnh167UGW0nGY0ZpEM3ld+zEXoEySlmEXcXfsCHZeTgo5qXH925V1JsdjrzasdaQ22/vXog==
-
 duplexer2@~0.1.0:
   version "0.1.4"
   resolved "https://registry.npmjs.org/duplexer2/-/duplexer2-0.1.4.tgz"
@@ -6978,11 +6958,6 @@ fetch-retry@^5.0.2:
   version "5.0.4"
   resolved "https://registry.npmjs.org/fetch-retry/-/fetch-retry-5.0.4.tgz"
   integrity sha512-LXcdgpdcVedccGg0AZqg+S8lX/FCdwXD92WNZ5k5qsb0irRhSFsBOpcJt7oevyqT2/C2nEE0zSFNdBEpj3YOSw==
-
-fflate@^0.6.9:
-  version "0.6.10"
-  resolved "https://registry.npmjs.org/fflate/-/fflate-0.6.10.tgz"
-  integrity sha512-IQrh3lEPM93wVCEczc9SaAOvkmcoQn/G8Bo1e8ZPlY3X3bnAxWaBdvTdvM1hP62iZp0BXWDy4vTAy4fF0+Dlpg==
 
 fflate@~0.8.2:
   version "0.8.2"
@@ -11771,11 +11746,6 @@ postcss@^8.2.15:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-potpack@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/potpack/-/potpack-1.0.2.tgz"
-  integrity sha512-choctRBIV9EMT9WGAZHn3V7t0Z2pMQyl0EZE6pFc/6ml3ssw7Dlf/oAOvFwjm1HVsqfQN8GfeFyJ+d8tRzqueQ==
-
 prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz"
@@ -13832,18 +13802,6 @@ text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz"
   integrity "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ= sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw=="
-
-three-stdlib@^2.34.0:
-  version "2.34.0"
-  resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.34.0.tgz#bc191d92037ddcc3e4d5a4ae1bd46a199a857b5b"
-  integrity sha512-U5qJYWgUKBFJqr1coMSbczA964uvouzBjQbtJlaI9LfMwy7hr+kc1Mfh0gqi/2872KmGu9utgff6lj8Oti8+VQ==
-  dependencies:
-    "@types/draco3d" "^1.4.0"
-    "@types/offscreencanvas" "^2019.6.4"
-    "@types/webxr" "^0.5.2"
-    draco3d "^1.4.1"
-    fflate "^0.6.9"
-    potpack "^1.0.1"
 
 three@^0.166.1:
   version "0.166.1"
