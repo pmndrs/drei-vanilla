@@ -1,4 +1,4 @@
-import { PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer, REVISION, ACESFilmicToneMapping } from 'three'
+import { PerspectiveCamera, Scene, WebGLRenderer, ACESFilmicToneMapping } from 'three'
 import { addons } from '@storybook/addons'
 import { STORY_CHANGED } from '@storybook/core-events'
 
@@ -29,6 +29,7 @@ declare global {
 
 window.canvas = root.appendChild(document.createElement('canvas'))
 window.context = canvas.getContext('webgl2')!
+window.canvas.style.display = 'block'
 
 export const Setup = () => {
   const renderer = new WebGLRenderer({ alpha: true, canvas, context })
