@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { shaderMaterial } from './shaderMaterial'
 import { version } from '../helpers/constants'
-import { FullScreenQuad } from 'three-stdlib'
+import { FullScreenQuad } from '../helpers/Pass'
 
 export type PortalMaterialType = {
   resolution: THREE.Vector2

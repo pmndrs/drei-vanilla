@@ -98,7 +98,7 @@ export function Outlines({
   thickness = 0.05,
   angle = Math.PI,
   gl,
-}: Partial<OutlinesProps>): OutlinesType {
+}: Partial<OutlinesProps> = {}): OutlinesType {
   const group = new THREE.Group()
 
   let shapeProps: OutlinesProps = {
