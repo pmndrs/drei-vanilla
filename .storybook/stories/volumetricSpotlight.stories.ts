@@ -169,7 +169,7 @@ function renderDepth() {
  */
 function depthOnResize() {
   renderer.getSize(rendererSize)
-  rendererSize.multiplyScalar(renderer.getPixelRatio())
+  rendererSize.multiplyScalar(renderer.getPixelRatio()) // depth texture will get misaligned if pixel is not multiplied
   volumeMaterial.resolution.copy(rendererSize)
 }
 
