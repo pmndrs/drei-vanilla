@@ -127,9 +127,6 @@ function setupSpotlight() {
  * Create depthTexture and DepthRender target
  */
 function updateDepthTargets() {
-  renderer.getSize(rendererSize)
-  rendererSize.multiplyScalar(renderer.getPixelRatio())
-
   if (depthTexture) depthTexture.dispose()
   depthTexture = new DepthTexture(volumeParams.depthResolution, volumeParams.depthResolution)
   depthTexture.format = DepthFormat
@@ -151,8 +148,8 @@ function updateDepthTargets() {
     window.addEventListener('resize', depthOnResize)
   } else {
     volumeMaterial.depth = null
-    volumeMaterial.resolution.set(0, 0)
     window.removeEventListener('resize', depthOnResize)
+    volumeMaterial.resolution.set(0, 0)
   }
 }
 
@@ -173,7 +170,7 @@ function renderDepth() {
 function depthOnResize() {
   renderer.getSize(rendererSize)
   rendererSize.multiplyScalar(renderer.getPixelRatio())
-  volumeMaterial.resolution.copy(renderer.getSize(rendererSize))
+  volumeMaterial.resolution.copy(rendererSize)
 }
 
 /**
@@ -259,7 +256,7 @@ function addSpotLightGui(gui: GUI) {
   })
 
   volFolder.add(volumeParams, 'useDepth').onChange(updateDepthTargets)
-  volFolder.add(volumeParams, 'depthResolution', 128, 2048, 1).onChange(updateDepthTargets)
+  volFolder.add(volumeParams, 'depthResolution', 128, 2048, 128).onChange(updateDepthTargets)
 }
 
 /**
