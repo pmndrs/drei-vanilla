@@ -1,4 +1,4 @@
-import { Color, Vector2, Vector3, type Texture } from 'three'
+import { Color, Vector2, Vector3, type Texture, UniformsLib, UniformsUtils } from 'three'
 import { shaderMaterial } from '../core/shaderMaterial'
 import { version } from '../helpers/constants'
 
@@ -37,10 +37,15 @@ export const SpotLightMaterial = shaderMaterial<SpotLightMaterialProps>(
   uniform vec3 spotPosition;
   uniform float attenuation;
 
+  #include <fog_pars_vertex>
   #include <common>
   #include <logdepthbuf_pars_vertex>
-
+  
   void main() {
+  	#include <begin_vertex>
+    #include <project_vertex>
+    #include <fog_vertex>
+
     // compute intensity
     vNormal = normalize(normalMatrix * normal);
     vec4 worldPosition = modelMatrix * vec4(position, 1);
@@ -66,6 +71,7 @@ export const SpotLightMaterial = shaderMaterial<SpotLightMaterialProps>(
   uniform float cameraFar;
   uniform float opacity;
 
+  #include <fog_pars_fragment>
   #include <packing>
   #include <logdepthbuf_pars_fragment>
 
@@ -100,5 +106,9 @@ export const SpotLightMaterial = shaderMaterial<SpotLightMaterialProps>(
 
     #include <tonemapping_fragment>
     #include <${version >= 154 ? 'colorspace_fragment' : 'encodings_fragment'}>
-  }`
+    #include <fog_fragment>
+  }`,
+  (material) => {
+    Object.assign(material.uniforms, UniformsUtils.merge([UniformsLib['fog']]))
+  }
 )
