@@ -32,6 +32,7 @@ export const PcssStory = async () => {
     size: 25,
     focus: 0,
     samples: 10,
+    intensity: 1,
   }
 
   const folder = gui.addFolder('Settings')
@@ -42,6 +43,7 @@ export const PcssStory = async () => {
   folder.add(args, 'size', 1, 100, 1)
   folder.add(args, 'focus', 0, 2, 0.1)
   folder.add(args, 'samples', 1, 20, 1)
+  folder.add(args, 'intensity', 0, 1, 0.1)
 
   const { renderer, scene, camera, render } = Setup()
 
@@ -62,6 +64,7 @@ export const PcssStory = async () => {
   light.shadow.mapSize.width = 1024
   light.shadow.mapSize.height = 1024
   light.shadow.camera.far = 20
+  light.shadow.intensity = 1
 
   scene.add(light)
 
@@ -113,8 +116,10 @@ export const PcssStory = async () => {
     }
   })
 
-  const updatePCSS = (args: { enabled: boolean; size: number; focus: number; samples: number }) => {
-    const { enabled, size, focus, samples } = args
+  const updatePCSS = (args: { enabled: boolean; size: number; focus: number; samples: number; intensity: number }) => {
+    const { enabled, size, focus, samples, intensity } = args
+
+    light.shadow.intensity = intensity
 
     if (reset) {
       reset(renderer, scene, camera)
