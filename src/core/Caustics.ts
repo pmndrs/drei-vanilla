@@ -258,7 +258,12 @@ const NORMALPROPS = {
   type: THREE.UnsignedByteType,
 }
 
-const CAUSTICPROPS = {
+const CAUSTICPROPS: {
+  minFilter: THREE.MinificationTextureFilter
+  magFilter: THREE.MagnificationTextureFilter
+  type: THREE.TextureDataType
+  generateMipmaps: boolean
+} = {
   minFilter: THREE.LinearMipmapLinearFilter,
   magFilter: THREE.LinearFilter,
   type: THREE.FloatType,
@@ -525,6 +530,12 @@ export const Caustics = (
   const res = params.resolution
   const normalTarget = useFBO(res, res, NORMALPROPS)
   const normalTargetB = useFBO(res, res, NORMALPROPS)
+
+  if (!renderer.extensions.get('OES_texture_float_linear')) {
+    console.warn('Caustics: OES_texture_float_linear extension is not supported, using HalfFloatType instead.')
+    CAUSTICPROPS.type = THREE.HalfFloatType
+  }
+
   const causticsTarget = useFBO(res, res, CAUSTICPROPS)
   const causticsTargetB = useFBO(res, res, CAUSTICPROPS)
 
