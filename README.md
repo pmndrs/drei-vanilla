@@ -486,8 +486,6 @@ clouds.update(camera, clock.getElapsedTime(), clock.getDelta())
 
 [drei counterpart](https://drei.docs.pmnd.rs/staging/camera-shake)
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://drei.pmnd.rs/?path=/story/staging-camerashake--camera-shake-story)
-
 <p>
   <a href="https://codesandbox.io/s/t4l0f"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/t4l0f/screenshot.png" alt="Demo"/></a>
   <a href="https://codesandbox.io/s/0ycwe"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/0ycwe/screenshot.png" alt="Demo"/></a>
@@ -497,31 +495,32 @@ A class for applying a configurable camera shake effect. Currently only supports
 
 If you use shake in combination with any controls system like OrbitControls make sure to call the `updateInitialRotation`
 
-```js
-const config = {
-  maxYaw: 0.1, // Max amount camera can yaw in either direction
-  maxPitch: 0.1, // Max amount camera can pitch in either direction
-  maxRoll: 0.1, // Max amount camera can roll in either direction
-  yawFrequency: 0.1, // Frequency of the yaw rotation
-  pitchFrequency: 0.1, // Frequency of the pitch rotation
-  rollFrequency: 0.1, // Frequency of the roll rotation
-  intensity: 1, // initial intensity of the shake
-  decay: false, // should the intensity decay over time
-  decayRate: 0.65, // if decay = true this is the rate at which intensity will reduce at
-}
-```
-
 ```ts
 const shake = new CameraShake(camera)
 
-// optional: if orbitcontrols are used , use the change event to update the initial rotation
-//orbitControls.addEventListener('change', () => {
+// optional: if orbitControls are used , use it's change event to update the initial rotation
+// orbitControls.addEventListener('change', () => {
 //    cameraShake.updateInitialRotation()
 //  })
 
-function animate(delta, elapsed) {
-  shake.update(delta, elapsed)
+// call in animate loop
+function animate() {
+  shake.update(delta, elapsedTime)
 }
+```
+
+```js
+
+shake.maxYaw= 0.1, // Max amount camera can yaw in either direction
+shake.maxPitch= 0.1, // Max amount camera can pitch in either direction
+shake.maxRoll= 0.1, // Max amount camera can roll in either direction
+shake.yawFrequency= 0.1, // Frequency of the yaw rotation
+shake.pitchFrequency= 0.1, // Frequency of the pitch rotation
+shake.rollFrequency= 0.1, // Frequency of the roll rotation
+shake.intensity= 1, // initial intensity of the shake
+shake.decay= false, // should the intensity decay over time
+shake.decayRate= 0.65, // if decay = true this is the rate at which intensity will reduce at
+
 ```
 
 #### Grid

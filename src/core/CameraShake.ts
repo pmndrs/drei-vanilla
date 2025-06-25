@@ -21,13 +21,13 @@ export class CameraShake {
   /** Rate at which intensity decays per second. */
   decayRate: number
 
-  /** Maximum yaw (Y axis) shake in radians. */
+  /** Maximum yaw shake in radians. */
   maxYaw: number
 
-  /** Maximum pitch (X axis) shake in radians. */
+  /** Maximum pitch shake in radians. */
   maxPitch: number
 
-  /** Maximum roll (Z axis) shake in radians. */
+  /** Maximum roll shake in radians. */
   maxRoll: number
 
   /** Frequency of yaw shake. */
@@ -40,13 +40,13 @@ export class CameraShake {
   rollFrequency: number
 
   /** Internal noise generator for yaw. */
-  yawNoise: SimplexNoise
+  private yawNoise: SimplexNoise
 
   /** Internal noise generator for pitch. */
-  pitchNoise: SimplexNoise
+  private pitchNoise: SimplexNoise
 
   /** Internal noise generator for roll. */
-  rollNoise: SimplexNoise
+  private rollNoise: SimplexNoise
 
   /**
    * @param objectToShake The Object3D (usually a Camera) to apply shake to.
