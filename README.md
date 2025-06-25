@@ -490,6 +490,8 @@ A class for applying a configurable camera shake effect. Currently only supports
 
 If you use camera controls (like OrbitControls), call `.updateInitialRotation()` after the camera is moved to keep the shake relative to the new orientation.
 
+Usage:
+
 ```ts
 const shake = new CameraShake(camera)
 
@@ -504,7 +506,7 @@ function animate() {
 }
 ```
 
-**Options:**
+Shake Options:
 
 ```js
 shake.maxYaw= 0.1, // Max amount camera can yaw in either direction
