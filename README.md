@@ -486,31 +486,27 @@ clouds.update(camera, clock.getElapsedTime(), clock.getDelta())
 
 [drei counterpart](https://drei.docs.pmnd.rs/staging/camera-shake)
 
-<p>
-  <a href="https://codesandbox.io/s/t4l0f"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/t4l0f/screenshot.png" alt="Demo"/></a>
-  <a href="https://codesandbox.io/s/0ycwe"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/0ycwe/screenshot.png" alt="Demo"/></a>
-</p>
-
 A class for applying a configurable camera shake effect. Currently only supports rotational camera shake. Pass a camera object in the constructor.
 
-If you use shake in combination with any controls system like OrbitControls make sure to call the `updateInitialRotation`
+If you use camera controls (like OrbitControls), call `.updateInitialRotation()` after the camera is moved to keep the shake relative to the new orientation.
 
 ```ts
 const shake = new CameraShake(camera)
 
-// optional: if orbitControls are used , use it's change event to update the initial rotation
-// orbitControls.addEventListener('change', () => {
-//    cameraShake.updateInitialRotation()
-//  })
+// If using OrbitControls:
+orbitControls.addEventListener('change', () => {
+  shake.updateInitialRotation()
+})
 
-// call in animate loop
+// call in animate loop:
 function animate() {
   shake.update(delta, elapsedTime)
 }
 ```
 
-```js
+**Options:**
 
+```js
 shake.maxYaw= 0.1, // Max amount camera can yaw in either direction
 shake.maxPitch= 0.1, // Max amount camera can pitch in either direction
 shake.maxRoll= 0.1, // Max amount camera can roll in either direction
@@ -520,7 +516,6 @@ shake.rollFrequency= 0.1, // Frequency of the roll rotation
 shake.intensity= 1, // initial intensity of the shake
 shake.decay= false, // should the intensity decay over time
 shake.decayRate= 0.65, // if decay = true this is the rate at which intensity will reduce at
-
 ```
 
 #### Grid
