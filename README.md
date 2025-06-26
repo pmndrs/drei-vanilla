@@ -52,6 +52,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
           <li><a href="#caustics">Caustics</a></li>
           <li><a href="#cloud">Cloud</a></li>
+          <li><a href="#camerashake">Camera Shake</a></li>
          </ul>
         <li><a href="#staging">Abstractions</a></li>
         <ul>
@@ -477,6 +478,46 @@ clouds.add(cloud_0)
 
 // call in animate loop
 clouds.update(camera, clock.getElapsedTime(), clock.getDelta())
+```
+
+#### CameraShake
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/staging-camerashake--cs-story)
+
+[drei counterpart](https://drei.docs.pmnd.rs/staging/camera-shake)
+
+A class for applying a configurable camera shake effect. Currently only supports rotational camera shake. Pass a camera object in the constructor.
+
+If you use camera controls (like OrbitControls), call `.updateInitialRotation()` after the camera is moved to keep the shake relative to the new orientation.
+
+Usage:
+
+```ts
+const shake = new CameraShake(camera)
+
+// If using OrbitControls:
+orbitControls.addEventListener('change', () => {
+  shake.updateInitialRotation()
+})
+
+// call in animate loop:
+function animate() {
+  shake.update(delta, elapsedTime)
+}
+```
+
+Shake Options:
+
+```js
+shake.maxYaw= 0.1, // Max amount camera can yaw in either direction
+shake.maxPitch= 0.1, // Max amount camera can pitch in either direction
+shake.maxRoll= 0.1, // Max amount camera can roll in either direction
+shake.yawFrequency= 0.1, // Frequency of the yaw rotation
+shake.pitchFrequency= 0.1, // Frequency of the pitch rotation
+shake.rollFrequency= 0.1, // Frequency of the roll rotation
+shake.intensity= 1, // initial intensity of the shake
+shake.decay= false, // should the intensity decay over time
+shake.decayRate= 0.65, // if decay = true this is the rate at which intensity will reduce at
 ```
 
 #### Grid

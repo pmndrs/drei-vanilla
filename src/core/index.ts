@@ -6,6 +6,7 @@ export * from './shaderMaterial'
 // Staging/Prototyping
 export * from './AccumulativeShadows'
 export * from './Cloud'
+export * from './CameraShake'
 
 // Misc
 export * from './useFBO'
