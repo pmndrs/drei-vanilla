@@ -53,6 +53,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#caustics">Caustics</a></li>
           <li><a href="#cloud">Cloud</a></li>
           <li><a href="#camerashake">Camera Shake</a></li>
+          <li><a href="#sparkles">Sparkles</a></li>
          </ul>
         <li><a href="#staging">Abstractions</a></li>
         <ul>
@@ -518,6 +519,54 @@ shake.rollFrequency= 0.1, // Frequency of the roll rotation
 shake.intensity= 1, // initial intensity of the shake
 shake.decay= false, // should the intensity decay over time
 shake.decayRate= 0.65, // if decay = true this is the rate at which intensity will reduce at
+```
+
+#### Sparkles
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/staging-sparkles--sparkle-story)
+
+[drei counterpart](https://drei.docs.pmnd.rs/staging/sparkles#sparkles)
+
+<p>
+  <a href="https://codesandbox.io/s/0c5hv9"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/0c5hv9/screenshot.png" alt="Demo"/></a>
+</p>
+
+Floating, glowing particles.
+
+```ts
+<Sparkles
+  /** Number of particles (default: 100) */
+  count?: number
+  /** Speed of particles (default: 1) */
+  speed?: number | Float32Array
+  /** Opacity of particles (default: 1) */
+  opacity?: number | Float32Array
+  /** Color of particles (default: 100) */
+  color?: THREE.ColorRepresentation | Float32Array
+  /** Size of particles (default: randomized between 0 and 1) */
+  size?: number | Float32Array
+  /** The space the particles occupy (default: 1) */
+  scale?: number | [number, number, number] | THREE.Vector3
+  /** Movement factor (default: 1) */
+  noise?: number | [number, number, number] | THREE.Vector3 | Float32Array
+/>
+```
+
+Custom shaders are allowed. Sparkles will use the following attributes and uniforms:
+
+Usage
+
+```js
+const sparkles = new Sparkles()
+sparkles.setPixelRatio(renderer.getPixelRatio())
+scene.add(sparkles)
+
+// in the update loop
+function animate() {
+  sparkles.update(elapsedTime)
+  ...
+}
+
 ```
 
 #### Grid
