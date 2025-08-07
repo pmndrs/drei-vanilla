@@ -7,6 +7,7 @@ export * from './shaderMaterial'
 export * from './AccumulativeShadows'
 export * from './Cloud'
 export * from './CameraShake'
+export * from './Sparkles'
 
 // Misc
 export * from './useFBO'
