@@ -252,7 +252,7 @@ export const CausticsMaterial = shaderMaterial<CausticsMaterialType>(
 )
 
 const NORMALPROPS = {
-  depth: true,
+  depthBuffer: true,
   minFilter: THREE.LinearFilter,
   magFilter: THREE.LinearFilter,
   type: THREE.UnsignedByteType,
