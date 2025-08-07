@@ -5,12 +5,7 @@
     "es6": true,
     "node": true
   },
-  "extends": [
-    "prettier",
-    "plugin:prettier/recommended",    
-    "plugin:import/errors",
-    "plugin:import/warnings"
-  ],
+  "extends": ["prettier", "plugin:prettier/recommended", "plugin:import/errors", "plugin:import/warnings"],
   "plugins": ["@typescript-eslint", "prettier", "import"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
