@@ -27,10 +27,10 @@ export const SparkleStory = async () => {
   gui = new GUI({ title: SparkleStory.storyName })
   renderer.shadowMap.enabled = true
   renderer.toneMapping = THREE.ACESFilmicToneMapping
-  camera.position.set(12, 12, 12)
+  camera.position.set(8, 5, 8)
 
   const controls = new OrbitControls(camera, renderer.domElement)
-  controls.target.set(0, 6, 0)
+  controls.target.set(0, 2, 0)
   controls.update()
 
   const floor = new THREE.Mesh(
