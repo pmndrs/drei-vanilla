@@ -473,8 +473,8 @@ function connect(shared: SharedState, target: TargetMesh) {
 
   async function wait() {
     while (true) {
-      const centerAndScaleTextureProperties = shared.gl.properties.get(shared.centerAndScaleTexture)
-      const covAndColorTextureProperties = shared.gl.properties.get(shared.covAndColorTexture)
+      const centerAndScaleTextureProperties = shared.gl.properties.get(shared.centerAndScaleTexture) as any
+      const covAndColorTextureProperties = shared.gl.properties.get(shared.covAndColorTexture) as any
       if (
         centerAndScaleTextureProperties?.__webglTexture &&
         covAndColorTextureProperties?.__webglTexture &&
@@ -577,7 +577,7 @@ function pushDataBuffer(shared: SharedState, buffer: ArrayBufferLike, vertexCoun
       height = 1
     }
 
-    const centerAndScaleTextureProperties = shared.gl.properties.get(shared.centerAndScaleTexture)
+    const centerAndScaleTextureProperties = shared.gl.properties.get(shared.centerAndScaleTexture) as any
     context.bindTexture(context.TEXTURE_2D, centerAndScaleTextureProperties.__webglTexture)
     context.texSubImage2D(
       context.TEXTURE_2D,
@@ -592,7 +592,7 @@ function pushDataBuffer(shared: SharedState, buffer: ArrayBufferLike, vertexCoun
       shared.loadedVertexCount * 4
     )
 
-    const covAndColorTextureProperties = shared.gl.properties.get(shared.covAndColorTexture)
+    const covAndColorTextureProperties = shared.gl.properties.get(shared.covAndColorTexture) as any
     context.bindTexture(context.TEXTURE_2D, covAndColorTextureProperties.__webglTexture)
     context.texSubImage2D(
       context.TEXTURE_2D,
