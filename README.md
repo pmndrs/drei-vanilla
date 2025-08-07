@@ -534,7 +534,7 @@ shake.decayRate= 0.65, // if decay = true this is the rate at which intensity wi
 Floating, glowing particles.
 
 ```ts
-<Sparkles
+SparklesProps = {
   /** Number of particles (default: 100) */
   count?: number
   /** Speed of particles (default: 1) */
@@ -549,7 +549,7 @@ Floating, glowing particles.
   scale?: number | [number, number, number] | THREE.Vector3
   /** Movement factor (default: 1) */
   noise?: number | [number, number, number] | THREE.Vector3 | Float32Array
-/>
+}
 ```
 
 Custom shaders are allowed. Sparkles will use the following attributes and uniforms:
@@ -557,7 +557,7 @@ Custom shaders are allowed. Sparkles will use the following attributes and unifo
 Usage
 
 ```js
-const sparkles = new Sparkles()
+const sparkles = new Sparkles(sparklesProps)
 sparkles.setPixelRatio(renderer.getPixelRatio())
 scene.add(sparkles)
 
