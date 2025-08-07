@@ -153,7 +153,7 @@ export const pcss = ({ focus = 0, size = 25, samples = 10 }: SoftShadowsProps = 
       '#if defined( SHADOWMAP_TYPE_PCF )',
       '\nreturn mix( 1.0, PCSS(shadowMap, shadowCoord), shadowIntensity );\n#if defined( SHADOWMAP_TYPE_PCF )'
     )
-  return (gl: THREE.Renderer, scene: THREE.Scene, camera: THREE.Camera) => {
+  return (gl: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.Camera) => {
     THREE.ShaderChunk.shadowmap_pars_fragment = original
     reset(gl, scene, camera)
   }
