@@ -8,6 +8,7 @@ export * from './AccumulativeShadows'
 export * from './Cloud'
 export * from './CameraShake'
 export * from './Sparkles'
+export * from './Stars'
 
 // Misc
 export * from './useFBO'

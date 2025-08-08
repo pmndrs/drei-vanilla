@@ -54,6 +54,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
           <li><a href="#cloud">Cloud</a></li>
           <li><a href="#camerashake">Camera Shake</a></li>
           <li><a href="#sparkles">Sparkles</a></li>
+          <li><a href="#stars">Stars</a></li>
          </ul>
         <li><a href="#staging">Abstractions</a></li>
         <ul>
@@ -69,8 +70,8 @@ import { pcss, ... } from '@pmndrs/vanilla'
          <li><a href="#misc">Misc</a></li>
         <ul>
           <li><a href="#sprite-animator">Sprite Animator</a></li>
-        </ul <li><a href="#portals">Portals</a></li>        
-        <ul>         
+        </ul <li><a href="#portals">Portals</a></li>
+        <ul>
           <li><a href="#meshportalmaterial">MeshPortalMaterial</a></li>
         </ul>
       </ul>
@@ -567,6 +568,44 @@ function animate() {
   ...
 }
 
+```
+
+#### Stars
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/staging-stars--stars-story)
+
+Adds a blinking shader-based starfield to your scene.
+
+```js
+export type StarsProps = {
+  /** The radius of the starfield (default 100) */
+  radius?: number
+  /** The depth of the starfield (default 50) */
+  depth?: number
+  /** The number of stars (default 5000) */
+  count?: number
+  /** The factor by which to scale each star (default 4) */
+  factor?: number
+  /** The saturation of the stars (default 0) */
+  saturation?: number
+  /** Whether to fade the edge of each star (default false) */
+  fade?: boolean
+  /** The speed of the stars pulsing (default 1) */
+  speed?: number
+}
+```
+
+Usage
+
+```js
+const stars = new Stars(starParams)
+scene.add(stars)
+
+// in the update loop
+function animate() {
+  stars.update(elapsedTime)
+  ...
+}
 ```
 
 #### Grid
