@@ -48,32 +48,33 @@ import { pcss, ... } from '@pmndrs/vanilla'
             <li><a href="#spotlight">SpotLight</a></li>
           </ul>
         <li><a href="#staging">Staging</a></li>
-         <ul>
-          <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
-          <li><a href="#caustics">Caustics</a></li>
-          <li><a href="#cloud">Cloud</a></li>
-          <li><a href="#camerashake">Camera Shake</a></li>
-          <li><a href="#sparkles">Sparkles</a></li>
-          <li><a href="#stars">Stars</a></li>
-         </ul>
-        <li><a href="#staging">Abstractions</a></li>
-        <ul>
-          <li><a href="#outlines">Outlines</a></li>
-          <li><a href="#billboard">Billboard</a></li>
-          <li><a href="#text">Text</a></li>
-          <li><a href="#splat">Splat</a></li>
-        </ul>
+          <ul>
+            <li><a href="#accumulativeshadows">AccumulativeShadows</a></li>
+            <li><a href="#caustics">Caustics</a></li>
+            <li><a href="#cloud">Cloud</a></li>
+            <li><a href="#camerashake">Camera Shake</a></li>
+            <li><a href="#sparkles">Sparkles</a></li>
+            <li><a href="#stars">Stars</a></li>
+          </ul>
+        <li><a href="#abstractions">Abstractions</a></li>
+          <ul>
+            <li><a href="#outlines">Outlines</a></li>
+            <li><a href="#billboard">Billboard</a></li>
+            <li><a href="#text">Text</a></li>
+            <li><a href="#splat">Splat</a></li>
+          </ul>
         <li><a href="#gizmos">Gizmos</a></li>
           <ul>
             <li><a href="#grid">Grid</a></li>
           </ul>
          <li><a href="#misc">Misc</a></li>
-        <ul>
-          <li><a href="#sprite-animator">Sprite Animator</a></li>
-        </ul <li><a href="#portals">Portals</a></li>
-        <ul>
-          <li><a href="#meshportalmaterial">MeshPortalMaterial</a></li>
-        </ul>
+          <ul>
+            <li><a href="#sprite-animator">Sprite Animator</a></li>
+          </ul>
+        <li><a href="#portals">Portals</a></li>
+          <ul>
+            <li><a href="#meshportalmaterial">MeshPortalMaterial</a></li>
+          </ul>
       </ul>
     </td>
 
@@ -256,12 +257,9 @@ const material = new MeshTransmissionMaterial({
 
 #### SpotLight
 
-[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](<[https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-shadermaterial--shader-material-story](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-volumetricspotlight--volumetric-spotlight-story)>)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-volumetricspotlight--volumetric-spotlight-story)
 
-<p>
-  <a href="https://codesandbox.io/s/tx1pq"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/tx1pq/screenshot.png" alt="Demo"/></a>
-  <a href="https://codesandbox.io/s/wdzv4"><img width="20%" src="https://codesandbox.io/api/v1/sandboxes/wdzv4/screenshot.png" alt="Demo"/></a>
-</p>
+[drei counterpart](https://drei.docs.pmnd.rs/staging/spot-light#spotlight)
 
 A Volumetric spotlight.
 
@@ -292,6 +290,8 @@ Optionally you can provide a depth-buffer which converts the spotlight into a so
 </p>
 
 Easily add reflections and/or blur to any mesh. It takes surface roughness into account for a more realistic effect. This material extends from [THREE.MeshStandardMaterial](https://threejs.org/docs/#api/en/materials/MeshStandardMaterial) and accepts all its props.
+
+# Staging
 
 ###  AccumulativeShadows
 
@@ -608,6 +608,8 @@ function animate() {
 }
 ```
 
+# Gizmos
+
 #### Grid
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-grid--grid-story)
@@ -676,6 +678,8 @@ export type GridType = {
   update: (camera: THREE.Camera) => void
 }
 ```
+
+# Abstractions
 
 #### Outlines
 
@@ -832,6 +836,8 @@ You can also use alphaHash, but this can be slower and create some noise, you wo
 const plush = new Splat(plushSplat, camera, { alphaHash: true })
 ```
 
+# Misc
+
 #### Sprite Animator
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/misc-spriteanimator--sprite-animator-story)
@@ -919,6 +925,8 @@ export type SpriteAnimatorType = {
   setFrameName: Function // Function to set the frame identifier to use, has to be one of animationNames.
 }
 ```
+
+# Portals
 
 #### MeshPortalMaterial
 
