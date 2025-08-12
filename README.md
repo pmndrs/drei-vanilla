@@ -56,7 +56,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
             <li><a href="#sparkles">Sparkles</a></li>
             <li><a href="#stars">Stars</a></li>
           </ul>
-        <li><a href="#staging">Abstractions</a></li>
+        <li><a href="#abstractions">Abstractions</a></li>
           <ul>
             <li><a href="#outlines">Outlines</a></li>
             <li><a href="#billboard">Billboard</a></li>
@@ -290,6 +290,8 @@ Optionally you can provide a depth-buffer which converts the spotlight into a so
 </p>
 
 Easily add reflections and/or blur to any mesh. It takes surface roughness into account for a more realistic effect. This material extends from [THREE.MeshStandardMaterial](https://threejs.org/docs/#api/en/materials/MeshStandardMaterial) and accepts all its props.
+
+# Staging
 
 ###  AccumulativeShadows
 
@@ -606,6 +608,8 @@ function animate() {
 }
 ```
 
+# gizmos
+
 #### Grid
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-grid--grid-story)
@@ -674,6 +678,8 @@ export type GridType = {
   update: (camera: THREE.Camera) => void
 }
 ```
+
+# abstractions
 
 #### Outlines
 
@@ -830,6 +836,8 @@ You can also use alphaHash, but this can be slower and create some noise, you wo
 const plush = new Splat(plushSplat, camera, { alphaHash: true })
 ```
 
+# misc
+
 #### Sprite Animator
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/misc-spriteanimator--sprite-animator-story)
@@ -917,6 +925,8 @@ export type SpriteAnimatorType = {
   setFrameName: Function // Function to set the frame identifier to use, has to be one of animationNames.
 }
 ```
+
+# portals
 
 #### MeshPortalMaterial
 
