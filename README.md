@@ -70,7 +70,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
          <li><a href="#misc">Misc</a></li>
         <ul>
           <li><a href="#sprite-animator">Sprite Animator</a></li>
-        </ul <li><a href="#portals">Portals</a></li>
+        <li><a href="#portals">Portals</a></li>
         <ul>
           <li><a href="#meshportalmaterial">MeshPortalMaterial</a></li>
         </ul>
