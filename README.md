@@ -608,7 +608,7 @@ function animate() {
 }
 ```
 
-# gizmos
+# Gizmos
 
 #### Grid
 
@@ -679,7 +679,7 @@ export type GridType = {
 }
 ```
 
-# abstractions
+# Abstractions
 
 #### Outlines
 
@@ -836,7 +836,7 @@ You can also use alphaHash, but this can be slower and create some noise, you wo
 const plush = new Splat(plushSplat, camera, { alphaHash: true })
 ```
 
-# misc
+# Misc
 
 #### Sprite Animator
 
@@ -926,7 +926,7 @@ export type SpriteAnimatorType = {
 }
 ```
 
-# portals
+# Portals
 
 #### MeshPortalMaterial
 
