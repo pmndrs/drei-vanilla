@@ -116,6 +116,7 @@ export class Trail extends THREE.Group {
     let mesh: THREE.InstancedMesh | THREE.Mesh
     if (props.geometry) {
       const iMesh = new THREE.InstancedMesh(geometry, material, props.instanceCount || defaults.instanceCount)
+      iMesh.frustumCulled = false
       iMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
       mesh = iMesh
     } else {
