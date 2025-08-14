@@ -59,7 +59,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "glsl-noise": "^0.0.0"
+    "glsl-noise": "^0.0.0",
+    "meshline": "^3.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",

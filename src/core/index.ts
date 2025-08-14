@@ -18,6 +18,7 @@ export * from './SpriteAnimator'
 export * from './Outlines'
 export * from './Billboard'
 export * from './Splat'
+export * from './Trail'
 
 // Gizmos
 export * from './Grid'
