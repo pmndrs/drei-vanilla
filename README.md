@@ -310,7 +310,7 @@ Refer to storybook code on how to use & what each variable does
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-caustics--caustics-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#caustics)
+[drei counterpart](https://drei.docs.pmnd.rs/staging/caustics#caustics)
 
 Caustics are swirls of light that appear when light passes through transmissive surfaces. This component uses a raymarching technique to project caustics onto a catcher plane. It is based on [github/N8python/caustics](https://github.com/N8python/caustics).
 
@@ -416,7 +416,7 @@ export function createCausticsUpdate(
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/staging-clouds--cloud-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#cloud)
+[drei counterpart](https://drei.docs.pmnd.rs/staging/cloud#cloud)
 
 Instanced Mesh/Particle based cloud.
 
@@ -615,7 +615,7 @@ function animate() {
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-grid--grid-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#grid)
+[drei counterpart](https://drei.docs.pmnd.rs/gizmos/grid#grid)
 
 A y-up oriented, shader-based grid implementation.
 
@@ -686,7 +686,7 @@ export type GridType = {
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-outlines--outlines-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#outlines)
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/outlines#outlines)
 
 An ornamental component that extracts the geometry from its parent and displays an inverted-hull outline. Supported parents are `THREE.Mesh`, `THREE.SkinnedMesh` and `THREE.InstancedMesh`.
 
@@ -740,7 +740,7 @@ export type OutlinesType = {
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-billboard--billboard-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#billboard)
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/billboard#billboard)
 
 Adds a `THREE.Group` that always faces the camera.
 
@@ -793,7 +793,7 @@ export type BillboardType = {
 
 #### Text [EXTERNAL]
 
-[drei counterpart](https://github.com/pmndrs/drei#text)
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/text#text)
 
 Hi-quality text rendering w/ signed distance fields (SDF) and antialiasing, using [troika-3d-text](https://github.com/protectwise/troika/tree/master/packages/troika-3d-text).
 
@@ -801,7 +801,7 @@ Hi-quality text rendering w/ signed distance fields (SDF) and antialiasing, usin
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-splat--splat-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#splat)
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/splat#splat)
 
 A declarative abstraction around [antimatter15/splat](https://github.com/antimatter15/splat). It supports re-use, multiple splats with correct depth sorting, splats can move and behave as a regular object3d's, supports alphahash & alphatest, and stream-loading.
 
@@ -840,6 +840,8 @@ const plush = new Splat(plushSplat, camera, { alphaHash: true })
 #### Trail
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-trails--trail-story)
+
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/trail#trail)
 
 A declarative, `three.MeshLine` based Trails implementation. Add this to the scene, set the target to any mesh and it will give it a beautiful trail.
 
@@ -897,7 +899,7 @@ So its material properties can be accessed via `trailMesh.trailData.material`
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/misc-spriteanimator--sprite-animator-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#sprite-animator)
+[drei counterpart](https://drei.docs.pmnd.rs/misc/sprite-animator#sprite-animator)
 
 ```tsx
 type SpriteAnimatorProps = {
