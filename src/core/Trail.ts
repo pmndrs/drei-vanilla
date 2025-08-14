@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { MeshLineGeometry as MeshLineGeometryImpl, MeshLineMaterial } from 'meshline'
 
 type BaseSettings = {
-  // Width of the line
+  // Width of the line , or acts as a scale multiplier when custom geometry is passed
   width: number
   // Length of the line
   length: number
@@ -24,11 +24,9 @@ type BaseSettings = {
  */
 type GeometrySettings =
   | {
-      /** Custom geometry used for InstancedMesh trail,
-       * instance count is from instanceCount ,
-       * `width` acts as a scale Multiplier*/
+      // Custom geometry used for InstancedMesh based trail
       geometry: THREE.BufferGeometry
-      /** Custom material for instanced rendering, must be compatible with the geometry */
+      // Custom material for trail, compulsory when using custom geometry
       material: THREE.Material
     }
   | {
@@ -69,10 +67,6 @@ const shiftLeft = (collection: Float32Array, steps = 1): Float32Array => {
 export type MeshLineGeometry = THREE.Mesh & MeshLineGeometryImpl
 
 export class Trail extends THREE.Group {
-  /**
-   * A declarative, three.MeshLine based Trails implementation.
-   * Add this to the scene, set the target to any mesh and it will give it a beautiful trail.
-   */
   trailParams: {
     width: number
     length: number
@@ -99,6 +93,10 @@ export class Trail extends THREE.Group {
     tempObj: THREE.Object3D
     positionArray: number[]
   }
+  /**
+   * A declarative, three.MeshLine based Trails implementation.
+   * Add this to the scene, set the target to any mesh and it will give it a beautiful trail.
+   */
   constructor(props: TrailProps) {
     super()
 

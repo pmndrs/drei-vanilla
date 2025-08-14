@@ -138,11 +138,6 @@ function setupInstanceTrail() {
 
   scene.add(trail)
 
-  console.log({
-    trail,
-    sourceMesh,
-  })
-
   const fol = gui.addFolder('Instance Trail')
   fol.onChange(() => trail.rebuildTrail(trailParams))
   fol.addColor(trailParams, 'color').name('Trail Color')

@@ -17,7 +17,7 @@ npm install @pmndrs/vanilla
 
 ### Basic usage:
 
-```jsx
+```js
 import { pcss, ... } from '@pmndrs/vanilla'
 ```
 
@@ -62,6 +62,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
             <li><a href="#billboard">Billboard</a></li>
             <li><a href="#text">Text</a></li>
             <li><a href="#splat">Splat</a></li>
+            <li><a href="#trail">Trail</a></li>
           </ul>
         <li><a href="#gizmos">Gizmos</a></li>
           <ul>
@@ -129,7 +130,7 @@ reset(renderer, scene, camera)
 
 Creates a THREE.ShaderMaterial for you with easier handling of uniforms, which are automatically declared as setter/getters on the object and allowed as constructor arguments.
 
-```jsx
+```js
 const ColorShiftMaterial = shaderMaterial(
   { time: 0, color: new THREE.Color(0.2, 0.0, 0.1) },
   // vertex shader
@@ -468,7 +469,7 @@ type CloudProps = {
 
 Usage
 
-```jsx
+```js
 // create main clouds group
 clouds = new Clouds({ texture: cloudTexture })
 scene.add(clouds)
@@ -647,7 +648,7 @@ export type GridProps = {
 
 Usage
 
-```jsx
+```js
 grid = Grid({
   args: [10.5, 10.5],
   cellSize: 0.6,
@@ -670,7 +671,7 @@ grid.update(camera)
 
 Grid function returns the following
 
-```jsx
+```js
 export type GridType = {
   /* Mesh with gridMaterial to add to your scene  */
   mesh: THREE.Mesh
@@ -714,7 +715,7 @@ export type OutlinesProps = {
 
 Usage
 
-```jsx
+```js
 const outlines = Outlines()
 const mesh = new THREE.Mesh(geometry, material)
 mesh.add(outlines.group)
@@ -727,7 +728,7 @@ scene.add(mesh)
 
 Outlines function returns the following
 
-```jsx
+```js
 export type OutlinesType = {
   group: THREE.Group
   updateProps: (props: Partial<OutlinesProps>) => void
@@ -835,6 +836,63 @@ You can also use alphaHash, but this can be slower and create some noise, you wo
 ```js
 const plush = new Splat(plushSplat, camera, { alphaHash: true })
 ```
+
+#### Trail
+
+[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://drei.vercel.app/?path=/story/misc-trail--use-trail-st)
+
+A declarative, `three.MeshLine` based Trails implementation. Add this to the scene, set the target to any mesh and it will give it a beautiful trail.
+
+Props defined below with their default values.
+
+```js
+export type TrailProps = {
+  // Width of the line , or acts as a scale multiplier when custom geometry is passed
+  width: number
+  // Length of the line
+  length: number
+  // How fast the line fades away
+  decay: number
+  // Wether to use the target's world or local positions
+  local: boolean
+  // Min distance between previous and current points
+  stride: number
+  // Number of frames to wait before next calculation
+  interval: number
+  // Number of instances to create for the trail when using custom geometry
+  instanceCount: number
+
+  color?: THREE.ColorRepresentation
+  // A function to define the width in each point along it.
+  attenuation?: (width: number) => number
+  // This object will produce the trail.
+  target: THREE.Object3D
+
+  // Custom geometry used for InstancedMesh based trail
+  geometry: THREE.BufferGeometry
+  // Custom material for trail,
+  material: THREE.Material
+}
+```
+
+Usage
+
+```js
+const trail = new Trail(trailParams)
+scene.add(trail)
+
+...
+// On resize
+trail.updateSize(w, h)
+
+// in update loop
+trail.update()
+```
+
+The lines are generated using [meshline](https://github.com/pmndrs/meshline) library
+So its material properties can be accessed via `trailMesh.trailData.material`
+
+👉 Inspired by [TheSpite's Codevember 2021 #9](https://spite.github.io/codevember-2021/9/)
 
 # Misc
 
@@ -952,7 +1010,7 @@ export type PortalMaterialType = {
 
 Usage:
 
-```jsx
+```js
 const rendererSize = new THREE.Vector2()
 const portalRenderTarget = new THREE.WebGLRenderTarget(512, 512)
 
@@ -987,7 +1045,7 @@ renderer.setAnimationLoop(() => {
 
 You can optionally fade or blur the edges of the portal by providing a sdf texture, do not forget to make the material transparent in that case. It uses SDF flood-fill to determine the shape, you can thereby blur any geometry. Import the helper function `meshPortalMaterialApplySDF` to auto apply the sdf mask.
 
-```jsx
+```js
 // Create portal material with SDF and edge blur
 const portalMaterial = new MeshPortalMaterial({
   map: portalRenderTarget.texture,
