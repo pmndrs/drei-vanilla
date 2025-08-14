@@ -17,7 +17,7 @@ npm install @pmndrs/vanilla
 
 ### Basic usage:
 
-```jsx
+```js
 import { pcss, ... } from '@pmndrs/vanilla'
 ```
 
@@ -62,6 +62,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
             <li><a href="#billboard">Billboard</a></li>
             <li><a href="#text">Text</a></li>
             <li><a href="#splat">Splat</a></li>
+            <li><a href="#trail">Trail</a></li>
           </ul>
         <li><a href="#gizmos">Gizmos</a></li>
           <ul>
@@ -129,7 +130,7 @@ reset(renderer, scene, camera)
 
 Creates a THREE.ShaderMaterial for you with easier handling of uniforms, which are automatically declared as setter/getters on the object and allowed as constructor arguments.
 
-```jsx
+```js
 const ColorShiftMaterial = shaderMaterial(
   { time: 0, color: new THREE.Color(0.2, 0.0, 0.1) },
   // vertex shader
@@ -309,7 +310,7 @@ Refer to storybook code on how to use & what each variable does
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/shaders-caustics--caustics-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#caustics)
+[drei counterpart](https://drei.docs.pmnd.rs/staging/caustics#caustics)
 
 Caustics are swirls of light that appear when light passes through transmissive surfaces. This component uses a raymarching technique to project caustics onto a catcher plane. It is based on [github/N8python/caustics](https://github.com/N8python/caustics).
 
@@ -415,7 +416,7 @@ export function createCausticsUpdate(
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/staging-clouds--cloud-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#cloud)
+[drei counterpart](https://drei.docs.pmnd.rs/staging/cloud#cloud)
 
 Instanced Mesh/Particle based cloud.
 
@@ -468,7 +469,7 @@ type CloudProps = {
 
 Usage
 
-```jsx
+```js
 // create main clouds group
 clouds = new Clouds({ texture: cloudTexture })
 scene.add(clouds)
@@ -614,7 +615,7 @@ function animate() {
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/gizmos-grid--grid-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#grid)
+[drei counterpart](https://drei.docs.pmnd.rs/gizmos/grid#grid)
 
 A y-up oriented, shader-based grid implementation.
 
@@ -647,7 +648,7 @@ export type GridProps = {
 
 Usage
 
-```jsx
+```js
 grid = Grid({
   args: [10.5, 10.5],
   cellSize: 0.6,
@@ -670,7 +671,7 @@ grid.update(camera)
 
 Grid function returns the following
 
-```jsx
+```js
 export type GridType = {
   /* Mesh with gridMaterial to add to your scene  */
   mesh: THREE.Mesh
@@ -685,7 +686,7 @@ export type GridType = {
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-outlines--outlines-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#outlines)
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/outlines#outlines)
 
 An ornamental component that extracts the geometry from its parent and displays an inverted-hull outline. Supported parents are `THREE.Mesh`, `THREE.SkinnedMesh` and `THREE.InstancedMesh`.
 
@@ -714,7 +715,7 @@ export type OutlinesProps = {
 
 Usage
 
-```jsx
+```js
 const outlines = Outlines()
 const mesh = new THREE.Mesh(geometry, material)
 mesh.add(outlines.group)
@@ -727,7 +728,7 @@ scene.add(mesh)
 
 Outlines function returns the following
 
-```jsx
+```js
 export type OutlinesType = {
   group: THREE.Group
   updateProps: (props: Partial<OutlinesProps>) => void
@@ -739,7 +740,7 @@ export type OutlinesType = {
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-billboard--billboard-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#billboard)
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/billboard#billboard)
 
 Adds a `THREE.Group` that always faces the camera.
 
@@ -792,7 +793,7 @@ export type BillboardType = {
 
 #### Text [EXTERNAL]
 
-[drei counterpart](https://github.com/pmndrs/drei#text)
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/text#text)
 
 Hi-quality text rendering w/ signed distance fields (SDF) and antialiasing, using [troika-3d-text](https://github.com/protectwise/troika/tree/master/packages/troika-3d-text).
 
@@ -800,7 +801,7 @@ Hi-quality text rendering w/ signed distance fields (SDF) and antialiasing, usin
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-splat--splat-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#splat)
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/splat#splat)
 
 A declarative abstraction around [antimatter15/splat](https://github.com/antimatter15/splat). It supports re-use, multiple splats with correct depth sorting, splats can move and behave as a regular object3d's, supports alphahash & alphatest, and stream-loading.
 
@@ -836,13 +837,69 @@ You can also use alphaHash, but this can be slower and create some noise, you wo
 const plush = new Splat(plushSplat, camera, { alphaHash: true })
 ```
 
+#### Trail
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-trails--trail-story)
+
+[drei counterpart](https://drei.docs.pmnd.rs/abstractions/trail#trail)
+
+A declarative, `three.MeshLine` based Trails implementation. Add this to the scene, set the target to any mesh and it will give it a beautiful trail.
+
+Props defined below
+
+```js
+export type TrailProps = {
+  // This object will produce the trail.
+  target: THREE.Object3D
+  // Width of the line , or acts as a scale multiplier when custom geometry is passed
+  width: number
+  // Length of the line
+  length: number
+  // How fast the line fades away
+  decay: number
+  // Wether to use the target's world or local positions
+  local: boolean
+  // Min distance between previous and current points
+  stride: number
+  // Number of frames to wait before next calculation
+  interval: number
+  // Number of instances to create for the trail when using custom geometry
+  instanceCount: number
+  // Color of the trail material
+  color?: THREE.ColorRepresentation
+  // A function to define the width in each point along it.
+  attenuation?: (width: number) => number
+  // Custom geometry used for InstancedMesh based trail
+  geometry: THREE.BufferGeometry
+  // Custom material for trail
+  material: THREE.Material
+}
+```
+
+Usage
+
+```js
+const trail = new Trail({ target:targetMesh })
+scene.add(trail)
+
+...
+// On resize
+trail.updateSize(w, h)
+
+// in update loop
+trail.update()
+```
+
+The lines are generated using [meshline](https://github.com/pmndrs/meshline) library
+So its material properties can be accessed via `trailMesh.trailData.material`
+
 # Misc
 
 #### Sprite Animator
 
 [![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/misc-spriteanimator--sprite-animator-story)
 
-[drei counterpart](https://github.com/pmndrs/drei#sprite-animator)
+[drei counterpart](https://drei.docs.pmnd.rs/misc/sprite-animator#sprite-animator)
 
 ```tsx
 type SpriteAnimatorProps = {
@@ -952,7 +1009,7 @@ export type PortalMaterialType = {
 
 Usage:
 
-```jsx
+```js
 const rendererSize = new THREE.Vector2()
 const portalRenderTarget = new THREE.WebGLRenderTarget(512, 512)
 
@@ -987,7 +1044,7 @@ renderer.setAnimationLoop(() => {
 
 You can optionally fade or blur the edges of the portal by providing a sdf texture, do not forget to make the material transparent in that case. It uses SDF flood-fill to determine the shape, you can thereby blur any geometry. Import the helper function `meshPortalMaterialApplySDF` to auto apply the sdf mask.
 
-```jsx
+```js
 // Create portal material with SDF and edge blur
 const portalMaterial = new MeshPortalMaterial({
   map: portalRenderTarget.texture,
