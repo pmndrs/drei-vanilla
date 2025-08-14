@@ -30,6 +30,9 @@ export const TrailStory = async () => {
   controls.target.set(0, 2, 0)
   controls.update()
 
+  const dirLight = new THREE.DirectionalLight(0xffffff, 1)
+  scene.add(dirLight)
+
   scene.add(new THREE.AxesHelper())
 
   scene.background = new THREE.Color(0x666666)
@@ -87,13 +90,13 @@ function setupLineTrail() {
 
   const fol = gui.addFolder('Trail')
   fol.onChange(() => trail.rebuildTrail(trailParams))
-  fol.addColor(trailParams, 'color').name('Trail Color')
-  fol.add(trailParams, 'length', 1, 50, 0.1).name('Trail Length')
-  fol.add(trailParams, 'width', 0, 20, 0.1).name('Trail Width')
-  fol.add(trailParams, 'decay', 0, 1, 0.01).name('Trail Decay')
-  fol.add(trailParams, 'stride', 0, 0.05, 0.01).name('Trail Stride')
+  fol.addColor(trailParams, 'color').name('Color')
+  fol.add(trailParams, 'length', 1, 50, 0.1).name('Length')
+  fol.add(trailParams, 'width', 0, 20, 0.1).name('Width')
+  fol.add(trailParams, 'decay', 0, 1, 0.01).name('Decay')
+  fol.add(trailParams, 'stride', 0, 0.05, 0.01).name('Stride')
   fol.add(trailParams, 'local').name('Local Space')
-  fol.add(trailParams, 'interval', 1, 60, 1).name('Trail Interval')
+  fol.add(trailParams, 'interval', 1, 60, 1).name('Update Interval')
 
   const onUpdate = () => {
     rotateSourceMesh()
@@ -129,9 +132,10 @@ function setupInstanceTrail() {
     attenuation: (width) => width,
     target: sourceMesh,
     color: new THREE.Color('red'),
+    instanceCount: 10,
 
     geometry: new THREE.OctahedronGeometry(0.5),
-    material: new THREE.MeshNormalMaterial(),
+    material: new THREE.MeshMatcapMaterial(),
   }
 
   const trail = new Trail(trailParams)
@@ -140,13 +144,14 @@ function setupInstanceTrail() {
 
   const fol = gui.addFolder('Instance Trail')
   fol.onChange(() => trail.rebuildTrail(trailParams))
-  fol.addColor(trailParams, 'color').name('Trail Color')
-  fol.add(trailParams, 'length', 1, 50, 0.1).name('Trail Length')
-  fol.add(trailParams, 'width', 0, 20, 0.1).name('Trail Width')
-  fol.add(trailParams, 'decay', 0, 1, 0.01).name('Trail Decay')
-  fol.add(trailParams, 'stride', 0, 1, 0.01).name('Trail Stride')
+  fol.addColor(trailParams, 'color').name('Color')
+  fol.add(trailParams, 'length', 1, 50, 0.1).name('Length')
+  fol.add(trailParams, 'width', 0, 20, 0.1).name('Width')
+  fol.add(trailParams, 'decay', 0, 1, 0.01).name('Decay')
+  fol.add(trailParams, 'stride', 0, 1, 0.01).name('Stride')
   fol.add(trailParams, 'local').name('Local Space')
-  fol.add(trailParams, 'interval', 1, 60, 1).name('Trail Interval')
+  fol.add(trailParams, 'interval', 1, 60, 1).name('Update Interval')
+  fol.add(trailParams, 'instanceCount', 5, 30, 1).name('Instance Count')
 
   const rendererSize = new THREE.Vector2()
   const onResize = () => {
