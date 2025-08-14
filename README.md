@@ -839,14 +839,16 @@ const plush = new Splat(plushSplat, camera, { alphaHash: true })
 
 #### Trail
 
-[![](https://img.shields.io/badge/-storybook-%23ff69b4)](https://drei.vercel.app/?path=/story/misc-trail--use-trail-st)
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/abstractions-trails--trail-story)
 
 A declarative, `three.MeshLine` based Trails implementation. Add this to the scene, set the target to any mesh and it will give it a beautiful trail.
 
-Props defined below with their default values.
+Props defined below
 
 ```js
 export type TrailProps = {
+  // This object will produce the trail.
+  target: THREE.Object3D
   // Width of the line , or acts as a scale multiplier when custom geometry is passed
   width: number
   // Length of the line
@@ -861,16 +863,13 @@ export type TrailProps = {
   interval: number
   // Number of instances to create for the trail when using custom geometry
   instanceCount: number
-
+  // Color of the trail material
   color?: THREE.ColorRepresentation
   // A function to define the width in each point along it.
   attenuation?: (width: number) => number
-  // This object will produce the trail.
-  target: THREE.Object3D
-
   // Custom geometry used for InstancedMesh based trail
   geometry: THREE.BufferGeometry
-  // Custom material for trail,
+  // Custom material for trail
   material: THREE.Material
 }
 ```
@@ -878,7 +877,7 @@ export type TrailProps = {
 Usage
 
 ```js
-const trail = new Trail(trailParams)
+const trail = new Trail({ target:targetMesh })
 scene.add(trail)
 
 ...
@@ -891,8 +890,6 @@ trail.update()
 
 The lines are generated using [meshline](https://github.com/pmndrs/meshline) library
 So its material properties can be accessed via `trailMesh.trailData.material`
-
-👉 Inspired by [TheSpite's Codevember 2021 #9](https://spite.github.io/codevember-2021/9/)
 
 # Misc
 

@@ -5,7 +5,7 @@ import { Meta } from '@storybook/html'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Trail, TrailProps } from '../../src/core/Trail'
 export default {
-  title: 'Staging/Trails',
+  title: 'Abstractions/Trails',
 } as Meta // TODO: this should be `satisfies Meta` but commit hooks lag behind TS
 
 let gui: GUI
