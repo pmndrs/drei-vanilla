@@ -25,3 +25,4 @@ export * from './Grid'
 
 // Portals
 export * from './MeshPortalMaterial'
+export * from './Fisheye'

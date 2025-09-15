@@ -75,6 +75,7 @@ import { pcss, ... } from '@pmndrs/vanilla'
         <li><a href="#portals">Portals</a></li>
           <ul>
             <li><a href="#meshportalmaterial">MeshPortalMaterial</a></li>
+            <li><a href="#fisheye">Fisheye</a></li>
           </ul>
       </ul>
     </td>
@@ -1057,4 +1058,46 @@ const portalMaterial = new MeshPortalMaterial({
 portalMesh = new THREE.Mesh(portalGeometry, portalMaterial)
 meshPortalMaterialApplySDF(portalMesh, 512, renderer) // 512 is SDF texture resolution
 scene.add(portalMesh)
+```
+
+### Fisheye
+
+[![storybook](https://img.shields.io/badge/-storybook-%23ff69b4)](https://pmndrs.github.io/drei-vanilla/?path=/story/portals-fisheye--fisheye-story)
+
+[drei counterpart](https://drei.docs.pmnd.rs/portals/fisheye)
+
+```ts
+export type FisheyeProps = {
+  /** Zoom factor, 0..1, default:0 */
+  zoom?: number
+  /** Number of segments, default: 64 */
+  segments?: number
+  /** Cubemap resolution default: 896 */
+  resolution?: number
+}
+```
+
+This component will take over system rendering. It portals its children into a cubemap which is then projected onto a sphere. The sphere is rendered out on the screen, filling it. You can lower the resolution to increase performance. Six renders per frame are necessary to construct a full fisheye view, and since each facet of the cubemap only takes a portion of the screen full resolution is not necessary. You can also reduce the amount of segments (resulting in edgier rounds).
+
+Usage:
+
+```js
+const fishEye = new Fisheye()
+
+//on resize
+fishEye.onResize(width, height)
+
+// in animate loop , instead of renderer.render()
+animateLoop(){
+  //...
+  fishEye.render(renderer, scene, camera)
+}
+
+// to raycast with fisheye active instead of raycaster.setFromCamera(pointer, camera)
+raycast(){
+  //...
+  fishEye.computeRaycastRayDirection(raycaster, pointer)
+  const intersects = raycaster.intersectObjects(raycastMeshes)
+}
+
 ```
