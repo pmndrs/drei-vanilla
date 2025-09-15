@@ -1077,27 +1077,37 @@ export type FisheyeProps = {
 }
 ```
 
-This component will take over system rendering. It portals its children into a cubemap which is then projected onto a sphere. The sphere is rendered out on the screen, filling it. You can lower the resolution to increase performance. Six renders per frame are necessary to construct a full fisheye view, and since each facet of the cubemap only takes a portion of the screen full resolution is not necessary. You can also reduce the amount of segments (resulting in edgier rounds).
+This class will take over rendering. It captures the scene into a cubemap from the camera's pov which is then projected onto a sphere. The sphere is then rendered to fill the screen. You can lower the resolution to increase performance. Six renders per frame are necessary to construct a full fisheye view, and since each face of the cubemap only takes a portion of the screen, full resolution is not necessary. You can also reduce the number of segments of the sphere (resulting in a more blocky sphere).
 
 Usage:
 
 ```js
 const fishEye = new Fisheye()
 
-//on resize
-fishEye.onResize(width, height)
-
-// in animate loop , instead of renderer.render()
-animateLoop(){
+// on resize event
+// make sure onResize is called once before first frame is rendered
+onWindowResize(){
   //...
-  fishEye.render(renderer, scene, camera)
+  fishEye.onResize(width, height)
 }
 
-// to raycast with fisheye active instead of raycaster.setFromCamera(pointer, camera)
+// In animation loop, use fisheye.render() instead of renderer.render()
+renderer.setAnimationLoop(() => {
+  //...
+  controls.update() // if using controls
+
+  // Use fisheye's rendering instead of normal rendering
+  fishEye.render(renderer, scene, camera) // replaces: renderer.render(scene, camera)
+})
+
+// To raycast through fisheye distortion,
+// use computeRaycastRayDirection instead of raycaster.setFromCamera
+const pointer = new THREE.Vector2()
 raycast(){
   //...
   fishEye.computeRaycastRayDirection(raycaster, pointer)
   const intersects = raycaster.intersectObjects(raycastMeshes)
+  //...
 }
 
 ```
